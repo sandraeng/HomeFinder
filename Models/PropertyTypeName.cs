@@ -2,5 +2,10 @@
 {
     public enum PropertyTypeName
     {
+        House,
+        Appartment,
+        Townhouse,
+        Farm,
+        Lot
     }
 }

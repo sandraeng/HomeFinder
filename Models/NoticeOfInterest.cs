@@ -10,6 +10,7 @@ namespace HomeFinder.Models
 
         [ForeignKey("UserId")]
         public HomeFinderUser User { get; set; }
+
         [ForeignKey("PropertyObjectId")]
         public PropertyObject PropertyObject { get; set; }
     }

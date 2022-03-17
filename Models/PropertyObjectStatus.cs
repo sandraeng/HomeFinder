@@ -2,5 +2,9 @@
 {
     public enum PropertyObjectStatus
     {
+        ForSale,
+        Sold,
+        BiddingInProgress,
+        Upcoming
     }
 }
