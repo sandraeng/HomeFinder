@@ -1,6 +1,6 @@
 ﻿using System;
-using HomeFinder.Areas.Identity.Data;
 using HomeFinder.Data;
+using HomeFinder.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
