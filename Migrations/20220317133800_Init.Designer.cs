@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeFinder.Migrations
 {
     [DbContext(typeof(HomeFinderContext))]
-    [Migration("20220317103007_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20220317133800_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,54 @@ namespace HomeFinder.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("HomeFinder.Areas.Identity.Data.HomeFinderUser", b =>
+            modelBuilder.Entity("HomeFinder.Models.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("HomeFinder.Models.HomeFinderImages", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AltText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PropertyObjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PropertyObjectId");
+
+                    b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("HomeFinder.Models.HomeFinderUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -84,6 +131,96 @@ namespace HomeFinder.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("HomeFinder.Models.NoticeOfInterest", b =>
+                {
+                    b.Property<int>("PropertyObjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("HandledByRealtor")
+                        .HasColumnType("bit");
+
+                    b.HasKey("PropertyObjectId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("NoticeOfInterests");
+                });
+
+            modelBuilder.Entity("HomeFinder.Models.PropertyFavoritedByUser", b =>
+                {
+                    b.Property<int>("PropertyObjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("PropertyObjectId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PropertyFavorited");
+                });
+
+            modelBuilder.Entity("HomeFinder.Models.PropertyObject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Area")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ListPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("NextShowingDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("NumberOfRooms")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("PropertyTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RealtorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UploadedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("PropertyTypeId");
+
+                    b.HasIndex("RealtorId");
+
+                    b.ToTable("PropertyObjects");
+                });
+
+            modelBuilder.Entity("HomeFinder.Models.PropertyType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PropertyTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -221,6 +358,72 @@ namespace HomeFinder.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("HomeFinder.Models.HomeFinderImages", b =>
+                {
+                    b.HasOne("HomeFinder.Models.PropertyObject", null)
+                        .WithMany("Images")
+                        .HasForeignKey("PropertyObjectId");
+                });
+
+            modelBuilder.Entity("HomeFinder.Models.NoticeOfInterest", b =>
+                {
+                    b.HasOne("HomeFinder.Models.PropertyObject", "PropertyObject")
+                        .WithMany()
+                        .HasForeignKey("PropertyObjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HomeFinder.Models.HomeFinderUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PropertyObject");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HomeFinder.Models.PropertyFavoritedByUser", b =>
+                {
+                    b.HasOne("HomeFinder.Models.PropertyObject", "PropertyObject")
+                        .WithMany()
+                        .HasForeignKey("PropertyObjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HomeFinder.Models.HomeFinderUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PropertyObject");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HomeFinder.Models.PropertyObject", b =>
+                {
+                    b.HasOne("HomeFinder.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.HasOne("HomeFinder.Models.PropertyType", "PropertyType")
+                        .WithMany()
+                        .HasForeignKey("PropertyTypeId");
+
+                    b.HasOne("HomeFinder.Models.HomeFinderUser", "Realtor")
+                        .WithMany()
+                        .HasForeignKey("RealtorId");
+
+                    b.Navigation("Address");
+
+                    b.Navigation("PropertyType");
+
+                    b.Navigation("Realtor");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -232,7 +435,7 @@ namespace HomeFinder.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("HomeFinder.Areas.Identity.Data.HomeFinderUser", null)
+                    b.HasOne("HomeFinder.Models.HomeFinderUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -241,7 +444,7 @@ namespace HomeFinder.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("HomeFinder.Areas.Identity.Data.HomeFinderUser", null)
+                    b.HasOne("HomeFinder.Models.HomeFinderUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -256,7 +459,7 @@ namespace HomeFinder.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HomeFinder.Areas.Identity.Data.HomeFinderUser", null)
+                    b.HasOne("HomeFinder.Models.HomeFinderUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -265,11 +468,16 @@ namespace HomeFinder.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("HomeFinder.Areas.Identity.Data.HomeFinderUser", null)
+                    b.HasOne("HomeFinder.Models.HomeFinderUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HomeFinder.Models.PropertyObject", b =>
+                {
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

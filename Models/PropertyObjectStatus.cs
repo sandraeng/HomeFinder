@@ -1,6 +1,6 @@
 ﻿namespace HomeFinder.Models
 {
-    public enum PropertyObjectState
+    public enum PropertyObjectStatus
     {
     }
 }

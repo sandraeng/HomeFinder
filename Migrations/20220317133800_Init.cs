@@ -3,10 +3,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HomeFinder.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StreetAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -44,6 +60,18 @@ namespace HomeFinder.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PropertyTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PropertyTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,6 +180,115 @@ namespace HomeFinder.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PropertyObjects",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PropertyTypeId = table.Column<int>(type: "int", nullable: true),
+                    RealtorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    ListPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    NumberOfRooms = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Area = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UploadedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NextShowingDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AddressId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PropertyObjects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PropertyObjects_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PropertyObjects_AspNetUsers_RealtorId",
+                        column: x => x.RealtorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PropertyObjects_PropertyTypes_PropertyTypeId",
+                        column: x => x.PropertyTypeId,
+                        principalTable: "PropertyTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AltText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PropertyObjectId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_PropertyObjects_PropertyObjectId",
+                        column: x => x.PropertyObjectId,
+                        principalTable: "PropertyObjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NoticeOfInterests",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PropertyObjectId = table.Column<int>(type: "int", nullable: false),
+                    HandledByRealtor = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NoticeOfInterests", x => new { x.PropertyObjectId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_NoticeOfInterests_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NoticeOfInterests_PropertyObjects_PropertyObjectId",
+                        column: x => x.PropertyObjectId,
+                        principalTable: "PropertyObjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PropertyFavorited",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PropertyObjectId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PropertyFavorited", x => new { x.PropertyObjectId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_PropertyFavorited_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PropertyFavorited_PropertyObjects_PropertyObjectId",
+                        column: x => x.PropertyObjectId,
+                        principalTable: "PropertyObjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -190,6 +327,36 @@ namespace HomeFinder.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Images_PropertyObjectId",
+                table: "Images",
+                column: "PropertyObjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NoticeOfInterests_UserId",
+                table: "NoticeOfInterests",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertyFavorited_UserId",
+                table: "PropertyFavorited",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertyObjects_AddressId",
+                table: "PropertyObjects",
+                column: "AddressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertyObjects_PropertyTypeId",
+                table: "PropertyObjects",
+                column: "PropertyTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertyObjects_RealtorId",
+                table: "PropertyObjects",
+                column: "RealtorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -210,10 +377,28 @@ namespace HomeFinder.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Images");
+
+            migrationBuilder.DropTable(
+                name: "NoticeOfInterests");
+
+            migrationBuilder.DropTable(
+                name: "PropertyFavorited");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "PropertyObjects");
+
+            migrationBuilder.DropTable(
+                name: "Addresses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "PropertyTypes");
         }
     }
 }
