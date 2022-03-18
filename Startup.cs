@@ -29,8 +29,8 @@ namespace HomeFinder
             services.AddRazorPages();
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
-                facebookOptions.AppId = Configuration.GetValue<string>("FBAppIdd");
-                facebookOptions.AppSecret = Configuration.GetValue<string>("FBAppSecret");
+                facebookOptions.AppId = Configuration["FBAppId"];
+                facebookOptions.AppSecret = Configuration["FBAppSecret"];
             });
         }
 
