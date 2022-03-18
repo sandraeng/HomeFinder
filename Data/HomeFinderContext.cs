@@ -41,5 +41,6 @@ namespace HomeFinder.Data
         public DbSet<PropertyFavoritedByUser> PropertyFavorited { get; set; }
         public DbSet<PropertyObject> PropertyObjects { get; set; }
         public DbSet<PropertyType> PropertyTypes { get; set; }
+        public DbSet<Company> Companies { get; set; }
     }
 }

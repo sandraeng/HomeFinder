@@ -13,6 +13,11 @@ namespace HomeFinder.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        public int? CompanyId { get; set; }
+
+        [ForeignKey("CompanyId")]
+        public Company Company { get; set; }
+
         public int? AddressId { get; set; }
 
         [ForeignKey("AddressId")]
