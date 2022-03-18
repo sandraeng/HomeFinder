@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
+
 namespace HomeFinder
 {
     public class Startup
@@ -26,6 +27,11 @@ namespace HomeFinder
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration.GetValue<string>("FBAppIdd");
+                facebookOptions.AppSecret = Configuration.GetValue<string>("FBAppSecret");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
