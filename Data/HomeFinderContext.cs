@@ -26,6 +26,13 @@ namespace HomeFinder.Data
                 .HasKey(c => new { c.PropertyObjectId, c.UserId });
             builder.Entity<PropertyFavoritedByUser>()
                 .HasKey(c => new { c.PropertyObjectId, c.UserId });
+
+            // Set ONDELETE cascade restrict
+            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+            base.OnModelCreating(builder);
         }
 
         public DbSet<Address> Addresses { get; set; }
