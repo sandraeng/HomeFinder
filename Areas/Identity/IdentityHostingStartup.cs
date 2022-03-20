@@ -16,10 +16,6 @@ namespace HomeFinder.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<HomeFinderContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("HomeFinderContextConnection")));
-
                 services.AddDefaultIdentity<HomeFinderUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<HomeFinderContext>();
             });
