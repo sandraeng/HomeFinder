@@ -11,7 +11,7 @@ namespace HomeFinder.Data
         {
             // Build config
             IConfiguration config = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), ".."))
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory()))
                 .AddJsonFile("appsettings.json")
                 .Build();
 
