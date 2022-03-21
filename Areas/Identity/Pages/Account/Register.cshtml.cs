@@ -61,6 +61,12 @@ namespace HomeFinder.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            [Required]
+            [StringLength (60)]
+            public string FirstName { get; set; }
+            [Required]
+            [StringLength(60)]
+            public string LastName { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -75,7 +81,7 @@ namespace HomeFinder.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new HomeFinderUser { UserName = Input.Email, Email = Input.Email };
+                var user = new HomeFinderUser { UserName = Input.Email, Email = Input.Email , FirstName = Input.FirstName, LastName = Input.LastName};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
