@@ -7,18 +7,21 @@
     <div class="auth-form-container">
         <div class="card login-logout-tab">
             <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
+                <ul class="nav nav-tabs card-header-tabs nav-fill">
                     <li class="nav-item">
-                        <a class="nav-link" href="/Identity/Account/Login">Logga In</a>
+                        <a class="nav-link login-reg-tab" href="/Identity/Account/Login">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Identity/Account/Register">Registrera</a>
+                        <a class="nav-link login-reg-tab" href="/Identity/Account/Register">Register</a>
                     </li>
                 </ul>
             </div>
             <div class="card-content">
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="homefinder-logo">
+                        <img src="/Images/HomeFinder-logga.png"/>
+                        </div>
                         @RenderBody()
                     </div>
                 </div>

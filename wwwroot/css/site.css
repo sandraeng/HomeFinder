@@ -71,14 +71,21 @@ body {
 }
 /* Login Register CSS
 -------------------------------------------------- */
-
-.fa-facebook{
+.homefinder-logo{
+    display:flex;
+    justify-content: center;
+}
+.fa-facebook {
     font-size: 20px;
+    color: #1b6ec2;
+    background: white;
+    border-radius: 40%;
+    padding: 1px 6px;
 }
 .fb-button{
     align-content: center;
 }
-.login-form .form-group, button {
+.login-form .form-group,.login-form button {
     margin: 20px;
 }
 
@@ -92,7 +99,7 @@ body {
 
 .login-logout-tab .nav-link {
     font-size: 20px;
-    color: #2e0466;
+    color: black;
     text-align: center;
     font-weight: 500;
 }
@@ -107,7 +114,7 @@ body {
 }
 
 .auth-form-container {
-    width: 500px;
+    width: 450px;
 }
 
 label {
@@ -116,11 +123,6 @@ label {
 
 .role-card {
     width: 550px;
-}
-
-.nav-link {
-    padding: 0.5rem 1.5rem;
-    margin-left: 10px
 }
 
 .nav-tabs {
@@ -135,11 +137,6 @@ label {
 }
 @media only screen and (min-width: 768px) {
     .auth-form-container{
-        width: 600px;
-    }
-}
-@media only screen and (min-width: 580px){
-    .nav-link {
-        padding: 0.5rem 3rem;
+        width: 550px;
     }
 }

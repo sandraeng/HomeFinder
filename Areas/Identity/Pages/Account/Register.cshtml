@@ -28,7 +28,7 @@
                             <p>
                                 @foreach (var provider in Model.ExternalLogins)
                                 {
-                                    <button type="submit" class="btn btn-primary fb-button" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fa fa-facebook"></i> Registrer with @provider.DisplayName</button>
+                                    <button type="submit" class="btn btn-primary fb-button" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fa fa-facebook"></i>   Register with @provider.DisplayName</button>
                                 }
                             </p>
                             <h5>Or</h5>
@@ -56,6 +56,22 @@
                     <label asp-for="Input.LastName"></label>
                     <input asp-for="Input.LastName" class="form-control" />
                     <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Input.PhoneNumber"></label>
+                    <input asp-for="Input.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Input.Address"></label>
+                    <input asp-for="Input.Address" class="form-control" />
+                    <span asp-validation-for="Input.Address" class="text-danger"></span>
                 </div>
             </div>
         </div>
