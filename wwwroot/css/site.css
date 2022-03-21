@@ -83,6 +83,7 @@ body {
     padding: 1px 6px;
 }
 .fb-button{
+    margin: 10px 0px;
     align-content: center;
 }
 .login-form .form-group,.login-form button {
@@ -130,7 +131,7 @@ label {
     justify-content: space-evenly;
 }
 
-.card-content h1, h4 {
+.card-content h2, h4 {
     text-align: center;
     font-weight: 600;
     color: black;
