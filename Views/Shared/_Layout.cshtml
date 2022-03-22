@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light bg-white border-bottom box-shadow">
+        <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light bg-navbar box-shadow">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="/Images/HomeFinder-logga-nav.png"/></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -32,13 +32,13 @@
             </div>
         </nav>
     </header>
-    <div class="container bg-main">
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-white">
+    <footer class="footer">
         <div class="container">
             &copy; 2022 - HomeFinder - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
