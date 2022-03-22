@@ -14,7 +14,10 @@ a.navbar-brand {
 a {
   color: #0366d6;
 }
-
+.text-dark{
+    color: black;
+    font-weight:600;
+}
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
@@ -44,7 +47,9 @@ html {
 .border-bottom {
   border-bottom: 1px solid #e5e5e5;
 }
-
+.btn:hover {
+    background-color: #e48153;
+}
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
@@ -64,7 +69,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    background: url("/Images/Bg-Suggestion.jpeg") center fixed no-repeat;
+    background: url("/Images/Bg-Suggestion2.jpeg") center fixed no-repeat;
     background-size: cover;
 }
 .footer {
@@ -110,7 +115,9 @@ body {
     text-align: center;
     font-weight: 500;
 }
-
+.login-logout-tab {
+    background-color: #e5e7e9;
+}
 .card-content {
     padding: 10px 20px;
 }
@@ -141,6 +148,32 @@ label {
     text-align: center;
     font-weight: 600;
     color: black;
+}
+.textarea, textarea {
+    resize: none;
+}
+
+.input-data label {
+    position: absolute;
+    color: #333;
+    font-weight: 600;
+    width: 200px;
+    text-align: left;
+}
+
+.input-data input {
+    height: 20px;
+    margin-top: 25px;
+    margin-bottom: 40px;
+    border: none;
+    border-bottom: 1px solid gray;
+    background-color: transparent;
+    transform: translateY(5px);
+}
+
+.input-data:hover label{
+    transform: translateY(-25px);
+    transition: transform 0.3s ease-in-out;
 }
 @media only screen and (min-width: 768px) {
     .auth-form-container{
