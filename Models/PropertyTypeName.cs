@@ -3,7 +3,7 @@
     public enum PropertyTypeName
     {
         House,
-        Appartment,
+        Apartment,
         Townhouse,
         Farm,
         Lot
