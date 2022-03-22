@@ -18,6 +18,5 @@ namespace HomeFinder.Models
         [ForeignKey("AddressId")]
         public Address Address { get; set; }
 
-        public ICollection<NoticeOfInterest> NoticeOfInterests { get; set; }
     }
 }
