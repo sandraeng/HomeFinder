@@ -1,0 +1,70 @@
+﻿@model HomeFinder.Models.PropertyObject
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>PropertyObject</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="RealtorId" class="control-label"></label>
+                <select asp-for="RealtorId" class="form-control" asp-items="ViewBag.RealtorId"></select>
+                <span asp-validation-for="RealtorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ListPrice" class="control-label"></label>
+                <input asp-for="ListPrice" class="form-control" />
+                <span asp-validation-for="ListPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfRooms" class="control-label"></label>
+                <input asp-for="NumberOfRooms" class="form-control" />
+                <span asp-validation-for="NumberOfRooms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Area" class="control-label"></label>
+                <input asp-for="Area" class="form-control" />
+                <span asp-validation-for="Area" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UploadedDate" class="control-label"></label>
+                <input asp-for="UploadedDate" class="form-control" />
+                <span asp-validation-for="UploadedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NextShowingDateTime" class="control-label"></label>
+                <input asp-for="NextShowingDateTime" class="form-control" />
+                <span asp-validation-for="NextShowingDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressId" class="control-label"></label>
+                <select asp-for="AddressId" class="form-control" asp-items="ViewBag.AddressId"></select>
+                <span asp-validation-for="AddressId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

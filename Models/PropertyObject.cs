@@ -9,7 +9,9 @@ namespace HomeFinder.Models
     {
         public int Id { get; set; }
 
+        public int PropertyTypeId { get; set; }
         [Required]
+        [ForeignKey("PropertyTypeId")]
         public PropertyType PropertyType { get; set; }
 
         public string RealtorId { get; set; }
