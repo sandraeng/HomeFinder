@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row auth-row">
+    <div class="auth-form-container">
+        <div class="card login-logout-tab">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs nav-fill">
+                    <li class="nav-item">
+                        <a class="nav-link login-reg-tab" href="/Identity/Account/Login">Log in</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link login-reg-tab" href="/Identity/Account/Register">Register</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="homefinder-logo">
+                        <img src="/Images/HomeFinder-logga.png"/>
+                        </div>
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        $(function () {
+            var current = location.pathname;
+            $('.nav-tabs li a').each(function () {
+                var $this = $(this);
+                if(current.indexOf($this.attr('href')) !== -1){
+                    $this.addClass('active');
+                }
+            })
+        })
+    </script>
+}
