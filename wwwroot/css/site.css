@@ -173,13 +173,14 @@ label {
     background-color: transparent;
     transform: translateY(5px);
 }
-.input-data:hover label {
+.input-data:hover label{
     transform: translateY(-25px);
     transition: transform 0.3s ease-in-out;
 }
 .label-label-active {
     transform: translateY(-25px);
 }
+
 @media only screen and (min-width: 768px) {
     .auth-form-container{
         width: 550px;
