@@ -1,11 +1,12 @@
-﻿.bottom-right {
-   right:15px;
-   bottom:5px;
-   position:absolute;
+﻿.custom-right-bottom {
+position:absolute;
+bottom:10px;
+right:10px;
+
 }
 
 
-.bottom-right label {
+/*.bottom-right label {
     position: relative;
 }
 
@@ -24,5 +25,5 @@
     transform: scale(1.7);
     color: red;
     transition-timing-function: cubic-bezier(0.4, 0, 0.68, 3.01);
-}
+}*/
 

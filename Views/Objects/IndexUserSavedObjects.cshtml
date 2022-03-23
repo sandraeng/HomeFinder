@@ -1,20 +1,50 @@
-﻿@model IEnumerable<PropertyObject>
+﻿@using HomeFinder.Data
+@using Microsoft.EntityFrameworkCore
+@model HomeFinderUser
+@inject HomeFinderContext db
 @{
     ViewData["Title"] = "Saved objects";
+
+    var savedObjects = GetSaved();
+
+    var likedObjects = GetLiked();
+
+    List<PropertyObject> GetSaved()
+    {
+        var noticeOfInterests = db.NoticeOfInterests.Where(nI => nI.UserId == Model.Id).Include(nI => nI.PropertyObject).ThenInclude(pO=> pO.Address).Include(nI => nI.PropertyObject.Images).ToList();
+
+        var tempList = new List<PropertyObject>();
+        foreach (var nI in noticeOfInterests)
+        {
+            tempList.Add(nI.PropertyObject);
+        }
+        return tempList;
+    };
+    List<PropertyObject> GetLiked()
+    {
+        var liked = db.PropertyFavorited.Where(pF => pF.UserId == Model.Id).Include(nI => nI.PropertyObject).ThenInclude(pO=> pO.Address).Include(nI => nI.PropertyObject.Images).ToList();
+
+        var tempList = new List<PropertyObject>();
+        foreach (var nI in liked)
+        {
+            tempList.Add(nI.PropertyObject);
+        }
+        return tempList;
+    }
 }
 <h1 class="mb-5">Mina sparade object</h1>
 
-@if (Model.Count() < 1)
+@if (savedObjects.Count() < 1)
 {
-    <h2>Du har inga sparade object</h2>
+    <i>Du har inga sparade object</i>
 }
 else
 {
-  <div class="row mb-5">
-    @foreach (var propObject in Model)
+  <div class="row mb-5 px-4 py-3 border rounded">
+    @foreach (var propObject in savedObjects)
    {
        <div class="card" style="width: 23rem; height: 18rem; flex-direction:row;">
-         <a asp-controller="" asp-action="" asp-route-id="" class="w-50 h-100">
+            <a asp-controller="" asp-action="" asp-route-id="" class="w-50 h-100">
            <img src="@propObject.Images[0].Url" class="card-img h-100" alt="...">
            </a> 
            <div class="card-body">
@@ -22,12 +52,9 @@ else
                   <p class="card-text">Ort: @propObject.Address.City</p>
                   <p class="card-text">Bostadstyp: @propObject.PropertyType</p>
                   <p class="card-text">Pris: @propObject.ListPrice.ToString("c")</p>
-                  <div class="bottom-right">
-                  <label>
-                      <input type="checkbox" name="" checked>
-                      <i class="fa-solid fa-heart heart-animation"></i>
-                  </label>
-                 </div>
+                  
+                  <a asp-controller="" asp-action="" asp-route-id="" class="btn btn-danger custom-right-bottom">Ta bort <i class="fa-regular fa-heart"></i></a>
+                 
                 </div>
                </div>
    }
@@ -35,4 +62,30 @@ else
 }
 <h1 class="mb-5">Mina intresseanmälningar</h1>
 
-<h5>Du har inga intresseanmälningar</h5>
+
+@if (savedObjects.Count() < 1)
+{
+    <i>Du har inga intresseanmälningar</i>
+}
+else
+{
+  <div class="row mb-5 px-4 py-3 border rounded">
+    @foreach (var propObject in savedObjects)
+   {
+       <div class="card" style="width: 23rem; height: 18rem; flex-direction:row;">
+            <a asp-controller="" asp-action="" asp-route-id="" class="w-50 h-100">
+           <img src="@propObject.Images[0].Url" class="card-img h-100" alt="...">
+           </a> 
+           <div class="card-body">
+               <h6 class="card-title">@propObject.Address.StreetAddress</h6>
+                  <p class="card-text">Ort: @propObject.Address.City</p>
+                  <p class="card-text">Bostadstyp: @propObject.PropertyType</p>
+                  <p class="card-text">Pris: @propObject.ListPrice.ToString("c")</p>
+                  <div class="custom-right-bottom">
+                  <a asp-controller="" asp-action="" asp-route-id="" class="btn btn-danger">Ta bort</a>
+                 </div>
+                </div>
+               </div>
+   }
+</div>  
+}
