@@ -89,7 +89,7 @@ body {
     display:flex;
     justify-content: center;
 }
-.fa-facebook {
+.fa-facebook-f {
     font-size: 20px;
     color: #1b6ec2;
     background: white;
@@ -177,7 +177,7 @@ label {
     transform: translateY(-25px);
     transition: transform 0.3s ease-in-out;
 }
-.input-data:current label {
+.label-label-active {
     transform: translateY(-25px);
 }
 @media only screen and (min-width: 768px) {
