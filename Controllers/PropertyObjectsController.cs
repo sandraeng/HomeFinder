@@ -52,8 +52,8 @@ namespace HomeFinder.Controllers
             // Get a list of values in enum and add to viewbag, so it can be used to populate a dropdown in View.
             ViewBag.PropertyObjectStatuses = new SelectList(Enum.GetNames(typeof(PropertyObjectStatus)));
             ViewBag.PropertyTypes = _context.PropertyTypes.ToList();
+            ViewBag.LeaseTypes = _context.LeaseTypes.ToList();
 
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id");
             ViewData["RealtorId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
@@ -63,23 +63,31 @@ namespace HomeFinder.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RealtorId,PropertyTypeId,Status,ListPrice,NumberOfRooms,Area,UploadedDate,NextShowingDateTime,AddressId,Address")] PropertyObject propertyObject)
+        public async Task<IActionResult> Create([Bind("Id,RealtorId,PropertyTypeId,Status,ListPrice,NumberOfRooms,Area,NextShowingDateTime,Address,LeaseTypeId,NonLivingArea,LotArea,YearBuilt,Description")] PropertyObject propertyObject)
         {
             // Update PropertyType with value from DB.
             propertyObject.PropertyType = _context.PropertyTypes.Where(x => x.Id == propertyObject.PropertyTypeId).FirstOrDefault();
+            // Update LeaseType with value from DB.
+            propertyObject.LeaseType = _context.LeaseTypes.Where(x => x.Id == propertyObject.LeaseTypeId).FirstOrDefault();
+            // Set uploaded date to today.
+            propertyObject.UploadedDate = DateTime.Now;
+            // Set AddressId to 0
+            propertyObject.AddressId = 0;
 
-
-            if (propertyObject.PropertyType is null)
+            // Check if Property type and LeaseType was set, if not then reload Create View.
+            if ((propertyObject.PropertyType is null) || (propertyObject.LeaseType is null))
             {
                 // Get a list of values in enum and add to viewbag, so it can be used to populate a dropdown in View.
                 ViewBag.PropertyObjectStatuses = new SelectList(Enum.GetNames(typeof(PropertyObjectStatus)));
                 ViewBag.PropertyTypes = _context.PropertyTypes.ToList();
+                ViewBag.LeaseTypes = _context.LeaseTypes.ToList();
 
-                ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id");
                 ViewData["RealtorId"] = new SelectList(_context.Users, "Id", "Id");
                 return View(propertyObject);
             }
             ModelState.Remove("PropertyType"); // We manually update PropertyType above, ignore it in ModelState.
+            ModelState.Remove("LeaseType"); // We manually update LeaseType above, ignore it in ModelState.
+            ModelState.Remove("Address.Id");
 
             if (ModelState.IsValid)
             {
@@ -91,7 +99,7 @@ namespace HomeFinder.Controllers
             // Get a list of values in enum and add to viewbag, so it can be used to populate a dropdown in View.
             ViewBag.PropertyObjectStatuses = new SelectList(Enum.GetNames(typeof(PropertyObjectStatus)));
             ViewBag.PropertyTypes = _context.PropertyTypes.ToList();
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", propertyObject.AddressId);
+            ViewBag.LeaseTypes = _context.LeaseTypes.ToList();
             ViewData["RealtorId"] = new SelectList(_context.Users, "Id", "Id", propertyObject.RealtorId);
             return View(propertyObject);
         }

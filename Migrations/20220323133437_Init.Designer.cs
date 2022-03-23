@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeFinder.Migrations
 {
     [DbContext(typeof(HomeFinderContext))]
-    [Migration("20220318132747_AddedCompanyToDB")]
-    partial class AddedCompanyToDB
+    [Migration("20220323133437_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -176,6 +176,25 @@ namespace HomeFinder.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("HomeFinder.Models.LeaseType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LeaseTypes");
+                });
+
             modelBuilder.Entity("HomeFinder.Models.NoticeOfInterest", b =>
                 {
                     b.Property<int>("PropertyObjectId")
@@ -222,16 +241,28 @@ namespace HomeFinder.Migrations
                     b.Property<decimal>("Area")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LeaseTypeId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("ListPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("LotArea")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("NextShowingDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("NonLivingArea")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("NumberOfRooms")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("PropertyTypeId")
+                    b.Property<int>("PropertyTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("RealtorId")
@@ -243,9 +274,14 @@ namespace HomeFinder.Migrations
                     b.Property<DateTime>("UploadedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("YearBuilt")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("LeaseTypeId");
 
                     b.HasIndex("PropertyTypeId");
 
@@ -351,12 +387,10 @@ namespace HomeFinder.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -393,12 +427,10 @@ namespace HomeFinder.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -479,10 +511,17 @@ namespace HomeFinder.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("HomeFinder.Models.LeaseType", "LeaseType")
+                        .WithMany()
+                        .HasForeignKey("LeaseTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HomeFinder.Models.PropertyType", "PropertyType")
                         .WithMany()
                         .HasForeignKey("PropertyTypeId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("HomeFinder.Models.HomeFinderUser", "Realtor")
                         .WithMany()
@@ -490,6 +529,8 @@ namespace HomeFinder.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Address");
+
+                    b.Navigation("LeaseType");
 
                     b.Navigation("PropertyType");
 
