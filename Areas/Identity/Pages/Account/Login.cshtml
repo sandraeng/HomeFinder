@@ -46,13 +46,13 @@
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="col-md-10">
                 <div class="input-data">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control"/>
+                    <label asp-for="Input.Email" class="label"></label>
+                    <input asp-for="Input.Email" class="form-control input"/>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="input-data">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control"/>
+                    <label asp-for="Input.Password" class="label"></label>
+                    <input asp-for="Input.Password" class="form-control input"/>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 </div>
@@ -80,6 +80,13 @@
     </div>   
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 @section Scripts {
+    <script type="text/javascript">
+        $(".input").click(function(){
+            const label = document.querySelector(".label")
+
+            label.classList.toggle("label-label-active")
+        })
+    </script>
     
 <script>
 
@@ -135,7 +142,10 @@
         'Thanks for logging in, ' + response.name + '!';
     });
   }
+
   </script>
+
+
 
     <partial name="_ValidationScriptsPartial" />
 }
