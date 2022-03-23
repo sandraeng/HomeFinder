@@ -69,7 +69,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    background: url("/Images/Bg-Suggestion2.jpeg") center fixed no-repeat;
+    background: url("/Images/bg-suggestion2.jpeg") center fixed no-repeat;
     background-size: cover;
 }
 .footer {

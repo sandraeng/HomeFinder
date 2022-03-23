@@ -65,33 +65,33 @@
                 </div>
                 </article> <!-- card-group-item.// -->
         </div> <!-- card.// -->
-    @foreach (var propertyobject in Model)
-    {
-            
-        <div class="card mb-2">
-                <a style="text-decoration: none;" asp-controller="#" asp-action="#" asp-route-id="@propertyobject.Id">
-                    <div class="row g-0">
-                        <div class="col-7">
+        @foreach (var propertyobject in Model)
+        {
+
+            <div class="card mb-2">
+                    <a style="text-decoration: none;" asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propertyobject.Id">
+                        <div class="row g-0">
+                            <div class="col-7">
                             @*inte fixat så bilderna kopplat till objektet laddas upp*@
-                            <img src="https://urbanpark.wellfastigheter.se/img/int_01.jpg" width="100%" style="object-fit: cover;">
-                        </div>
-                        <div class="col-5">
-                            <div class="card-body">
+                                <img src="https://urbanpark.wellfastigheter.se/img/int_01.jpg" width="100%" style="object-fit: cover;">
+                            </div>
+                            <div class="col-5">
+                                <div class="card-body">
 
-                                <button type="button" class="btn btn-danger float-right"><i class="fa-solid fa-heart"></i></button>
-                                <h5 class="card-text mb-4" style="text-align: center;">@propertyobject.Address.StreetAddress</h5>
-                                <p class="card-text"><b>City:</b> @propertyobject.Address.City</p>
-                                <p class="card-text"><b>Property type:</b> @propertyobject.PropertyType.PropertyTypeName.ToString()</p>
-                                <p class="card-text"><b>Rooms:</b> @propertyobject.NumberOfRooms.ToString("0")</p>
-                                <p class="card-text"><b>Area:</b> @propertyobject.Area.ToString("0") sqm</p>
-                                <p class="card-text"><b>Price:</b> @propertyobject.ListPrice.ToString("c")</p>
+                                    <button type="button" class="btn btn-danger float-right"><i class="fa-solid fa-heart"></i></button>
+                                    <h5 class="card-text mb-4" style="text-align: center;">@propertyobject.Address.StreetAddress</h5>
+                                    <p class="card-text"><b>City:</b> @propertyobject.Address.City</p>
+                                    <p class="card-text"><b>Property type:</b> @propertyobject.PropertyType.PropertyTypeName.ToString()</p>
+                                    <p class="card-text"><b>Rooms:</b> @propertyobject.NumberOfRooms.ToString("0")</p>
+                                    <p class="card-text"><b>Area:</b> @propertyobject.Area.ToString("0") sqm</p>
+                                    <p class="card-text"><b>Price:</b> @propertyobject.ListPrice.ToString("c")</p>
 
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-    }
+                    </a>
+                </div>
+        }
         </div>
 
 </div>
