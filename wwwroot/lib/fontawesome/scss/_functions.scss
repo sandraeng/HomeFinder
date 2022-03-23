@@ -1,7 +1,16 @@
 // functions
 // --------------------------
 
+<<<<<<< HEAD
 // Originally obtained from the Bootstrap https://github.com/twbs/bootstrap
+=======
+// fa-content: convenience function used to set content property
+@function fa-content($fa-var) {
+  @return unquote("\"#{ $fa-var }\"");
+}
+
+// fa-divide: Originally obtained from the Bootstrap https://github.com/twbs/bootstrap
+>>>>>>> SavedObjects
 //
 // Licensed under: The MIT License (MIT)
 //
@@ -25,6 +34,10 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+<<<<<<< HEAD
+=======
+
+>>>>>>> SavedObjects
 @function fa-divide($dividend, $divisor, $precision: 10) {
   $sign: if($dividend > 0 and $divisor > 0, 1, -1);
   $dividend: abs($dividend);
