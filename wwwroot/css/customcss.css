@@ -14,16 +14,15 @@
     opacity:0;
     cursor:pointer;
 }
-i {
+.heart-animation {
     transition-property: all;
     transition-duration: 500ms;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.68, 3.01);
     transition-delay: 0s;
 }
 
-    .bottom-right label input[type="checkbox"]:checked ~ i {
-        transform: scale(1.7);
-        color: red;
-        
-    }
+.bottom-right label input[type="checkbox"]:checked ~ i {
+    transform: scale(1.7);
+    color: red;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.68, 3.01);
+}
 

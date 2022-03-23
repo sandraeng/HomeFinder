@@ -2,20 +2,22 @@
 @{
     ViewData["Title"] = "Saved objects";
 }
-<h1>Saved objects</h1>
+<h1 class="mb-5">Mina sparade object</h1>
 
 @if (Model.Count() < 1)
 {
-    <h2>No objects saved</h2>
+    <h2>Du har inga sparade object</h2>
 }
 else
 {
-  <div class="row">
+  <div class="row mb-5">
     @foreach (var propObject in Model)
    {
        <div class="card" style="width: 23rem; height: 18rem; flex-direction:row;">
-         <img src="@propObject.Images[0].Url" class="card-img w-50 h-100" alt="...">
-            <div class="card-body">
+         <a asp-controller="" asp-action="" asp-route-id="" class="w-50 h-100">
+           <img src="@propObject.Images[0].Url" class="card-img h-100" alt="...">
+           </a> 
+           <div class="card-body">
                <h6 class="card-title">@propObject.Address.StreetAddress</h6>
                   <p class="card-text">Ort: @propObject.Address.City</p>
                   <p class="card-text">Bostadstyp: @propObject.PropertyType</p>
@@ -24,7 +26,7 @@ else
                   <label>
                       <input type="checkbox" name="">
                       
-                          <i class="fa-solid fa-heart"></i>
+                          <i class="fa-solid fa-heart heart-animation"></i>
                      
                   </label>
                  </div>
@@ -35,3 +37,6 @@ else
    }
 </div>  
 }
+<h1 class="mb-5">Mina intresseanmälningar</h1>
+
+<h5>Du har inga intresseanmälningar</h5>
