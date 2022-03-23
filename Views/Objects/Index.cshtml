@@ -43,9 +43,9 @@ else
   <div class="row mb-5 px-2 border rounded">
     @foreach (var propObject in likedObjects)
    {
-       <div class="card m-1" style="width: 32%; height: 18rem; flex-direction:row;">
+       <div class="card m-1 custom-container">
             <a asp-controller="" asp-action="" asp-route-id="@propObject.Id" class="w-50 h-100">
-           <img src="@propObject.Images[0].Url" class="card-img h-100" alt="...">
+           <img src="@propObject.Images[0].Url" class="card-img h-100 custom-img-fit" alt="...">
            </a> 
            <div class="pt-3">
                <h6 class="text-center pb-4">@propObject.Address.StreetAddress</h6>
@@ -70,9 +70,9 @@ else
   <div class="row mb-5 px-2 border rounded">
     @foreach (var propObject in objectsOfInterest)
    {
-       <div class="card m-1" style="width: 32%; height: 18rem; flex-direction:row;">
+       <div class="card m-1 custom-container">
             <a asp-controller="" asp-action="" asp-route-id="@propObject.Id" class="w-50 h-100">
-           <img src="@propObject.Images[0].Url" class="card-img h-100" alt="...">
+           <img src="@propObject.Images[0].Url" class="card-img h-100 custom-img-fit" alt="...">
            </a> 
            <div class="pt-3">
                <h6 class="text-center pb-4">@propObject.Address.StreetAddress</h6>

@@ -2,7 +2,12 @@
 position:absolute;
 bottom:10px;
 right:10px;
-
 }
-
-
+.custom-container {
+    width: 32%;
+    height: 18rem;
+    flex-direction: row;
+}
+.custom-img-fit {
+    object-fit:cover;
+}
