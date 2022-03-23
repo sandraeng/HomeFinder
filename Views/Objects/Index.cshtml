@@ -1,0 +1,89 @@
+﻿@using HomeFinder.Data
+@using Microsoft.EntityFrameworkCore
+@model HomeFinderUser
+@inject HomeFinderContext db
+@{
+    ViewData["Title"] = "Saved objects";
+
+    var objectsOfInterest = GetObjectsOfInterest();
+
+    var likedObjects = GetLiked();
+
+    List<PropertyObject> GetObjectsOfInterest()
+    {
+        var noticeOfInterests = db.NoticeOfInterests.Where(nI => nI.UserId == Model.Id).Include(nI => nI.PropertyObject).ThenInclude(pO=> pO.Address).Include(nI => nI.PropertyObject.Images).ToList();
+
+        var tempList = new List<PropertyObject>();
+        foreach (var nI in noticeOfInterests)
+        {
+            tempList.Add(nI.PropertyObject);
+        }
+        return tempList;
+    };
+    List<PropertyObject> GetLiked()
+    {
+        var liked = db.PropertyFavorited.Where(pF => pF.UserId == Model.Id).Include(nI => nI.PropertyObject).ThenInclude(pO=> pO.Address).Include(nI => nI.PropertyObject.Images).ToList();
+
+        var tempList = new List<PropertyObject>();
+        foreach (var nI in liked)
+        {
+            tempList.Add(nI.PropertyObject);
+        }
+        return tempList;
+    }
+}
+<h1 class="mb-5">Mina sparade object</h1>
+
+@if (likedObjects.Count() < 1)
+{
+    <i class="mb-5">Du har inga sparade object</i>
+}
+else
+{
+  <div class="row mb-5 px-2 border rounded">
+    @foreach (var propObject in likedObjects)
+   {
+       <div class="card m-1 custom-container">
+            <a asp-controller="" asp-action="" asp-route-id="@propObject.Id" class="w-50 h-100">
+           <img src="@propObject.Images[0].Url" class="card-img h-100 custom-img-fit" alt="...">
+           </a> 
+           <div class="pt-3">
+               <h6 class="text-center pb-4">@propObject.Address.StreetAddress</h6>
+                  <p class="card-text px-2">Ort: @propObject.Address.City</p>
+                  <p class="card-text px-2">Bostadstyp: @propObject.PropertyType</p>
+                  <p class="card-text px-2">Pris: @propObject.ListPrice.ToString("c")</p>
+                  <a asp-action="RemoveLikedObject" asp-route-id="@propObject.Id" class="btn btn-danger custom-right-bottom">Ta bort <i class="fa-solid fa-heart"></i></a>
+                 </div>
+               </div>
+   }
+</div>  
+}
+<h1 class="mb-5">Mina intresseanmälningar</h1>
+
+
+@if (objectsOfInterest.Count() < 1)
+{
+    <i class="mb-5">Du har inga intresseanmälningar</i>
+}
+else
+{
+  <div class="row mb-5 px-2 border rounded">
+    @foreach (var propObject in objectsOfInterest)
+   {
+       <div class="card m-1 custom-container">
+            <a asp-controller="" asp-action="" asp-route-id="@propObject.Id" class="w-50 h-100">
+           <img src="@propObject.Images[0].Url" class="card-img h-100 custom-img-fit" alt="...">
+           </a> 
+           <div class="pt-3">
+               <h6 class="text-center pb-4">@propObject.Address.StreetAddress</h6>
+                  <p class="card-text px-2">Ort: @propObject.Address.City</p>
+                  <p class="card-text px-2">Bostadstyp: @propObject.PropertyType</p>
+                  <p class="card-text px-2">Pris: @propObject.ListPrice.ToString("c")</p>
+                  <div class="custom-right-bottom">
+                  <a asp-action="RemoveObjectOfInterest" asp-route-id="@propObject.Id" class="btn btn-danger">Ta bort</a>
+                 </div>
+                </div>
+               </div>
+   }
+</div>  
+}

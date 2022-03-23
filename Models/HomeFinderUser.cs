@@ -22,5 +22,6 @@ namespace HomeFinder.Models
 
         [ForeignKey("AddressId")]
         public Address Address { get; set; }
+
     }
 }
