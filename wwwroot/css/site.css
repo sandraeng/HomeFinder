@@ -10,6 +10,9 @@ a.navbar-brand {
 .bg-navbar {
     background-color: #d7d9dbb3;
 }
+.navbar{
+    padding:0;
+}
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
