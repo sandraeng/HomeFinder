@@ -3,3 +3,27 @@
    bottom:15px;
    position:absolute;
 }
+
+
+.bottom-right label {
+    position: relative;
+}
+
+.bottom-right label input[type="checkbox"] {
+    position:absolute;
+    opacity:0;
+    cursor:pointer;
+}
+i {
+    transition-property: all;
+    transition-duration: 500ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.68, 3.01);
+    transition-delay: 0s;
+}
+
+    .bottom-right label input[type="checkbox"]:checked ~ i {
+        transform: scale(1.7);
+        color: red;
+        
+    }
+
