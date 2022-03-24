@@ -127,7 +127,7 @@ namespace HomeFinder.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RealtorId,Status,ListPrice,NumberOfRooms,Area,UploadedDate,NextShowingDateTime,AddressId")] PropertyObject propertyObject)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RealtorId,PropertyTypeId,Status,ListPrice,NumberOfRooms,Area,NonLivingArea,LotArea,UploadedDate,NextShowingDateTime,AddressId,Description,LeaseTypeId,YearBuilt")] PropertyObject propertyObject)
         {
             if (id != propertyObject.Id)
             {
