@@ -28,7 +28,7 @@ namespace HomeFinder.Data
                         FirstName = "Gabriel",
                         LastName = "Andersson",
                         Company = null,
-                        Address = new Address { City = "Malmö", Country = "Sverige", PostalCode = "211 57", StreetAddress = "S:t Knuts torg 2" },
+                        Address = new Address { Id = 1, City = "Malmö", Country = "Sverige", PostalCode = "211 57", StreetAddress = "S:t Knuts torg 2" },
                         UserName = "Gabriel@mail.com",
                         NormalizedUserName = "GABRIEL@MAIL.COM",
                         Email = "Gabriel@mail.com",
@@ -51,7 +51,7 @@ namespace HomeFinder.Data
                         FirstName = "Sonja",
                         LastName = "Pettersson",
                         Company = null,
-                        Address = new Address { City = "Stockholm", Country = "Sverige", PostalCode = "113 20", StreetAddress = "Sankt eriksplan 6 B" },
+                        Address = new Address { Id = 2, City = "Stockholm", Country = "Sverige", PostalCode = "113 20", StreetAddress = "Sankt eriksplan 6 B" },
                         UserName = "Sonja@mail.com",
                         NormalizedUserName = "SONJA@MAIL.COM",
                         Email = "Sonja@mail.com",
@@ -73,7 +73,7 @@ namespace HomeFinder.Data
                         FirstName = "Rikard",
                         LastName = "Svensson",
                         Company = new Company { Name = "BestSales", OrgNumber = "221177-4321" },
-                        Address = new Address { City = "Stockholm", Country = "Sverige", PostalCode = "111 31", StreetAddress = "Trädgårdsgatan 3" },
+                        Address = new Address { Id = 3, City = "Stockholm", Country = "Sverige", PostalCode = "111 31", StreetAddress = "Trädgårdsgatan 3" },
                         UserName = "Rikard@BestSales.org",
                         NormalizedUserName = "RIKARD@BESTSALES.ORG",
                         Email = "Rikard@BestSales.org",
@@ -90,14 +90,13 @@ namespace HomeFinder.Data
                         AccessFailedCount = 0
 
                     },
-
-                   new HomeFinderUser
+                    new HomeFinderUser
                    {
                        Id = "c1a35e52-29f0-4ba3-968f-d1d6b89483fe",
                        FirstName = "Sanna",
                        LastName = "Bergström",
                        Company = new Company { Name = "Property4Sale", OrgNumber = "771122-1234" },
-                       Address = new Address { City = "Malmö", Country = "Sverige", PostalCode = "211 11", StreetAddress = "Skeppsgatan 19" },
+                       Address = new Address { Id = 4, City = "Malmö", Country = "Sverige", PostalCode = "211 11", StreetAddress = "Skeppsgatan 19" },
                        UserName = "Sanna@Property4Sale.com",
                        NormalizedUserName = "SANNA@PROPERTY4SALE.COM",
                        Email = "Sanna@Property4Sale.com",
@@ -114,7 +113,123 @@ namespace HomeFinder.Data
                        AccessFailedCount = 0
 
                    }
-                );  
+                );
+                context.PropertyObjects.AddRange(
+                    new PropertyObject {
+                        Id = 1,
+                        Address = new Address { Id = 5 ,City ="Malmö", Country = "Sverige", PostalCode= "211 55", StreetAddress= "Hantverkaregatan 13" },
+                        Area = 34 ,
+                        Description = "Finare etta går ej att hitta",
+                        Images = { new HomeFinderImages {AltText="Utan möbler" ,Url= "https://cdn.pixabay.com/photo/2016/08/01/10/37/lichtraum-1560788_960_720.jpg" }, new HomeFinderImages {AltText="Miljö utanför",Url= "https://cdn.pixabay.com/photo/2018/06/17/11/31/modern-buildings-3480351_960_720.jpg" } },
+                        LeaseType = new LeaseType { Id = 1 , Description ="Du äger bostaden", Name ="Bostadsrätt"},
+                        ListPrice = 100000,
+                        LotArea =0,
+                        NextShowingDateTime = DateTime.Now.Date,
+                        NonLivingArea =0,
+                        NumberOfRooms = 1,
+                        PropertyType = new PropertyType { Id = 1, IconUrl = "https://cdn.pixabay.com/photo/2021/10/11/23/49/building-6702046_960_720.png", PropertyTypeName = PropertyTypeName.Apartment},
+                        RealtorId = "c1a35e52-29f0-4ba3-968f-d1d6b89483fe",
+                        Status =0,
+                        UploadedDate = DateTime.Now.Date,
+                        YearBuilt =1940
+                    },
+                    new PropertyObject
+                    {
+                        Id = 2,
+                        AddressId = 5,
+                        Area = 70,
+                        Description = "Fin trea centralt i malmö",
+                        Images = { new HomeFinderImages { AltText = "Vardagsrum", Url = "https://cdn.pixabay.com/photo/2018/01/26/08/15/dining-room-3108037_960_720.jpg" }, new HomeFinderImages { AltText = "Badrum", Url = "https://cdn.pixabay.com/photo/2018/01/29/07/55/modern-minimalist-bathroom-3115450_960_720.jpg" } },
+                        LeaseTypeId = 1,
+                        ListPrice = 300000,
+                        LotArea = 0,
+                        NextShowingDateTime = DateTime.Now.Date,
+                        NonLivingArea = 0,
+                        NumberOfRooms = 3,
+                        PropertyTypeId = 1,
+                        RealtorId = "c1a35e52-29f0-4ba3-968f-d1d6b89483fe",
+                        Status = 0,
+                        UploadedDate = DateTime.Now.Date,
+                        YearBuilt = 1940
+                    },
+                    new PropertyObject
+                    {
+                        Id = 3,
+                        Address = new Address { Id = 6, City = "Malmö", Country = "Sverige", PostalCode = "212 91", StreetAddress = "Fårabäcksvägen 95" },
+                        Area = 180,
+                        Description = "Fint hus strax utanför malmö",
+                        Images = { new HomeFinderImages { AltText = "Utanför huset", Url = "https://cdn.pixabay.com/photo/2019/06/28/12/18/facade-4304096_960_720.jpg" }, new HomeFinderImages { AltText = "Vardagsrum", Url = "https://cdn.pixabay.com/photo/2020/06/25/10/21/architecture-5339245_960_720.jpg" } },
+                        LeaseTypeId = 1,
+                        ListPrice = 500000,
+                        LotArea = 0,
+                        NextShowingDateTime = DateTime.Now.Date,
+                        NonLivingArea = 0,
+                        NumberOfRooms = 5,
+                        PropertyType = new PropertyType { Id = 2, IconUrl = "https://cdn.pixabay.com/photo/2021/07/02/04/48/home-6380863_960_720.png", PropertyTypeName = PropertyTypeName.House },
+                        RealtorId = "c1a35e52-29f0-4ba3-968f-d1d6b89483fe",
+                        Status = 0,
+                        UploadedDate = DateTime.Now.Date,
+                        YearBuilt = 2000
+                    },
+                    new PropertyObject
+                    {
+                        Id = 4,
+                        Address = new Address {Id = 7, City = "Stockholm", Country = "Sverige", PostalCode = "118 28", StreetAddress = "Fatburs brunnsgata 26" },
+                        Area = 40,
+                        Description = "Liten men fräsch tvåa",
+                        Images = { new HomeFinderImages { AltText = "Fick med nästan allt", Url = "https://cdn.pixabay.com/photo/2019/03/08/20/17/kitchen-4043098_960_720.jpg" }, new HomeFinderImages { AltText = "Innergård", Url = "https://cdn.pixabay.com/photo/2016/04/18/14/52/buildings-1336611_960_720.jpg" } },
+                        LeaseTypeId = 1,
+                        ListPrice = 4000000,
+                        LotArea = 0,
+                        NextShowingDateTime = DateTime.Now.Date,
+                        NonLivingArea = 0,
+                        NumberOfRooms = 2,
+                        PropertyTypeId = 1,
+                        RealtorId = "a73917c6-5cd3-47a2-88bb-e76c41840137",
+                        Status = 0,
+                        UploadedDate = DateTime.Now.Date,
+                        YearBuilt = 1991
+                    },
+                    new PropertyObject
+                    {
+                        Id = 5,
+                        Address = new Address {Id = 8, City = "Stockholm", Country = "Sverige", PostalCode = "112 49", StreetAddress = "Igeldammsgatan 14" },
+                        Area = 60,
+                        Description = "Alldeles perfekt trea",
+                        Images = { new HomeFinderImages { AltText = "Kök och vardagsrum", Url = "https://cdn.pixabay.com/photo/2020/12/16/00/10/home-5835289_960_720.jpg" }, new HomeFinderImages { AltText = "Sovrum", Url = "https://cdn.pixabay.com/photo/2014/08/11/21/40/bedroom-416062_960_720.jpg" } },
+                        LeaseTypeId = 1,
+                        ListPrice = 5000000,
+                        LotArea = 0,
+                        NextShowingDateTime = DateTime.Now.Date,
+                        NonLivingArea = 0,
+                        NumberOfRooms = 3,
+                        PropertyTypeId = 1,
+                        RealtorId = "a73917c6-5cd3-47a2-88bb-e76c41840137",
+                        Status = 0,
+                        UploadedDate = DateTime.Now.Date,
+                        YearBuilt = 1928
+                    },
+                    new PropertyObject
+                    {
+                        Id = 6,
+                        Address = new Address {Id = 9, City = "Stockholm", Country = "Sverige", PostalCode = "120 56", StreetAddress = "Sandfjärdsgatan 60" },
+                        Area = 140,
+                        Description = "Radhus i familjevänligt område",
+                        Images = { new HomeFinderImages { AltText = "", Url = "https://cdn.pixabay.com/photo/2018/05/08/13/44/architecture-3383067_960_720.jpg" }, new HomeFinderImages { AltText = "Vardagsrum", Url = "https://cdn.pixabay.com/photo/2020/09/14/09/48/living-room-5570510_960_720.jpg" } },
+                        LeaseTypeId = 1,
+                        ListPrice = 3500000,
+                        LotArea = 0,
+                        NextShowingDateTime = DateTime.Now.Date,
+                        NonLivingArea = 0,
+                        NumberOfRooms = 5,
+                        PropertyType = new PropertyType { Id = 3, IconUrl = "https://cdn.pixabay.com/photo/2020/03/10/09/11/architecture-4918393_960_720.png", PropertyTypeName = PropertyTypeName.Townhouse },
+                        RealtorId = "a73917c6-5cd3-47a2-88bb-e76c41840137",
+                        Status = 0,
+                        UploadedDate = DateTime.Now.Date,
+                        YearBuilt = 1
+                    }
+
+                    );
                 context.SaveChanges();
             }
         }
