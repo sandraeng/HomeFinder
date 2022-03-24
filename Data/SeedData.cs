@@ -235,15 +235,15 @@ namespace HomeFinder.Data
                 
                 context.NoticeOfInterests.AddRange(
                     new NoticeOfInterest { PropertyObject = propertyObjects[4], User = users[0]},
-                    new NoticeOfInterest { PropertyObject = propertyObjects[3], User = users[1]},
-                    new NoticeOfInterest { PropertyObject = propertyObjects[2], User = users[1]}
+                    new NoticeOfInterest { PropertyObject = propertyObjects[3], User = users[3]},
+                    new NoticeOfInterest { PropertyObject = propertyObjects[2], User = users[3]}
                 );
                 context.PropertyFavorited.AddRange(
                     new PropertyFavoritedByUser { PropertyObject = propertyObjects[4], User = users[0]},
                     new PropertyFavoritedByUser { PropertyObject = propertyObjects[3], User = users[0]},
                     new PropertyFavoritedByUser { PropertyObject = propertyObjects[0], User = users[0]},
-                    new PropertyFavoritedByUser { PropertyObject = propertyObjects[5], User = users[1]},
-                    new PropertyFavoritedByUser { PropertyObject = propertyObjects[2], User = users[1]}
+                    new PropertyFavoritedByUser { PropertyObject = propertyObjects[5], User = users[3]},
+                    new PropertyFavoritedByUser { PropertyObject = propertyObjects[2], User = users[3]}
                 );
 
 
