@@ -32,19 +32,24 @@
         return tempList;
     }
 }
-<h1 class="mb-5">Mina sparade object</h1>
+
+<div class="text-center text-white">
+<h1 class="my-5">Mina sparade object</h1>
+</div>
 
 @if (likedObjects.Count() < 1)
 {
-    <i class="mb-5">Du har inga sparade object</i>
+ <div class="container4 border">
+  <p class="custom-p">Du har inga sparade object!
+</div>
 }
 else
 {
-  <div class="row mb-5 px-2 border rounded">
+  <div class="row my-5 px-2 border rounded">
     @foreach (var propObject in likedObjects)
    {
        <div class="card m-1 custom-container">
-            <a asp-controller="" asp-action="" asp-route-id="@propObject.Id" class="w-50 h-100">
+            <a asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propObject.Id" class="w-50 h-100">
            <img src="@propObject.Images[0].Url" class="card-img h-100 custom-img-fit" alt="...">
            </a> 
            <div class="pt-3">
@@ -58,20 +63,26 @@ else
    }
 </div>  
 }
-<h1 class="mb-5">Mina intresseanmälningar</h1>
-
+<div class="text-center text-white">
+<h1 class="my-5">Mina intresseanmälningar</h1>
+</div>
 
 @if (objectsOfInterest.Count() < 1)
 {
-    <i class="mb-5">Du har inga intresseanmälningar</i>
+    
+ <div class="container4 border">
+  <p class="custom-p">Du har inga intersseanmälningar!
+</div>
+
 }
 else
 {
-  <div class="row mb-5 px-2 border rounded">
+  <div class="row my-5 px-2 border rounded">
     @foreach (var propObject in objectsOfInterest)
    {
-       <div class="card m-1 custom-container">
-            <a asp-controller="" asp-action="" asp-route-id="@propObject.Id" class="w-50 h-100">
+       
+       <div class="card m-1 custom-container ">
+            <a asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propObject.Id" class="w-50 h-100">
            <img src="@propObject.Images[0].Url" class="card-img h-100 custom-img-fit" alt="...">
            </a> 
            <div class="pt-3">

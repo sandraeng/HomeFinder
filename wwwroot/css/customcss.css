@@ -11,3 +11,19 @@ right:10px;
 .custom-img-fit {
     object-fit:cover;
 }
+div.container4 {
+    height: 18rem;
+    position: relative;
+    background-color: white;
+    opacity:0.8;
+}
+.custom-p {
+    
+    font-size: 50px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
