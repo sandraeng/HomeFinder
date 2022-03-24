@@ -174,6 +174,25 @@ namespace HomeFinder.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("HomeFinder.Models.LeaseType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LeaseTypes");
+                });
+
             modelBuilder.Entity("HomeFinder.Models.NoticeOfInterest", b =>
                 {
                     b.Property<int>("PropertyObjectId")
@@ -220,11 +239,23 @@ namespace HomeFinder.Migrations
                     b.Property<decimal>("Area")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LeaseTypeId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("ListPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("LotArea")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("NextShowingDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<decimal>("NonLivingArea")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("NumberOfRooms")
                         .HasColumnType("decimal(18,2)");
@@ -241,9 +272,14 @@ namespace HomeFinder.Migrations
                     b.Property<DateTime>("UploadedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("YearBuilt")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("LeaseTypeId");
 
                     b.HasIndex("PropertyTypeId");
 
@@ -473,6 +509,12 @@ namespace HomeFinder.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("HomeFinder.Models.LeaseType", "LeaseType")
+                        .WithMany()
+                        .HasForeignKey("LeaseTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HomeFinder.Models.PropertyType", "PropertyType")
                         .WithMany()
                         .HasForeignKey("PropertyTypeId")
@@ -485,6 +527,8 @@ namespace HomeFinder.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Address");
+
+                    b.Navigation("LeaseType");
 
                     b.Navigation("PropertyType");
 

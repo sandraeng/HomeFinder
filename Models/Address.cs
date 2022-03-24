@@ -1,10 +1,12 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace HomeFinder.Models
 {
     public class Address
     {
+        [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
         [Display(Name = "Street Address")]

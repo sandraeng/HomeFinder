@@ -1,5 +1,9 @@
 /*!
+<<<<<<< HEAD
  * Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com
+=======
+ * Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com
+>>>>>>> SavedObjects
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  * Copyright 2022 Fonticons, Inc.
  */
@@ -7,7 +11,11 @@
 @import 'variables';
 
 :root, :host {
+<<<<<<< HEAD
   --#{ $fa-css-prefix }-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";
+=======
+  --#{$fa-css-prefix}-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";
+>>>>>>> SavedObjects
 }
 
 @font-face {
@@ -20,11 +28,19 @@
 }
 
 .fab,
+<<<<<<< HEAD
 .fa-brands {
+=======
+.#{$fa-css-prefix}-brands {
+>>>>>>> SavedObjects
   font-family: 'Font Awesome 6 Brands';
   font-weight: 400;
 }
 
 @each $name, $icon in $fa-brand-icons {
+<<<<<<< HEAD
   .#{$fa-css-prefix}-#{$name}:before { content: fa-content($icon); }
+=======
+  .#{$fa-css-prefix}-#{$name}:before { content: unquote("\"#{ $icon }\""); }
+>>>>>>> SavedObjects
 }

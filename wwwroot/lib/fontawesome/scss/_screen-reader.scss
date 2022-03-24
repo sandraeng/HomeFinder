@@ -3,12 +3,22 @@
 
 // only display content to screen readers
 .sr-only,
+<<<<<<< HEAD
 .fa-sr-only {
   @include fa-sr-only; 
+=======
+.#{$fa-css-prefix}-sr-only {
+  @include fa-sr-only;
+>>>>>>> SavedObjects
 }
 
 // use in conjunction with .sr-only to only display content when it's focused
 .sr-only-focusable,
+<<<<<<< HEAD
 .fa-sr-only-focusable {
   @include fa-sr-only-focusable; 
+=======
+.#{$fa-css-prefix}-sr-only-focusable {
+  @include fa-sr-only-focusable;
+>>>>>>> SavedObjects
 }
