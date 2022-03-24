@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HomeFinder.Data;
 using HomeFinder.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace HomeFinder.Controllers
 {
     public class PropertyObjectsController : Controller
     {
         private readonly HomeFinderContext _context;
+        private readonly UserManager<HomeFinderUser> _userManager;
 
-        public PropertyObjectsController(HomeFinderContext context)
+        public PropertyObjectsController(HomeFinderContext context,UserManager<HomeFinderUser> userManager)
         {
             _context = context;
+            this._userManager = userManager;
         }
 
         // GET: PropertyObjects
@@ -188,6 +192,41 @@ namespace HomeFinder.Controllers
             _context.PropertyObjects.Remove(propertyObject);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+
+        [Authorize]
+        public async Task<IActionResult> SavedObjects()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            return View(user);
+        }
+
+        public async Task<IActionResult> RemoveLikedObject(int id)
+        {
+            var objToRemove = await _context.PropertyFavorited.FirstOrDefaultAsync(lP => lP.PropertyObject.Id == id);
+            if (objToRemove == null)
+            {
+                return NotFound();
+            }
+            _context.PropertyFavorited.Remove(objToRemove);
+            _context.SaveChanges();
+
+            return RedirectToAction("SavedObjects");
+        }
+
+        public async Task<IActionResult> RemoveObjectOfInterest(int id)
+        {
+            var objToRemove = await _context.NoticeOfInterests.FirstOrDefaultAsync(nI => nI.PropertyObject.Id == id);
+            if (objToRemove == null)
+            {
+                return NotFound();
+            }
+            _context.NoticeOfInterests.Remove(objToRemove);
+            _context.SaveChanges();
+
+            return RedirectToAction("SavedObjects");
         }
 
         private bool PropertyObjectExists(int id)
