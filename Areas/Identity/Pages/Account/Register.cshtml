@@ -69,22 +69,49 @@
             </div>
             <div class="col-md-6">
                 <div class="input-data">
-                    <label asp-for="Input.Address" id="address"></label>
-                    <input asp-for="Input.Address" class="form-control" onfocus="addressLabelStayUp()"/>
-                    <span asp-validation-for="Input.Address" class="text-danger"></span>
+                    <label asp-for="Input.Email" id="email"></label>
+                    <input asp-for="Input.Email" class="form-control" onfocus="emailLabelStayUp()"/>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
             </div>
         </div>
-            <div class="input-data">
-                <label asp-for="Input.Email" id="email"></label>
-                <input asp-for="Input.Email" class="form-control" onfocus="emailLabelStayUp()"/>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-data">
+                    <label asp-for="Input.Address.StreetAddress" id="streetAddress"></label>
+                    <input asp-for="Input.Address.StreetAddress" class="form-control" onfocus="streetAddressLabelStayUp()"/>
+                    <span asp-validation-for="Input.Address.StreetAddress" class="text-danger"></span>
+                </div>
             </div>
+            <div class="col-md-6">
+                <div class="input-data">
+                    <label asp-for="Input.Address.Country" id="country"></label>
+                    <input asp-for="Input.Address.Country" class="form-control" onfocus="countryLabelStayUp()"/>
+                    <span asp-validation-for="Input.Address.Country" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-data">
+                    <label asp-for="Input.Address.PostalCode" id="postalCode"></label>
+                    <input asp-for="Input.Address.PostalCode" class="form-control" onfocus="postalCodeLabelStayUp()"/>
+                    <span asp-validation-for="Input.Address.PostalCode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-data">
+                    <label asp-for="Input.Address.City" id="city"></label>
+                    <input asp-for="Input.Address.City" class="form-control" onfocus="cityLabelStayUp()"/>
+                    <span asp-validation-for="Input.Address.City" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="input-data">
                         <label asp-for="Input.Password" id="password"></label>
-                        <input asp-for="Input.Password" class="form-control" onfocus="passwordLabelStayUp()"/>
+                        <input asp-for="Input.Password" class="form-control" onfocus="passwordLabelStayUp()" />
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
                 </div>
@@ -121,8 +148,26 @@
             phoneNumber.classList.toggle("label-label-active")
 
         }
-        function addressLabelStayUp(){
-            const address = document.getElementById("address")
+        function streetAddressLabelStayUp(){
+            const address = document.getElementById("streetAddress")
+
+            address.classList.toggle("label-label-active")
+
+        }
+        function countryLabelStayUp(){
+            const address = document.getElementById("country")
+
+            address.classList.toggle("label-label-active")
+
+        }
+        function cityLabelStayUp(){
+            const address = document.getElementById("city")
+
+            address.classList.toggle("label-label-active")
+
+        }
+        function postalCodeLabelStayUp(){
+            const address = document.getElementById("postalCode")
 
             address.classList.toggle("label-label-active")
 
