@@ -84,6 +84,14 @@
                                     <p class="card-text"><b>Property type:</b> @propertyobject.PropertyType.PropertyTypeName.ToString()</p>
                                     <p class="card-text"><b>Rooms:</b> @propertyobject.NumberOfRooms.ToString("0")</p>
                                     <p class="card-text"><b>Area:</b> @propertyobject.Area.ToString("0") sqm</p>
+                                    @if (!String.IsNullOrEmpty(@propertyobject.NonLivingArea.ToString()))
+                                {
+                                    <p class="card-text"><b>Biarea:</b> @propertyobject.NonLivingArea.ToString("0") sqm</p>
+                                }
+                                @if (!String.IsNullOrEmpty(@propertyobject.LotArea.ToString()))
+                                {
+                                    <p class="card-text"><b>Lot size:</b> @propertyobject.LotArea.ToString("0") sqm</p>
+                                }
                                     <p class="card-text"><b>Price:</b> @propertyobject.ListPrice.ToString("c")</p>
 
                                 </div>
