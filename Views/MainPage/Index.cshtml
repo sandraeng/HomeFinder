@@ -9,97 +9,99 @@
 <h2 class="my-4">Properties</h2>
 
 
-<div class="row">
-        <div class="col-12">
-            <div class="card col-3 float-right ml-2">
-                <div class="card-header"><h5 style="text-align:center;">Filter Search</h5></div>
-                <article class="card-group-item">
-                    <header class=" mt-4">
-                        <h6 class="title" style="text-align: center; text-decoration: underline;">Price Range </h6>
-                    </header>
-                    <div class="filter-content">
-                        <div class="card-body">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Min</label>
-                                    <input type="number" class="form-control" id="inputEmail4" placeholder="0kr">
-                                </div>
-                                <div class="form-group col-md-6 text-right">
-                                    <label>Max</label>
-                                    <input type="number" class="form-control" placeholder="1 000 000kr">
-                                </div>
-                            </div>
-                        </div> <!-- card-body.// -->
-                </div>
-                </article> <!-- card-group-item.// -->
+<div class="">
+    <div class="col-12">
+        <div class="card col-3 float-right ml-2">
+            <div class="card-header"><h5 style="text-align:center;">Filter Search</h5></div>
             <article class="card-group-item">
-                    <header>
-                        <h6 class="title" style="text-align: center; text-decoration: underline;">Property Type </h6>
-                    </header>
-                    <div class="filter-content">
-                        <div class="card-body">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="Check1">
-                                <label class="custom-control-label" for="Check1">Apartment</label>
-                            </div> <!-- form-check.// -->
-
-                        <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="Check2">
-                                <label class="custom-control-label" for="Check2">Townhouse</label>
-                            </div> <!-- form-check.// -->
-
-                        <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="Check3">
-                                <label class="custom-control-label" for="Check3">House</label>
-                            </div> <!-- form-check.// -->
-
-                        <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="Check4">
-                                <label class="custom-control-label" for="Check4">Farm</label>
-                            </div> <!-- form-check.// -->
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="Check4">
-                                <label class="custom-control-label" for="Check4">Lot</label>
-                            </div> <!-- form-check.// -->
+                <header class=" mt-4">
+                    <h6 class="title" style="text-align: center; text-decoration: underline;">Price Range </h6>
+                </header>
+                <div class="filter-content">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Min</label>
+                                <input type="number" class="form-control" id="inputEmail4" placeholder="0kr">
+                            </div>
+                            <div class="form-group col-md-6 text-right">
+                                <label>Max</label>
+                                <input type="number" class="form-control" placeholder="1 000 000kr">
+                            </div>
+                        </div>
                     </div> <!-- card-body.// -->
                 </div>
-                </article> <!-- card-group-item.// -->
+            </article> <!-- card-group-item.// -->
+            <article class="card-group-item">
+                <header>
+                    <h6 class="title" style="text-align: center; text-decoration: underline;">Property Type </h6>
+                </header>
+                <div class="filter-content">
+                    <div class="card-body">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Check1">
+                            <label class="custom-control-label" for="Check1">Apartment</label>
+                        </div> <!-- form-check.// -->
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Check2">
+                            <label class="custom-control-label" for="Check2">Townhouse</label>
+                        </div> <!-- form-check.// -->
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Check3">
+                            <label class="custom-control-label" for="Check3">House</label>
+                        </div> <!-- form-check.// -->
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Check4">
+                            <label class="custom-control-label" for="Check4">Farm</label>
+                        </div> <!-- form-check.// -->
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Check4">
+                            <label class="custom-control-label" for="Check4">Lot</label>
+                        </div> <!-- form-check.// -->
+                    </div> <!-- card-body.// -->
+                </div>
+            </article> <!-- card-group-item.// -->
         </div> <!-- card.// -->
         @foreach (var propertyobject in Model)
         {
 
             <div class="card mb-2">
-                    <a style="text-decoration: none;" asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propertyobject.Id">
-                        <div class="row g-0">
-                            <div class="col-7">
+                <a style="text-decoration: none;" asp-controller="MainPage" asp-action="Details" asp-route-id="@propertyobject.Id">
+                    <div class="row g-0">
+                        <div class="col-7">
                             @*inte fixat så bilderna kopplat till objektet laddas upp*@
-                                <img src="https://urbanpark.wellfastigheter.se/img/int_01.jpg" width="100%" style="object-fit: cover;">
-                            </div>
-                            <div class="col-5">
-                                <div class="card-body">
+                            <a asp-controller="MainPage" asp-action="Details" asp-route-id="@propertyobject.Id">
+                                <img class="w-100" style="object-fit:cover" src="@propertyobject.Images[0].Url" alt="@propertyobject.Images[0].AltText">
+                            </a>
+                        </div>
+                        <div class="col-5">
+                            <div class="card-body">
 
-                                    <button type="button" class="btn btn-danger float-right"><i class="fa-solid fa-heart"></i></button>
-                                    <h5 class="card-text mb-4" style="text-align: center;">@propertyobject.Address.StreetAddress</h5>
-                                    <p class="card-text"><b>City:</b> @propertyobject.Address.City</p>
-                                    <p class="card-text"><b>Property type:</b> @propertyobject.PropertyType.PropertyTypeName.ToString()</p>
-                                    <p class="card-text"><b>Rooms:</b> @propertyobject.NumberOfRooms.ToString("0")</p>
-                                    <p class="card-text"><b>Area:</b> @propertyobject.Area.ToString("0") sqm</p>
-                                    @if (!String.IsNullOrEmpty(@propertyobject.NonLivingArea.ToString()))
+                                <button type="button" class="btn btn-danger float-right"><i class="fa-solid fa-heart"></i></button>
+                                <h5 class="card-text mb-4" style="text-align: center;">@propertyobject.Address.StreetAddress</h5>
+                                <p class="card-text"><b>City:</b> @propertyobject.Address.City</p>
+                                <p class="card-text"><b>Property type:</b> @propertyobject.PropertyType.PropertyTypeName.ToString()</p>
+                                <p class="card-text"><b>Rooms:</b> @propertyobject.NumberOfRooms.ToString("0")</p>
+                                <p class="card-text"><b>Area:</b> @propertyobject.Area.ToString("0") sqm</p>
+                                @if (@propertyobject.NonLivingArea > 0)
                                 {
                                     <p class="card-text"><b>Biarea:</b> @propertyobject.NonLivingArea.ToString("0") sqm</p>
                                 }
-                                @if (!String.IsNullOrEmpty(@propertyobject.LotArea.ToString()))
+                                @if (@propertyobject.LotArea > 0)
                                 {
                                     <p class="card-text"><b>Lot size:</b> @propertyobject.LotArea.ToString("0") sqm</p>
                                 }
-                                    <p class="card-text"><b>Price:</b> @propertyobject.ListPrice.ToString("c")</p>
+                                <p class="card-text"><b>Price:</b> @propertyobject.ListPrice.ToString("c")</p>
 
-                                </div>
                             </div>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
+            </div>
         }
-        </div>
+    </div>
 
 </div>
