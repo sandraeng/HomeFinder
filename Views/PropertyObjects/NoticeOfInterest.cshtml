@@ -1,0 +1,48 @@
+﻿@model HomeFinder.Models.PropertyObject
+
+@{
+    ViewData["Title"] = "Verify interest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-12">
+    <div class="card mb-2">
+        <div class="card-header">
+            <h5>
+                @Html.DisplayFor(model => model.Address.StreetAddress), @Html.DisplayFor(model => model.Address.City)
+            </h5>
+        </div>
+        <div class="row g-0">
+            <div class="col-12">
+                <div class="card-body">
+                    @if(ViewBag.OldNoticeExists)
+                    {
+                    <h5>
+                        You have already sent a notice of interest for this property.
+                    </h5>
+                    } else
+                    {
+                    <h5>
+                        I am interested in this property and would like to be contacted with more information.
+                    </h5>
+                    <form asp-action="VerifyNoticeOfInterest">
+                        <input type="hidden" asp-for="Id" />
+                        <p class="card-text"><b>@Html.DisplayNameFor(model => model.Address):       </b><br />@Html.DisplayFor(model => model.Address.StreetAddress)<br />@Html.DisplayFor(model => model.Address.PostalCode)<br />@Html.DisplayFor(model => model.Address.City)</p>
+                        <p class="card-text"><b>@Html.DisplayNameFor(model => model.Realtor):       </b>@Html.DisplayFor(model => model.Realtor.FirstName) @Html.DisplayFor(model => model.Realtor.LastName), @Html.DisplayFor(model => model.Realtor.Company.Name)</p>
+                        <div class="form-group">
+                            <input type="submit" value="Send notice" class="btn btn-primary" />
+                        </div>
+                    </form>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="m-2">
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

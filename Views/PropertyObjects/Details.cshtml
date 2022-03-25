@@ -21,7 +21,15 @@
         <div class="row g-0">
             <div class="col-12">
                 <div class="card-body">
-                    <button type="button" class="btn btn-danger float-right"><i class="fa-solid fa-heart"></i></button>
+                    <div class="float-right text-right">
+                        <button type="button" class="btn btn-danger m-1"><i class="fa-solid fa-heart"></i></button>
+                        <form asp-action="NoticeOfInterest">
+                            <input type="hidden" asp-for="Id" />
+                            <div class="form-group">
+                                <input type="submit" value="Leave a notice of interest" class="btn btn-primary m-1" />
+                            </div>
+                        </form>
+                    </div>
 
                     <p class="card-text"><b>@Html.DisplayNameFor(model => model.Status):        </b>@Html.DisplayFor(model => model.Status)</p>
                     <p class="card-text"><b>@Html.DisplayNameFor(model => model.ListPrice):     </b>@Html.DisplayFor(model => model.ListPrice)</p>

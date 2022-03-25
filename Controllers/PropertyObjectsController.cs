@@ -194,8 +194,69 @@ namespace HomeFinder.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        // POST: PropertyObjects/NoticeOfInterest
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
+        public async Task<IActionResult> NoticeOfInterest(int id)
+        {
+            // Update noticeOfInterest with PropertyObject from db.
+            var propertyObject = await _context.PropertyObjects.Where(po => po.Id == id).FirstOrDefaultAsync();
+
+            if (propertyObject is not null)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var oldNoticeOfInterest = await _context.NoticeOfInterests.Where(n => (n.PropertyObjectId == propertyObject.Id) && (n.UserId == user.Id)).FirstOrDefaultAsync();
+                ViewBag.OldNoticeExists = false;
+                if (oldNoticeOfInterest is not null)
+                {
+                    ViewBag.OldNoticeExists = true;
+                }
+                return View(propertyObject);
+            }
+
+            // Invalid data.
+            return NotFound();
+        }
+
+        // POST: PropertyObjects/VerifyNoticeOfInterest
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> VerifyNoticeOfInterest(PropertyObject propertyObject)
+        {
+            if ((propertyObject.Id > 0))
+            {
+                // Update property object with correct object from db.
+                propertyObject = await _context.PropertyObjects.Where(po => po.Id == propertyObject.Id).FirstOrDefaultAsync();
+            }
+            var user = await _userManager.GetUserAsync(User);
+
+            if ((user is not null) && (propertyObject is not null))
+            {
+                // Verify that a notice of interest for this PropertyObject and user doesn't exist.
+                var oldNoticeOfInterest = await _context.NoticeOfInterests.Where(n => (n.PropertyObjectId == propertyObject.Id) && (n.UserId == user.Id)).FirstOrDefaultAsync();
+                if (oldNoticeOfInterest is null)
+                {
+                    var notice = new NoticeOfInterest();
+                    notice.PropertyObject = propertyObject;
+                    notice.PropertyObjectId = propertyObject.Id;
+                    notice.User = user;
+                    notice.UserId = user.Id;
+
+                    _context.Add(notice);
+                    await _context.SaveChangesAsync();
+                    return View("Details", propertyObject);
+                }
+            }
+            return NotFound();
+        }
+
+            [Authorize]
         public async Task<IActionResult> SavedObjects()
         {
             var user = await _userManager.GetUserAsync(User);
