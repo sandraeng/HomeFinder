@@ -4,6 +4,8 @@
 
 @{
     ViewData["Title"] = "Main Page";
+    var maxPrice = (int)Model.Max(p => p.ListPrice);
+    var minPrice = (int)Model.Min(p => p.ListPrice);
 }
 
 <h2 class="my-4">Properties</h2>
@@ -11,60 +13,104 @@
 
 <div class="">
     <div class="col-12">
-        <div class="card col-3 float-right ml-2">
-            <div class="card-header"><h5 style="text-align:center;">Filter Search</h5></div>
+        <form asp-action="Index" class="col-3 float-right">
+            <div class="form_container">
+                <h5 style="text-align: center;">Filter Search</h5>
             <article class="card-group-item">
-                <header class=" mt-4">
-                    <h6 class="title" style="text-align: center; text-decoration: underline;">Price Range </h6>
-                </header>
-                <div class="filter-content">
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>Min</label>
-                                <input type="number" class="form-control" id="inputEmail4" placeholder="0kr">
-                            </div>
-                            <div class="form-group col-md-6 text-right">
-                                <label>Max</label>
-                                <input type="number" class="form-control" placeholder="1 000 000kr">
-                            </div>
-                        </div>
-                    </div> <!-- card-body.// -->
+                <div class="my-1">
+                    <input type="text" name="searchString" placeholder="City or Street" class="form-control col-12" />
                 </div>
-            </article> <!-- card-group-item.// -->
+            </article>
+            <article class"card-group-item">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                    <label>Min</label>
+                    <input type="number" name="minPrice" class="form-control" id="minimum-value">
+                    </div>
+                    <div class="form-group col-md-6 text-right">
+                    <label>Max</label>
+                    <input type="number" name="maxPrice" class="form-control" id="maximum-value">
+                    </div>
+                </div>
+                <div class="middle w-100">
+                    <div class="multi-range-slider">
+                        <input type="range"  id="input-left" min="@minPrice" max="@maxPrice" value="@minPrice" />
+                        <input type="range"  id="input-right" min="@minPrice" max="@maxPrice" value="@maxPrice" />
+
+                    <div class="slider">
+                    <div class="track"></div>
+                    <div class="range"></div>
+                    <div class="thumb left"></div>
+                    <div class="thumb right"></div>
+                </div>
+                </div>
+                </div>
+            </article>
             <article class="card-group-item">
-                <header>
-                    <h6 class="title" style="text-align: center; text-decoration: underline;">Property Type </h6>
-                </header>
-                <div class="filter-content">
-                    <div class="card-body">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Check1">
-                            <label class="custom-control-label" for="Check1">Apartment</label>
-                        </div> <!-- form-check.// -->
-
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Check2">
-                            <label class="custom-control-label" for="Check2">Townhouse</label>
-                        </div> <!-- form-check.// -->
-
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Check3">
-                            <label class="custom-control-label" for="Check3">House</label>
-                        </div> <!-- form-check.// -->
-
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Check4">
-                            <label class="custom-control-label" for="Check4">Farm</label>
-                        </div> <!-- form-check.// -->
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Check4">
-                            <label class="custom-control-label" for="Check4">Lot</label>
-                        </div> <!-- form-check.// -->
-                    </div> <!-- card-body.// -->
+                <div class="my-2">
+                    <h6 style="text-align:center;">Number of rooms</h6>
+                    <label for="minNumRooms">Min</label>
+                    <input type="number" name="minNumRooms" step="1" class="form-control-sm col-4" />
+                    <label for="maxNumRooms">Max</label>
+                    <input type="number" name="maxNumRooms" step="1" class="form-control-sm col-4 float-right" />
                 </div>
+            </article>
+            <article class="card-group-item">
+                <div class="checkbox_wrapper">
+                    <div class="checkbox_title">
+                        <h6>Choose Property Type</h6>
+                    </div>
+
+                    <div class="checkbox_container">
+                        <label class="option_item">
+                            <input type="checkbox" class="checkbox_search" id="house_option" />
+                            <div class="option_inner">
+                                <div class="icon_search"><i class="fa-solid fa-house"></i></div>
+                                <div class="name_search">House</div>
+                            </div>
+                        </label>
+                        <label class="option_item">
+                            <input type="checkbox" class="checkbox_search" id="apartment_option" />
+                            <div class="option_inner">
+                                <div class="icon_search"><i class="fa-solid fa-building"></i></div>
+                                <div class="name_search">Apartment</div>
+
+                            </div>
+                        </label>
+                        <label class="option_item">
+                            <input type="checkbox" class="checkbox_search" id="townhouse_option" />
+                            <div class="option_inner">
+                                <div class="icon_search"><i class="fa-solid fa-city"></i></div>
+                                <div class="name_search">Townhouse</div>
+
+                            </div>
+                        </label>
+                        <label class="option_item">
+                            <input type="checkbox" class="checkbox_search" id="farm_option" />
+                            <div class="option_inner">
+                                <div class="icon_search"><i class="fa-solid fa-industry"></i></div>
+                                <div class="name_search">Farm</div>
+
+                            </div>
+                        </label>
+                        <label class="option_item">
+                            <input type="checkbox" class="checkbox_search" id="lot_option" />
+                            <div class="option_inner">
+                                <div class="icon_search"><i class="fa-solid fa-vector-square"></i></div>
+                                <div class="name_search">Lot</div>
+
+                            </div>
+                        </label
+                    </div>
+                </div>
+                
             </article> <!-- card-group-item.// -->
-        </div> <!-- card.// -->
+            <div class="my-3" style="text-align:center;">
+            <input type="submit" value="Filter" class="btn btn-success btn-sm mr-3"/>
+            <a asp-action="Index" class="btn btn-secondary btn-sm">Clear</a>
+            </div>
+            </div>
+        </form>
         @foreach (var propertyobject in Model)
         {
 
