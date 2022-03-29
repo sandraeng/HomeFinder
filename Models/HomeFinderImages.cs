@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HomeFinder.Models
 {
@@ -7,10 +8,13 @@ namespace HomeFinder.Models
         public int Id { get; set; }
 
         [Required]
-        public string Url { get; set; }
+        public string Path { get; set; }
 
-        [Required]
         [MaxLength(30)]
         public string AltText { get; set; }
+
+        public int PropertyObjectId { get; set; }
+        [ForeignKey("PropertyObjectId")]
+        public PropertyObject PropertyObject { get; set; }
     }
 }

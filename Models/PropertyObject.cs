@@ -55,7 +55,6 @@ namespace HomeFinder.Models
         [ForeignKey("AddressId")]
         public Address Address { get; set; }
 
-        [Required]
         public List<HomeFinderImages> Images { get; set; } = new List<HomeFinderImages>();
 
         public string Description { get; set; }

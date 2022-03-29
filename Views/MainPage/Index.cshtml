@@ -74,7 +74,7 @@
                         <div class="col-7">
                             @*inte fixat så bilderna kopplat till objektet laddas upp*@
                             <a asp-controller="MainPage" asp-action="Details" asp-route-id="@propertyobject.Id">
-                                <img class="w-100" style="object-fit:cover" src="@propertyobject.Images[0].Url" alt="@propertyobject.Images[0].AltText">
+                                <img class="w-100" style="object-fit:cover; " src="@propertyobject.Images[0].Path" asp-append-version="true" alt="@propertyobject.Images[0].AltText">
                             </a>
                         </div>
                         <div class="col-5">
