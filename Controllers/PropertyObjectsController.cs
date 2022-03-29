@@ -9,6 +9,9 @@ using HomeFinder.Data;
 using HomeFinder.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace HomeFinder.Controllers
 {
@@ -16,11 +19,13 @@ namespace HomeFinder.Controllers
     {
         private readonly HomeFinderContext _context;
         private readonly UserManager<HomeFinderUser> _userManager;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public PropertyObjectsController(HomeFinderContext context,UserManager<HomeFinderUser> userManager)
+        public PropertyObjectsController(HomeFinderContext context, UserManager<HomeFinderUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             this._userManager = userManager;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         // GET: PropertyObjects
@@ -67,7 +72,7 @@ namespace HomeFinder.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RealtorId,PropertyTypeId,Status,ListPrice,NumberOfRooms,Area,NextShowingDateTime,Address,LeaseTypeId,NonLivingArea,LotArea,YearBuilt,Description")] PropertyObject propertyObject)
+        public async Task<IActionResult> Create([Bind("Id,RealtorId,PropertyTypeId,Status,ListPrice,NumberOfRooms,Area,NextShowingDateTime,Address,LeaseTypeId,NonLivingArea,LotArea,YearBuilt,Description,Images")] PropertyObject propertyObject, List<IFormFile> files)
         {
             // Update PropertyType with value from DB.
             propertyObject.PropertyType = _context.PropertyTypes.Where(x => x.Id == propertyObject.PropertyTypeId).FirstOrDefault();
@@ -97,8 +102,20 @@ namespace HomeFinder.Controllers
             {
                 _context.Add(propertyObject);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                foreach (var file in files)
+                {
+                    var image = new HomeFinderImages();
+                    string path = UploadFile(file);
+                    image.Path = "~/Images/" + path;
+                    image.PropertyObjectId = propertyObject.Id;
+                    _context.Add(image);
+                    await _context.SaveChangesAsync();
+                    propertyObject.Images.Add(image);
+                }
+                return RedirectToAction("Edit", "HomeFinderImages", new {id = propertyObject.Id });
             }
+
 
             // Get a list of values in enum and add to viewbag, so it can be used to populate a dropdown in View.
             ViewBag.PropertyObjectStatuses = new SelectList(Enum.GetNames(typeof(PropertyObjectStatus)));
@@ -106,6 +123,22 @@ namespace HomeFinder.Controllers
             ViewBag.LeaseTypes = _context.LeaseTypes.ToList();
             ViewData["RealtorId"] = new SelectList(_context.Users, "Id", "Id", propertyObject.RealtorId);
             return View(propertyObject);
+        }
+
+        private string UploadFile(IFormFile file)
+        {
+            string fileName = null;
+            if (file != null)
+            {
+                string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "Images");
+                fileName = Guid.NewGuid().ToString() + "-" + file.FileName;
+                string filePath = Path.Combine(uploadDir, fileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+            }
+            return fileName;
         }
 
         // GET: PropertyObjects/Edit/5
@@ -256,7 +289,7 @@ namespace HomeFinder.Controllers
             return NotFound();
         }
 
-            [Authorize]
+        [Authorize]
         public async Task<IActionResult> SavedObjects()
         {
             var user = await _userManager.GetUserAsync(User);

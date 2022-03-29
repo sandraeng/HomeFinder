@@ -24,7 +24,7 @@
                             @foreach (var item in @Model.Images)
                             {
                                 <div class="carousel-item @(first?Html.Raw("active"):Html.Raw(""))" style="height: 600px;">
-                                    <img class="w-100 h-100" style="object-fit: cover;" src="@item.Url" alt="@item.AltText">
+                                    <img class="w-100 h-100" style="object-fit: cover;" src="@item.Path" asp-append-version="true" alt="@item.AltText">
                                     
                                 </div>
                                 first = false;
