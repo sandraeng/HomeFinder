@@ -110,11 +110,10 @@ namespace HomeFinder.Controllers
                     image.Path = "~/Images/" + path;
                     image.PropertyObjectId = propertyObject.Id;
                     _context.Add(image);
-                    //_context.Images.Add(image);
                     await _context.SaveChangesAsync();
                     propertyObject.Images.Add(image);
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Edit", "HomeFinderImages", new {id = propertyObject.Id });
             }
 
 
