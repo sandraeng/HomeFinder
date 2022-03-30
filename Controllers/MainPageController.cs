@@ -80,6 +80,7 @@ namespace HomeFinder.Controllers
                 propertyobjects = propertyobjects.Where(p => p.PropertyType.PropertyTypeName == Models.PropertyTypeName.Lot);
 
             }
+           
 
             return View(await propertyobjects.ToListAsync());
         }

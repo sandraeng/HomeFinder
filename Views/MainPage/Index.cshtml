@@ -115,6 +115,15 @@
             </div>
             </div>
         </form>
+        @if(Model.ToList().Count < 1)
+        {
+            <div class="col-5">
+                <div class="card-body" style="background-color:white; border-radius: 5px; text-align: center;">
+                    <h4>No properties match the search result</h4>
+                </div>
+            </div>
+        }
+        
         @foreach (var propertyobject in Model)
         {
 
@@ -152,6 +161,7 @@
                 </a>
             </div>
         }
+        
     </div>
 
 </div>
