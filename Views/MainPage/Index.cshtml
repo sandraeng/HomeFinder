@@ -9,6 +9,9 @@
 
     var maxPrice = (int)props.Max(p => p.ListPrice);
     var minPrice = (int)props.Min(p => p.ListPrice);
+
+    var maxArea = (int)props.Max(p => p.Area);
+    var minArea = (int)props.Min(p => p.Area);
     
 }
 
@@ -25,7 +28,8 @@
                     <input type="text" name="searchString" placeholder="City or Street" class="form-control col-12" />
                 </div>
             </article>
-            <article class"card-group-item">
+            <article class="card-group-item">
+                <h6 style="text-align:center;">Price</h6>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                     <label>Min</label>
@@ -46,6 +50,32 @@
                     <div class="range"></div>
                     <div class="thumb left"></div>
                     <div class="thumb right"></div>
+                </div>
+                </div>
+                </div>
+            </article>
+             <article class="card-group-item">
+                 <h6 style="text-align:center;">Area</h6>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                    <label>Min</label>
+                    <input type="number" name="minArea" class="form-control" id="minimum-value2">
+                    </div>
+                    <div class="form-group col-md-6 text-right">
+                    <label>Max</label>
+                    <input type="number" name="maxArea" class="form-control" id="maximum-value2">
+                    </div>
+                </div>
+                <div class="middle w-100">
+                    <div class="multi-range-slider">
+                        <input type="range"  id="input-left2" min="@minArea" max="@maxArea" value="@minArea" />
+                        <input type="range"  id="input-right2" min="@minArea" max="@maxArea" value="@maxArea" />
+
+                    <div class="slider">
+                    <div class="track"></div>
+                    <div class="range2"></div>
+                    <div class="thumb left2"></div>
+                    <div class="thumb right2"></div>
                 </div>
                 </div>
                 </div>

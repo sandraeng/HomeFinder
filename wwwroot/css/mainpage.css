@@ -94,7 +94,7 @@
 
 
 
-    .slider > .range {
+    .slider > .range, .range2 {
         position: absolute;
         z-index: 2;
         left: 25%;
@@ -120,14 +120,14 @@
 
 
 
-        .slider > .thumb.left {
+        .slider > .thumb.left, .thumb.left2 {
             left: 25%;
             transform: translate(-15px, -8px);
         }
 
 
 
-        .slider > .thumb.right {
+        .slider > .thumb.right, .thumb.right2 {
             right: 25%;
             transform: translate(15px, -8px);
         }
