@@ -14,7 +14,7 @@ namespace HomeFinder.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index(string searchString, string minNumRooms, string maxNumRooms, string minPrice, string maxPrice)
+        public async Task<IActionResult> Index(string searchString, string minNumRooms, string maxNumRooms, string minPrice, string maxPrice, string checkBoxHouse = "off", string checkBoxApartment = "off", string checkBoxTownhouse = "off", string checkBoxFarm = "off", string checkBoxLot = "off")
         {
             var propertyobjects = _context.PropertyObjects
                 .Include(p => p.Address)
@@ -48,6 +48,36 @@ namespace HomeFinder.Controllers
             {
                 var max = int.Parse(maxPrice);
                 propertyobjects = propertyobjects.Where(p => p.ListPrice <= max);
+
+            }
+            if (checkBoxHouse=="on")
+            {
+               
+                propertyobjects = propertyobjects.Where(p => p.PropertyType.PropertyTypeName == Models.PropertyTypeName.House);
+
+            }
+            if (checkBoxApartment == "on")
+            {
+
+                propertyobjects = propertyobjects.Where(p => p.PropertyType.PropertyTypeName == Models.PropertyTypeName.Apartment);
+
+            }
+            if (checkBoxTownhouse == "on")
+            {
+
+                propertyobjects = propertyobjects.Where(p => p.PropertyType.PropertyTypeName == Models.PropertyTypeName.Townhouse);
+
+            }
+            if (checkBoxFarm == "on")
+            {
+
+                propertyobjects = propertyobjects.Where(p => p.PropertyType.PropertyTypeName == Models.PropertyTypeName.Farm);
+
+            }
+            if (checkBoxLot == "on")
+            {
+
+                propertyobjects = propertyobjects.Where(p => p.PropertyType.PropertyTypeName == Models.PropertyTypeName.Lot);
 
             }
 

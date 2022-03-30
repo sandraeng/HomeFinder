@@ -1,11 +1,15 @@
 ﻿@using HomeFinder.Models
 @model IEnumerable<HomeFinder.Models.PropertyObject>
-
+@inject HomeFinder.Data.HomeFinderContext db
 
 @{
     ViewData["Title"] = "Main Page";
-    var maxPrice = (int)Model.Max(p => p.ListPrice);
-    var minPrice = (int)Model.Min(p => p.ListPrice);
+
+    var props = db.PropertyObjects.ToList();
+
+    var maxPrice = (int)props.Max(p => p.ListPrice);
+    var minPrice = (int)props.Min(p => p.ListPrice);
+    
 }
 
 <h2 class="my-4">Properties</h2>
@@ -63,14 +67,14 @@
 
                     <div class="checkbox_container">
                         <label class="option_item">
-                            <input type="checkbox" class="checkbox_search" id="house_option" />
+                            <input type="checkbox" name="checkBoxHouse" class="checkbox_search" id="house_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-house"></i></div>
                                 <div class="name_search">House</div>
                             </div>
                         </label>
                         <label class="option_item">
-                            <input type="checkbox" class="checkbox_search" id="apartment_option" />
+                            <input type="checkbox" name="checkBoxApartment" class="checkbox_search" id="apartment_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-building"></i></div>
                                 <div class="name_search">Apartment</div>
@@ -78,7 +82,7 @@
                             </div>
                         </label>
                         <label class="option_item">
-                            <input type="checkbox" class="checkbox_search" id="townhouse_option" />
+                            <input type="checkbox" name="checkBoxTownhouse" class="checkbox_search" id="townhouse_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-city"></i></div>
                                 <div class="name_search">Townhouse</div>
@@ -86,7 +90,7 @@
                             </div>
                         </label>
                         <label class="option_item">
-                            <input type="checkbox" class="checkbox_search" id="farm_option" />
+                            <input type="checkbox" name="checkBoxFarm" class="checkbox_search" id="farm_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-industry"></i></div>
                                 <div class="name_search">Farm</div>
@@ -94,7 +98,7 @@
                             </div>
                         </label>
                         <label class="option_item">
-                            <input type="checkbox" class="checkbox_search" id="lot_option" />
+                            <input type="checkbox" name="checkBoxLot" class="checkbox_search" id="lot_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-vector-square"></i></div>
                                 <div class="name_search">Lot</div>
