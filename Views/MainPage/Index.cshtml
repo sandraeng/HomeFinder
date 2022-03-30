@@ -1,5 +1,5 @@
 ﻿@using HomeFinder.Models
-@model IEnumerable<HomeFinder.Models.PropertyObject>
+@model HomeFinder.Models.PropertySearchModel
 @inject HomeFinder.Data.HomeFinderContext db
 
 @{
@@ -20,12 +20,13 @@
 
 <div class="">
     <div class="col-12">
-        <form asp-action="Index" class="col-3 float-right">
+        <form asp-action="Index" method="post" class="col-3 float-right">
             <div class="form_container">
                 <h5 style="text-align: center;">Filter Search</h5>
+                <div asp-validation-summary="All" class="text-danger"></div>
             <article class="card-group-item">
                 <div class="my-1">
-                    <input type="text" name="searchString" placeholder="City or Street" class="form-control col-12" />
+                    <input type="text" asp-for="Searchstring" placeholder="City or Street" class="form-control col-12" />
                 </div>
             </article>
             <article class="card-group-item">
@@ -33,11 +34,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                     <label>Min</label>
-                    <input type="number" name="minPrice" class="form-control" id="minimum-value">
+                    <input type="number" asp-for="MinPrice" class="form-control" id="minimum-value">
                     </div>
                     <div class="form-group col-md-6 text-right">
                     <label>Max</label>
-                    <input type="number" name="maxPrice" class="form-control" id="maximum-value">
+                    <input type="number" asp-for="MaxPrice" class="form-control" id="maximum-value">
                     </div>
                 </div>
                 <div class="middle w-100">
@@ -59,11 +60,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                     <label>Min</label>
-                    <input type="number" name="minArea" class="form-control" id="minimum-value2">
+                    <input type="number" asp-for="MinArea" class="form-control" id="minimum-value2">
                     </div>
                     <div class="form-group col-md-6 text-right">
                     <label>Max</label>
-                    <input type="number" name="maxArea" class="form-control" id="maximum-value2">
+                    <input type="number" asp-for="MaxArea" class="form-control" id="maximum-value2">
                     </div>
                 </div>
                 <div class="middle w-100">
@@ -84,9 +85,9 @@
                 <div class="my-2">
                     <h6 style="text-align:center;">Number of rooms</h6>
                     <label for="minNumRooms">Min</label>
-                    <input type="number" name="minNumRooms" step="1" class="form-control-sm col-4" />
+                    <input type="number" asp-for="MinNumRooms" step="1" class="form-control-sm col-4" />
                     <label for="maxNumRooms">Max</label>
-                    <input type="number" name="maxNumRooms" step="1" class="form-control-sm col-4 float-right" />
+                    <input type="number" asp-for="MaxNumRooms" step="1" class="form-control-sm col-4 float-right" />
                 </div>
             </article>
             <article class="card-group-item">
@@ -97,14 +98,14 @@
 
                     <div class="checkbox_container">
                         <label class="option_item">
-                            <input type="checkbox" name="checkBoxHouse" class="checkbox_search" id="house_option" />
+                            <input type="checkbox" asp-for="IsHouse" class="checkbox_search" id="house_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-house"></i></div>
                                 <div class="name_search">House</div>
                             </div>
                         </label>
                         <label class="option_item">
-                            <input type="checkbox" name="checkBoxApartment" class="checkbox_search" id="apartment_option" />
+                            <input type="checkbox" asp-for="IsApartment" class="checkbox_search" id="apartment_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-building"></i></div>
                                 <div class="name_search">Apartment</div>
@@ -112,7 +113,7 @@
                             </div>
                         </label>
                         <label class="option_item">
-                            <input type="checkbox" name="checkBoxTownhouse" class="checkbox_search" id="townhouse_option" />
+                            <input type="checkbox" asp-for="IsTownhouse" class="checkbox_search" id="townhouse_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-city"></i></div>
                                 <div class="name_search">Townhouse</div>
@@ -120,7 +121,7 @@
                             </div>
                         </label>
                         <label class="option_item">
-                            <input type="checkbox" name="checkBoxFarm" class="checkbox_search" id="farm_option" />
+                            <input type="checkbox" asp-for="IsFarm" class="checkbox_search" id="farm_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-industry"></i></div>
                                 <div class="name_search">Farm</div>
@@ -128,7 +129,7 @@
                             </div>
                         </label>
                         <label class="option_item">
-                            <input type="checkbox" name="checkBoxLot" class="checkbox_search" id="lot_option" />
+                            <input type="checkbox" asp-for="IsLot" class="checkbox_search" id="lot_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-vector-square"></i></div>
                                 <div class="name_search">Lot</div>
@@ -139,6 +140,7 @@
                 </div>
                 
             </article> <!-- card-group-item.// -->
+            
             <div class="my-3" style="text-align:center;">
             <input type="submit" value="Filter" class="btn btn-success btn-sm mr-3"/>
             <a asp-action="Index" class="btn btn-secondary btn-sm">Clear</a>
