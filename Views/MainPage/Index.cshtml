@@ -147,7 +147,7 @@
             </div>
             </div>
         </form>
-        @if(Model.ToList().Count < 1)
+        @if(Model.Results.Count() < 1)
         {
             <div class="col-5">
                 <div class="card-body" style="background-color:white; border-radius: 5px; text-align: center;">
@@ -156,7 +156,7 @@
             </div>
         }
         
-        @foreach (var propertyobject in Model)
+        @foreach (var propertyobject in Model.Results)
         {
 
             <div class="card mb-2">
