@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HomeFinder.Data;
 using Microsoft.EntityFrameworkCore;
+using HomeFinder.Models;
 
 namespace HomeFinder
 {
@@ -29,6 +30,7 @@ namespace HomeFinder
                 options.UseSqlServer(
                     Configuration.GetConnectionString("HomeFinderContextConnection")));
 
+            services.AddSingleton<PropertySearchModel>();
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddAuthentication().AddFacebook(facebookOptions =>

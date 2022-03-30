@@ -1,6 +1,8 @@
 ﻿using HomeFinder.Data;
+using HomeFinder.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,91 +11,110 @@ namespace HomeFinder.Controllers
     public class MainPageController : Controller
     {
         private readonly HomeFinderContext _context;
+        private readonly PropertySearchModel searchModel;
 
-        public MainPageController(HomeFinderContext context)
+        public MainPageController(HomeFinderContext context, PropertySearchModel searchModel)
         {
             _context = context;
+            this.searchModel = searchModel;
+            this.searchModel.Results = GetAllProps();
         }
-        public async Task<IActionResult> Index(string searchString, string minNumRooms, string maxNumRooms, string minPrice, string maxPrice, string minArea, string maxArea, string checkBoxHouse = "off", string checkBoxApartment = "off", string checkBoxTownhouse = "off", string checkBoxFarm = "off", string checkBoxLot = "off")
+        public async Task<IActionResult> Index()
         {
-            var propertyobjects = _context.PropertyObjects
-                .Include(p => p.Address)
-                .Include(p => p.PropertyType)
-                .Include(p => p.Images)
-                .Select(p => p);
 
-            if (!string.IsNullOrEmpty(searchString))
+            return View(searchModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Index(PropertySearchModel searchModel)
+        {
+            if (searchModel.MinNumRooms > searchModel.MaxNumRooms)
             {
-                propertyobjects = propertyobjects.Where(p => p.Address.City.Contains(searchString) || p.Address.StreetAddress.Contains(searchString));
+                ModelState.AddModelError("", "Maximumrooms must be greater or equal to Minimumrooms");
             }
-            if (!string.IsNullOrEmpty(minNumRooms))
-            {
-                var min = int.Parse(minNumRooms);
-                propertyobjects = propertyobjects.Where(p => p.NumberOfRooms >= min);
 
-            }
-            if (!string.IsNullOrEmpty(maxNumRooms))
+            if (searchModel.MinPrice > searchModel.MaxPrice)
             {
-                var max = int.Parse(maxNumRooms);
-                propertyobjects = propertyobjects.Where(p => p.NumberOfRooms <= max);
+                ModelState.AddModelError("", "MaxPrice must be greater or equal to MinPrice");
+            }
 
-            }
-            if (!string.IsNullOrEmpty(minPrice))
+            if (searchModel.MinArea > searchModel.MaxArea)
             {
-                var min = int.Parse(minPrice);
-                propertyobjects = propertyobjects.Where(p => p.ListPrice >= min);
+                ModelState.AddModelError("", "MaxArea must be greater or equal to MinArea");
+            }
 
-            }
-            if (!string.IsNullOrEmpty(maxPrice))
+            if (ModelState.IsValid)
             {
-                var max = int.Parse(maxPrice);
-                propertyobjects = propertyobjects.Where(p => p.ListPrice <= max);
+                var props = GetAllProps();
 
-            }
-            if (!string.IsNullOrEmpty(minArea))
-            {
-                var min = int.Parse(minArea);
-                propertyobjects = propertyobjects.Where(p => p.Area >= min);
+                var numberOfBool = 0;
 
-            }
-            if (!string.IsNullOrEmpty(maxArea))
-            {
-                var max = int.Parse(maxArea);
-                propertyobjects = propertyobjects.Where(p => p.Area <= max);
-
-            }
-            if (checkBoxHouse=="on")
-            {
                
-                propertyobjects = propertyobjects.Where(p => p.PropertyType.PropertyTypeName == Models.PropertyTypeName.House);
+
+                if (searchModel.IsHouse)
+                {
+                    searchModel.Results.AddRange(props.Where(p => p.PropertyType.PropertyTypeName == PropertyTypeName.House));
+                    numberOfBool++;
+                }
+                if (searchModel.IsApartment)
+                {
+                    searchModel.Results.AddRange(props.Where(p => p.PropertyType.PropertyTypeName == PropertyTypeName.Apartment));
+                    numberOfBool++;
+                }
+                if (searchModel.IsTownhouse)
+                {
+                    searchModel.Results.AddRange(props.Where(p => p.PropertyType.PropertyTypeName == PropertyTypeName.Townhouse));
+                    numberOfBool++;
+                }
+                if (searchModel.IsFarm)
+                {
+                    searchModel.Results.AddRange(props.Where(p => p.PropertyType.PropertyTypeName == PropertyTypeName.Farm));
+                    numberOfBool++;
+                }
+                if (searchModel.IsLot)
+                {
+                    searchModel.Results.AddRange(props.Where(p => p.PropertyType.PropertyTypeName == PropertyTypeName.Lot));
+                    numberOfBool++;
+                }
+
+
+                if (numberOfBool > 0)
+                {
+                    if (!string.IsNullOrEmpty(searchModel.Searchstring))
+                    {
+                        searchModel.Results = searchModel.Results.Where(p => p.Address.City.Contains(searchModel.Searchstring) || p.Address.StreetAddress.Contains(searchModel.Searchstring)).ToList();
+                    }
+
+                    if (searchModel.MaxNumRooms > 0)
+                    {
+                        searchModel.Results = searchModel.Results.Where(p => p.NumberOfRooms >= searchModel.MinNumRooms && p.NumberOfRooms <= searchModel.MaxNumRooms).ToList();
+                    }
+
+                    searchModel.Results = searchModel.Results.Where(p => p.ListPrice >= searchModel.MinPrice && p.ListPrice <= searchModel.MaxPrice).ToList();
+
+                    searchModel.Results = searchModel.Results.Where(p => p.ListPrice >= searchModel.MinArea && p.NumberOfRooms <= searchModel.MaxArea).ToList();
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(searchModel.Searchstring))
+                    {
+                        searchModel.Results.AddRange(props.Where(p => p.Address.City.Contains(searchModel.Searchstring) || p.Address.StreetAddress.Contains(searchModel.Searchstring)));
+                    }
+
+                    if (searchModel.MaxNumRooms > 0)
+                    {
+                        searchModel.Results = searchModel.Results.Where(p => p.NumberOfRooms >= searchModel.MinNumRooms && p.NumberOfRooms <= searchModel.MaxNumRooms).ToList();
+                    }
+
+                    searchModel.Results = searchModel.Results.Where(p => p.ListPrice >= searchModel.MinPrice && p.ListPrice <= searchModel.MaxPrice).ToList();
+
+                    searchModel.Results = searchModel.Results.Where(p => p.ListPrice >= searchModel.MinArea && p.NumberOfRooms <= searchModel.MaxArea).ToList();
+                }
+
+
 
             }
-            if (checkBoxApartment == "on")
-            {
 
-                propertyobjects = propertyobjects.Where(p => p.PropertyType.PropertyTypeName == Models.PropertyTypeName.Apartment);
-
-            }
-            if (checkBoxTownhouse == "on")
-            {
-
-                propertyobjects = propertyobjects.Where(p => p.PropertyType.PropertyTypeName == Models.PropertyTypeName.Townhouse);
-
-            }
-            if (checkBoxFarm == "on")
-            {
-
-                propertyobjects = propertyobjects.Where(p => p.PropertyType.PropertyTypeName == Models.PropertyTypeName.Farm);
-
-            }
-            if (checkBoxLot == "on")
-            {
-
-                propertyobjects = propertyobjects.Where(p => p.PropertyType.PropertyTypeName == Models.PropertyTypeName.Lot);
-
-            }
-
-            return View(await propertyobjects.ToListAsync());
+            return View(searchModel);
         }
         // GET: PropertyObjects/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -114,6 +135,15 @@ namespace HomeFinder.Controllers
             }
 
             return View(propertyObject);
+        }
+
+        private List<PropertyObject>GetAllProps(){
+
+            return _context.PropertyObjects
+                .Include(p => p.Address)
+                .Include(p => p.PropertyType)
+                .Include(p => p.Images).ToList();
+
         }
     }
 }
