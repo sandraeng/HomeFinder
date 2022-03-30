@@ -14,7 +14,7 @@ namespace HomeFinder.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index(string searchString, string minNumRooms, string maxNumRooms, string minPrice, string maxPrice, string checkBoxHouse = "off", string checkBoxApartment = "off", string checkBoxTownhouse = "off", string checkBoxFarm = "off", string checkBoxLot = "off")
+        public async Task<IActionResult> Index(string searchString, string minNumRooms, string maxNumRooms, string minPrice, string maxPrice, string minArea, string maxArea, string checkBoxHouse = "off", string checkBoxApartment = "off", string checkBoxTownhouse = "off", string checkBoxFarm = "off", string checkBoxLot = "off")
         {
             var propertyobjects = _context.PropertyObjects
                 .Include(p => p.Address)
@@ -48,6 +48,18 @@ namespace HomeFinder.Controllers
             {
                 var max = int.Parse(maxPrice);
                 propertyobjects = propertyobjects.Where(p => p.ListPrice <= max);
+
+            }
+            if (!string.IsNullOrEmpty(minArea))
+            {
+                var min = int.Parse(minArea);
+                propertyobjects = propertyobjects.Where(p => p.Area >= min);
+
+            }
+            if (!string.IsNullOrEmpty(maxArea))
+            {
+                var max = int.Parse(maxArea);
+                propertyobjects = propertyobjects.Where(p => p.Area <= max);
 
             }
             if (checkBoxHouse=="on")
