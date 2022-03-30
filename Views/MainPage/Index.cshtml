@@ -9,6 +9,9 @@
 
     var maxPrice = (int)props.Max(p => p.ListPrice);
     var minPrice = (int)props.Min(p => p.ListPrice);
+
+    var maxArea = (int)props.Max(p => p.Area);
+    var minArea = (int)props.Min(p => p.Area);
     
 }
 
@@ -25,7 +28,7 @@
                     <input type="text" name="searchString" placeholder="City or Street" class="form-control col-12" />
                 </div>
             </article>
-            <article class"card-group-item">
+            <article class="card-group-item">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                     <label>Min</label>
@@ -40,6 +43,31 @@
                     <div class="multi-range-slider">
                         <input type="range"  id="input-left" min="@minPrice" max="@maxPrice" value="@minPrice" />
                         <input type="range"  id="input-right" min="@minPrice" max="@maxPrice" value="@maxPrice" />
+
+                    <div class="slider">
+                    <div class="track"></div>
+                    <div class="range"></div>
+                    <div class="thumb left"></div>
+                    <div class="thumb right"></div>
+                </div>
+                </div>
+                </div>
+            </article>
+             <article class="card-group-item">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                    <label>Min</label>
+                    <input type="number" name="minPrice" class="form-control" id="minimum-value">
+                    </div>
+                    <div class="form-group col-md-6 text-right">
+                    <label>Max</label>
+                    <input type="number" name="maxPrice" class="form-control" id="maximum-value">
+                    </div>
+                </div>
+                <div class="middle w-100">
+                    <div class="multi-range-slider">
+                        <input type="range"  id="input-left" min="@minArea" max="@maxArea" value="@minArea" />
+                        <input type="range"  id="input-right" min="@minArea" max="@maxArea" value="@maxArea" />
 
                     <div class="slider">
                     <div class="track"></div>
