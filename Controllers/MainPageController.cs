@@ -33,6 +33,8 @@ namespace HomeFinder.Controllers
             searchModel.MaxArea = (int)searchModel.Results.Max(p => p.Area);
             searchModel.MinArea = (int)searchModel.Results.Min(p => p.Area);
 
+            searchModel.MaxNumRooms = (int)searchModel.Results.Max(p => p.NumberOfRooms);
+
             return View(searchModel);
         }
         [HttpPost]
@@ -40,17 +42,17 @@ namespace HomeFinder.Controllers
         {
             if (searchModel.MinNumRooms > searchModel.MaxNumRooms)
             {
-                ModelState.AddModelError("", "Maximumrooms must be greater or equal to Minimumrooms");
+                ModelState.AddModelError("", "Maximum rooms must be greater or equal to minimum rooms");
             }
 
             if (searchModel.MinPrice > searchModel.MaxPrice)
             {
-                ModelState.AddModelError("", "MaxPrice must be greater or equal to MinPrice");
+                ModelState.AddModelError("", "Maximum price must be greater or equal to minimum price");
             }
 
             if (searchModel.MinArea > searchModel.MaxArea)
             {
-                ModelState.AddModelError("", "MaxArea must be greater or equal to MinArea");
+                ModelState.AddModelError("", "Maximum area must be greater or equal to minimum area");
             }
 
             if (ModelState.IsValid)
@@ -106,11 +108,9 @@ namespace HomeFinder.Controllers
                     searchModel.Searchstring = searchModel.Searchstring.ToLower();
                      searchModel.Results = searchModel.Results.Where(p => p.Address.City.ToLower().Contains(searchModel.Searchstring) || p.Address.StreetAddress.ToLower().Contains(searchModel.Searchstring)).ToList();
                 }
-
-                if (searchModel.MaxNumRooms > 0)
-                {
-                     searchModel.Results = searchModel.Results.Where(p => p.NumberOfRooms >= searchModel.MinNumRooms && p.NumberOfRooms <= searchModel.MaxNumRooms).ToList();
-                }
+                
+                searchModel.Results = searchModel.Results.Where(p => p.NumberOfRooms >= searchModel.MinNumRooms && p.NumberOfRooms <= searchModel.MaxNumRooms).ToList();
+                
                
             }
 

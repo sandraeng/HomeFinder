@@ -12,22 +12,29 @@ namespace HomeFinder.Models
         public PropertySearchModel()
         {
             Results = new List<PropertyObject>();
+            MinNumRooms = 0;
             
         }
         
         public string Searchstring { get; set; }
-        [Range(0,int.MaxValue, ErrorMessage = "Minimumrooms cant be lower then 0") ]
-        public int MinNumRooms { get; set; }
-        [Range(0, int.MaxValue, ErrorMessage = "Maximumrooms cant be lower then 0")]
-        public int MaxNumRooms { get; set; }
-        [Range(0, int.MaxValue, ErrorMessage = "MinPrice cant be lower then 0")]
-        public int MinPrice { get; set; }
-        [Range(0, int.MaxValue, ErrorMessage = "MaxPrice cant be lower then 0")]
-        public int MaxPrice { get; set; }
-        [Range(0, int.MaxValue, ErrorMessage = "MinArea cant be lower then 0")]
-        public int MinArea { get; set; }
-        [Range(0, int.MaxValue, ErrorMessage = "MaxArea cant be lower then 0")]
-        public int MaxArea { get; set; }
+        [Required(ErrorMessage = "Minimum rooms requires a value")]
+        [Range(0,int.MaxValue, ErrorMessage = "Minimum rooms cant be lower then 0") ]
+        public int? MinNumRooms { get; set; }
+        [Required(ErrorMessage = "Maximum rooms requires a value")]
+        [Range(0, int.MaxValue, ErrorMessage = "Maximum rooms cant be lower then 0")]
+        public int? MaxNumRooms { get; set; }
+        [Required(ErrorMessage = "Minimum price requires a value")]
+        [Range(0, int.MaxValue, ErrorMessage = "Minimum price cant be lower then 0")]
+        public int? MinPrice { get; set; }
+        [Required(ErrorMessage = "Maximum price requires a value")]
+        [Range(0, int.MaxValue, ErrorMessage = "Maximum price cant be lower then 0")]
+        public int? MaxPrice { get; set; }
+        [Required(ErrorMessage = "Minimum area requires a value")]
+        [Range(0, int.MaxValue, ErrorMessage = "Minimum area cant be lower then 0")]
+        public int? MinArea { get; set; }
+        [Required(ErrorMessage = "Maximum area requires a value")]
+        [Range(0, int.MaxValue, ErrorMessage = "Maximum area cant be lower then 0")]
+        public int? MaxArea { get; set; }
         public bool IsHouse { get; set; }
         public bool IsApartment { get; set; }
         public bool IsTownhouse { get; set; }
