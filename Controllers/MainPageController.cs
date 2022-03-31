@@ -46,72 +46,63 @@ namespace HomeFinder.Controllers
             {
                 var props = GetAllProps();
 
-                var numberOfBool = 0;
+                var tempList = new List<PropertyObject>();
 
-               
+
+                int numberBool = 0;
+                
 
                 if (searchModel.IsHouse)
                 {
                     searchModel.Results.AddRange(props.Where(p => p.PropertyType.PropertyTypeName == PropertyTypeName.House));
-                    numberOfBool++;
+                    numberBool++;
                 }
+                
                 if (searchModel.IsApartment)
                 {
                     searchModel.Results.AddRange(props.Where(p => p.PropertyType.PropertyTypeName == PropertyTypeName.Apartment));
-                    numberOfBool++;
+                    numberBool++;
                 }
+               
                 if (searchModel.IsTownhouse)
                 {
                     searchModel.Results.AddRange(props.Where(p => p.PropertyType.PropertyTypeName == PropertyTypeName.Townhouse));
-                    numberOfBool++;
+                    numberBool++;
                 }
+                
                 if (searchModel.IsFarm)
                 {
                     searchModel.Results.AddRange(props.Where(p => p.PropertyType.PropertyTypeName == PropertyTypeName.Farm));
-                    numberOfBool++;
+                    numberBool++;
                 }
+                
                 if (searchModel.IsLot)
                 {
                     searchModel.Results.AddRange(props.Where(p => p.PropertyType.PropertyTypeName == PropertyTypeName.Lot));
-                    numberOfBool++;
+                    numberBool++;
                 }
 
-
-                if (numberOfBool > 0)
+                if (numberBool > 0)
                 {
-                    if (!string.IsNullOrEmpty(searchModel.Searchstring))
-                    {
-                        searchModel.Results = searchModel.Results.Where(p => p.Address.City.Contains(searchModel.Searchstring) || p.Address.StreetAddress.Contains(searchModel.Searchstring)).ToList();
-                    }
-
-                    if (searchModel.MaxNumRooms > 0)
-                    {
-                        searchModel.Results = searchModel.Results.Where(p => p.NumberOfRooms >= searchModel.MinNumRooms && p.NumberOfRooms <= searchModel.MaxNumRooms).ToList();
-                    }
-
                     searchModel.Results = searchModel.Results.Where(p => p.ListPrice >= searchModel.MinPrice && p.ListPrice <= searchModel.MaxPrice).ToList();
-
-                    searchModel.Results = searchModel.Results.Where(p => p.ListPrice >= searchModel.MinArea && p.NumberOfRooms <= searchModel.MaxArea).ToList();
+                    searchModel.Results = searchModel.Results.Where(p => p.Area >= searchModel.MinArea && p.Area <= searchModel.MaxArea).ToList();
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(searchModel.Searchstring))
-                    {
-                        searchModel.Results.AddRange(props.Where(p => p.Address.City.Contains(searchModel.Searchstring) || p.Address.StreetAddress.Contains(searchModel.Searchstring)));
-                    }
-
-                    if (searchModel.MaxNumRooms > 0)
-                    {
-                        searchModel.Results = searchModel.Results.Where(p => p.NumberOfRooms >= searchModel.MinNumRooms && p.NumberOfRooms <= searchModel.MaxNumRooms).ToList();
-                    }
-
-                    searchModel.Results = searchModel.Results.Where(p => p.ListPrice >= searchModel.MinPrice && p.ListPrice <= searchModel.MaxPrice).ToList();
-
-                    searchModel.Results = searchModel.Results.Where(p => p.ListPrice >= searchModel.MinArea && p.NumberOfRooms <= searchModel.MaxArea).ToList();
+                    searchModel.Results = props.Where(p => p.ListPrice >= searchModel.MinPrice && p.ListPrice <= searchModel.MaxPrice).ToList();
+                    searchModel.Results = searchModel.Results.Where(p => p.Area >= searchModel.MinArea && p.Area <= searchModel.MaxArea).ToList();
                 }
 
+                if (!string.IsNullOrEmpty(searchModel.Searchstring))
+                {
+                     searchModel.Results = searchModel.Results.Where(p => p.Address.City.Contains(searchModel.Searchstring) || p.Address.StreetAddress.Contains(searchModel.Searchstring)).ToList();
+                }
 
-
+                if (searchModel.MaxNumRooms > 0)
+                {
+                     searchModel.Results = searchModel.Results.Where(p => p.NumberOfRooms >= searchModel.MinNumRooms && p.NumberOfRooms <= searchModel.MaxNumRooms).ToList();
+                }
+               
             }
 
             return View(searchModel);
