@@ -42,17 +42,17 @@ namespace HomeFinder.Controllers
         {
             if (searchModel.MinNumRooms > searchModel.MaxNumRooms)
             {
-                ModelState.AddModelError("", "Maximum rooms must be greater or equal to minimum rooms");
+                ModelState.AddModelError("MaxNumRooms", "Maximum rooms must be greater or equal to minimum rooms");
             }
 
             if (searchModel.MinPrice > searchModel.MaxPrice)
             {
-                ModelState.AddModelError("", "Maximum price must be greater or equal to minimum price");
+                ModelState.AddModelError("MaxPrice", "Maximum price must be greater or equal to minimum price");
             }
 
             if (searchModel.MinArea > searchModel.MaxArea)
             {
-                ModelState.AddModelError("", "Maximum area must be greater or equal to minimum area");
+                ModelState.AddModelError("MaxArea", "Maximum area must be greater or equal to minimum area");
             }
 
             if (ModelState.IsValid)

@@ -29,7 +29,7 @@
                     <input type="text" asp-for="Searchstring" placeholder="City or Street" class="form-control col-12" />
                 </div>
             </article>
-            <article class="card-group-item mt-3">
+            <article class="card-group-item mt-3 mb-3">
                 <h6 style="text-align:center;">Price</h6>
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -55,7 +55,9 @@
                 </div>
                 </div>
             </article>
-             <article class="card-group-item mt-3">
+            @Html.ValidationMessageFor(model => model.MaxPrice, "", new { @class = "text-danger"})
+            @Html.ValidationMessageFor(model => model.MinPrice, "", new { @class = "text-danger"})
+             <article class="card-group-item mt-3 mb-3">
                  <h6 style="text-align:center;">Area</h6>
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -81,7 +83,9 @@
                 </div>
                 </div>
             </article>
-            <article class="card-group-item mt-3">
+            @Html.ValidationMessageFor(model => model.MinArea, "", new { @class = "text-danger"})
+            @Html.ValidationMessageFor(model => model.MaxArea, "", new { @class = "text-danger"})
+            <article class="card-group-item mt-3 mb-3">
                 <div class="my-2">
                     <h6 style="text-align:center;">Number of rooms</h6>
                     <label for="minNumRooms">Min</label>
@@ -90,7 +94,9 @@
                     <input type="number" asp-for="MaxNumRooms" step="1" class="form-control-sm col-4 float-right" />
                 </div>
             </article>
-            <article class="card-group-item  mt-3">
+            @Html.ValidationMessageFor(model => model.MinNumRooms, "", new { @class = "text-danger"})
+            @Html.ValidationMessageFor(model => model.MaxNumRooms, "", new { @class = "text-danger"})
+            <article class="card-group-item  mt-3 mb-3">
                 <div class="checkbox_wrapper">
                     <div class="checkbox_title">
                         <h6>Choose Property Type</h6>
