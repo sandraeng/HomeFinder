@@ -17,13 +17,16 @@ namespace HomeFinder.Controllers
         {
             _context = context;
             this.searchModel = searchModel;
+
             
 
+
+
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             searchModel.Results = GetAllProps();
-            
+
             searchModel.MaxPrice = (int)searchModel.Results.Max(p => p.ListPrice);
             searchModel.MinPrice = (int)searchModel.Results.Min(p => p.ListPrice);
 
@@ -33,7 +36,7 @@ namespace HomeFinder.Controllers
             return View(searchModel);
         }
         [HttpPost]
-        public async Task<IActionResult> Index(PropertySearchModel searchModel)
+        public IActionResult Index(PropertySearchModel searchModel)
         {
             if (searchModel.MinNumRooms > searchModel.MaxNumRooms)
             {
@@ -98,8 +101,9 @@ namespace HomeFinder.Controllers
                     searchModel.Results = searchModel.Results.Where(p => p.Area >= searchModel.MinArea && p.Area <= searchModel.MaxArea).ToList();
                 }
 
-                if (!string.IsNullOrEmpty(searchModel.Searchstring.ToLower()))
+                if (!string.IsNullOrEmpty(searchModel.Searchstring))
                 {
+                    searchModel.Searchstring = searchModel.Searchstring.ToLower();
                      searchModel.Results = searchModel.Results.Where(p => p.Address.City.ToLower().Contains(searchModel.Searchstring) || p.Address.StreetAddress.ToLower().Contains(searchModel.Searchstring)).ToList();
                 }
 
