@@ -45,7 +45,7 @@
                     <p class="card-text"><b>@Html.DisplayNameFor(model => model.YearBuilt):     </b>@Html.DisplayFor(model => model.YearBuilt)</p>
                     <p class="card-text"><b>@Html.DisplayNameFor(model => model.NextShowingDateTime): </b>@Html.DisplayFor(model => model.NextShowingDateTime)</p>
                     <p class="card-text"><b>@Html.DisplayNameFor(model => model.UploadedDate):  </b>@Html.DisplayFor(model => model.UploadedDate)</p>
-                    <iframe height="350" class="col-12" frameborder="0" style="border:0" referrerpolicy="no-referrer-when-downgrade" src="@($"https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY_HERE&q={HttpUtility.UrlPathEncode(Model.Address.FullAddress)}")"></iframe>
+                    <iframe height="350" class="col-12" frameborder="0" style="border:0" referrerpolicy="no-referrer-when-downgrade" src="@ViewBag.GoogleMapsURL"></iframe>
                 </div>
             </div>
         </div>

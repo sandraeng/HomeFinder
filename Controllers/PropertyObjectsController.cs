@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using System.Web;
+using Microsoft.Extensions.Configuration;
 
 namespace HomeFinder.Controllers
 {
@@ -20,12 +22,14 @@ namespace HomeFinder.Controllers
         private readonly HomeFinderContext _context;
         private readonly UserManager<HomeFinderUser> _userManager;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IConfiguration Configuration;
 
-        public PropertyObjectsController(HomeFinderContext context, UserManager<HomeFinderUser> userManager, IWebHostEnvironment webHostEnvironment)
+        public PropertyObjectsController(HomeFinderContext context, UserManager<HomeFinderUser> userManager, IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
         {
             _context = context;
             this._userManager = userManager;
             this.webHostEnvironment = webHostEnvironment;
+            this.Configuration = configuration;
         }
 
         // GET: PropertyObjects
@@ -52,6 +56,8 @@ namespace HomeFinder.Controllers
                 return NotFound();
             }
 
+            string apiKey = Configuration.GetValue<string>("GoogleMapsAPIKey");
+            ViewBag.GoogleMapsURL = GoogleMapsURL(apiKey, propertyObject.Address.FullAddress);
             return View(propertyObject);
         }
 
@@ -326,6 +332,15 @@ namespace HomeFinder.Controllers
         private bool PropertyObjectExists(int id)
         {
             return _context.PropertyObjects.Any(e => e.Id == id);
+        }
+
+        private string GoogleMapsURL(string apiKey, string searchQuery)
+        {
+            // URL-encode search Query.
+            string q = HttpUtility.UrlPathEncode(searchQuery);
+            string src = $"https://www.google.com/maps/embed/v1/place?key={apiKey}&q={q}";
+
+            return src;
         }
     }
 }
