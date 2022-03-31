@@ -6,6 +6,7 @@ var maximumValue = document.getElementById("maximum-value");
 var thumbLeft = document.querySelector(".slider > .thumb.left");
 var thumbRight = document.querySelector(".slider > .thumb.right");
 var range = document.querySelector(".slider > .range");
+var temp1 = -1;
 
 function setLeftValue() {
     var _this = inputLeft,
@@ -18,7 +19,18 @@ function setLeftValue() {
     var percent = ((_this.value - min) / (max - min)) * 100;
     thumbLeft.style.left = percent + "%";
     range.style.left = percent + "%";
-    minimumValue.value = _this.value;
+    if (temp1 > 0) {
+        minimumValue.value = _this.value;
+        console.log('inside first');
+    }
+
+    if (minimumValue.value < _this.min) {
+        temp1 = _this.value;
+        console.log('inside second');
+    }
+    else {
+        minimumValue.value = _this.value;
+    }
 }
 setLeftValue(); function setRightValue() {
     var _this = inputRight,
@@ -45,6 +57,7 @@ var maximumValue2 = document.getElementById("maximum-value2");
 var thumbLeft2 = document.querySelector(".slider > .thumb.left2");
 var thumbRight2 = document.querySelector(".slider > .thumb.right2");
 var range2 = document.querySelector(".slider > .range2");
+var temp2 = -1;
 
 function setLeft2Value() {
     var _this = inputLeft2,
@@ -57,7 +70,23 @@ function setLeft2Value() {
     var percent = ((_this.value - min) / (max - min)) * 100;
     thumbLeft2.style.left = percent + "%";
     range2.style.left = percent + "%";
-    minimumValue2.value = _this.value;
+
+    if (temp2 > 0)
+    {
+        minimumValue2.value = _this.value;
+        console.log('inside first');
+    }
+
+    if (minimumValue2.value < _this.min)
+    {
+        temp2 = _this.value;
+        console.log('inside second');
+    }
+    else
+    {
+        minimumValue2.value = _this.value;
+    }
+
 }
 setLeft2Value();
 
