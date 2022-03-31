@@ -17,10 +17,18 @@ namespace HomeFinder.Controllers
         {
             _context = context;
             this.searchModel = searchModel;
-            this.searchModel.Results = GetAllProps();
+            
+
         }
         public async Task<IActionResult> Index()
         {
+            searchModel.Results = GetAllProps();
+            
+            searchModel.MaxPrice = (int)searchModel.Results.Max(p => p.ListPrice);
+            searchModel.MinPrice = (int)searchModel.Results.Min(p => p.ListPrice);
+
+            searchModel.MaxArea = (int)searchModel.Results.Max(p => p.Area);
+            searchModel.MinArea = (int)searchModel.Results.Min(p => p.Area);
 
             return View(searchModel);
         }
@@ -45,9 +53,6 @@ namespace HomeFinder.Controllers
             if (ModelState.IsValid)
             {
                 var props = GetAllProps();
-
-                var tempList = new List<PropertyObject>();
-
 
                 int numberBool = 0;
                 
@@ -93,9 +98,9 @@ namespace HomeFinder.Controllers
                     searchModel.Results = searchModel.Results.Where(p => p.Area >= searchModel.MinArea && p.Area <= searchModel.MaxArea).ToList();
                 }
 
-                if (!string.IsNullOrEmpty(searchModel.Searchstring))
+                if (!string.IsNullOrEmpty(searchModel.Searchstring.ToLower()))
                 {
-                     searchModel.Results = searchModel.Results.Where(p => p.Address.City.Contains(searchModel.Searchstring) || p.Address.StreetAddress.Contains(searchModel.Searchstring)).ToList();
+                     searchModel.Results = searchModel.Results.Where(p => p.Address.City.ToLower().Contains(searchModel.Searchstring) || p.Address.StreetAddress.ToLower().Contains(searchModel.Searchstring)).ToList();
                 }
 
                 if (searchModel.MaxNumRooms > 0)
