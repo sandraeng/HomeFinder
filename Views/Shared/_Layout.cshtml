@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<HomeFinderUser> signInManager
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,9 +26,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MainPage" asp-action="Index">Properties</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PropertyObjects" asp-action="SavedObjects">My objects</a>
-                        </li>
+                        @if(signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="PropertyObjects" asp-action="SavedObjects">My objects</a>
+                            </li>
+                        }
+
+                        @if(signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownMenuLink" 
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Manage</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a asp-controller="Admin" asp-action="ListRoles" class="dropdown-item">List roles</a>
+                                    <a asp-controller="Admin" asp-action="ListUsers" class="dropdown-item">List users</a>
+
+                                </div>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

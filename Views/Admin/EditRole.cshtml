@@ -1,5 +1,4 @@
-﻿@using HomeFinder.RoleModels
-@model EditRole
+﻿@model EditRole
 
 @{
     ViewData["Title"] = "Edit role";
@@ -7,7 +6,7 @@
 
 <h1>Edit role</h1>
 
-<div class="role-container text-center mt-5 pt-3 pb-4" style="background-color:#d7d9dbb3;">
+<div class="text-center mt-5 pt-3 pb-4" style="background-color:#d7d9dbb3;">
 
     <form method="post" class="mt-5 pt-3">
         <div class="form-group row">
@@ -33,28 +32,27 @@
             </div>
         </div>
         <div class="col-md-8 offset-md-2">
-        <div class="card m-3">
+            <div class="card m-3">
                 <div class="card-header">
                     <h3>Users in this role</h3>
                 </div>
                 <div class="card-body">
-                @if (Model.Users.Any())
-                {
-                    foreach(var user in Model.Users)
+                    @if (Model.Users.Any())
                     {
-                        <h5 class="card-title">@user</h5>
+                        foreach (var user in Model.Users)
+                        {
+                            <h5 class="card-title">@user</h5>
+                        }
                     }
-                }
-                else
-                {
-                    <h5 class="card-title">No users in this role</h5>
-                }
-            </div>
+                    else
+                    {
+                        <h5 class="card-title">No users in this role</h5>
+                    }
+                </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Add users</a>
-                    <a href="#" class="btn btn-danger">Remove users</a>
+                    <a asp-action="EditUsersInRole" asp-controller="Admin" asp-route-roleId="@Model.Id" class="btn btn-primary">Add or remove users</a>
                 </div>
             </div>
-            </div>
+        </div>
     </form>
 </div>
