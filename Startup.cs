@@ -36,6 +36,12 @@ namespace HomeFinder
                 facebookOptions.AppId = Configuration["FBAppId"];
                 facebookOptions.AppSecret = Configuration["FBAppSecret"];
             });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Required to be redirected to correct login-page when not logged in.
+                options.LoginPath = "/Identity/Account/Login";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
