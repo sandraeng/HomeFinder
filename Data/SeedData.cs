@@ -1,4 +1,7 @@
 ﻿using HomeFinder.Models;
+using HomeFinder.RoleModels;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -8,7 +11,7 @@ namespace HomeFinder.Data
 {
     public static class SeedData
     {
-        public static void Initialize(IServiceProvider serviceProvider)
+        public static async void Initialize(IServiceProvider serviceProvider)
         {
             using (var context = new HomeFinderContext(
                 serviceProvider.GetRequiredService<
@@ -26,10 +29,13 @@ namespace HomeFinder.Data
                 
                 //Lösenord för alla: 1!(FirstName) tex. 1!Gabriel
 
+                // Gabriel är nu insatt som Admin i databasen
 
                 context.Users.AddRange(
                     new HomeFinderUser
                     {
+                        // ADMIN
+
                         Id = "f3c9115a-a0a4-4c4e-aa8a-ec960749556c",
                         FirstName = "Gabriel",
                         LastName = "Andersson",
@@ -120,6 +126,27 @@ namespace HomeFinder.Data
 
                    }
                 );
+                await context.SaveChangesAsync();
+
+
+                var roleStore = new RoleStore<IdentityRole>(context);
+
+                if (!context.Roles.Any(r => r.Name == "Admin"))
+                {
+                    await roleStore.CreateAsync(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" });
+                    await roleStore.CreateAsync(new IdentityRole { Name = "Realtor", NormalizedName = "REALTOR" });
+
+                    var userStore = new UserStore<HomeFinderUser>(context);
+                    foreach (var user in context.Users)
+                    {
+                        if (user.Id == "f3c9115a-a0a4-4c4e-aa8a-ec960749556c")
+                        {
+                            await userStore.AddToRoleAsync(user, "Admin");
+                        }
+                    }
+                }
+
+
                 context.PropertyObjects.AddRange(
                     new PropertyObject {
                         Address = new Address { City = "Malmö", Country = "Sverige", PostalCode = "211 55", StreetAddress = "Hantverkaregatan 13" },

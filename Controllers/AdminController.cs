@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HomeFinder.Controllers
@@ -26,6 +27,36 @@ namespace HomeFinder.Controllers
         {
             var users = userManager.Users;
             return View(users);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with id: {id} cannot be found";
+                return View("Error");
+            }
+
+            var userClaims = await userManager.GetClaimsAsync(user);
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            var model = new EditUser
+            {
+                Id = user.Id,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                AddressId = user.AddressId,
+                CompanyId = user.CompanyId,
+                Claims = userClaims.Select(c => c.Value).ToList(),
+                Roles = userRoles.ToList()
+            };
+
+            return View(model);
         }
 
         [HttpGet]
@@ -73,7 +104,7 @@ namespace HomeFinder.Controllers
             if(role == null)
             {
                 ViewBag.ErrorMessage = $"Role with id: {id} cannot be found";
-                return View("NotFound");
+                return View("Error");
             }
 
             var model = new EditRole
@@ -101,7 +132,7 @@ namespace HomeFinder.Controllers
             if (role == null)
             {
                 ViewBag.ErrorMessage = $"Role with id: {model.Id} cannot be found";
-                return View("NotFound");
+                return View("Error");
             }
             else
             {

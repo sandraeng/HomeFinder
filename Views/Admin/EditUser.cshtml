@@ -1,0 +1,74 @@
+﻿@model EditUser
+
+@{
+    ViewData["Title"] = "Edit user";
+}
+
+<div class="mt-5 pt-3 pb-4" style="background-color:#d7d9dbb3;">
+    <h4>Edit user</h4>
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group row">
+            <label asp-for="Id" class="col-md-2 offset-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input asp-for="Id" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="FirstName" class="col-md-2 offset-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="LastName" class="col-md-2 offset-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="PhoneNumber" class="col-md-2 offset-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Email" class="col-md-2 offset-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.Address.StreetAddress" class="col-md-2 offset-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input asp-for="@Model.Address.StreetAddress" class="form-control" />
+                <span asp-validation-for="@Model.Address.StreetAddress" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.Address.Country" class="col-md-2 offset-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input asp-for="@Model.Address.Country" class="form-control" />
+                <span asp-validation-for="@Model.Address.Country" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.Address.PostalCode" class="col-md-2 offset-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input asp-for="@Model.Address.PostalCode" class="form-control" />
+                <span asp-validation-for="@Model.Address.PostalCode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="@Model.Address.City" class="col-md-2 offset-md-2 col-form-label"></label>
+            <div class="col-md-6">
+                <input asp-for="@Model.Address.City" class="form-control" />
+                <span asp-validation-for="@Model.Address.City" class="text-danger"></span>
+            </div>
+        </div>
+    </form>
+</div>
