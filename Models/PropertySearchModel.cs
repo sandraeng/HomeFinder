@@ -13,6 +13,7 @@ namespace HomeFinder.Models
         {
             Results = new List<PropertyObject>();
             MinNumRooms = 0;
+            MinArea = 0;
             
         }
         
@@ -24,10 +25,10 @@ namespace HomeFinder.Models
         [Range(0, int.MaxValue, ErrorMessage = "Maximum rooms cant be lower then 0")]
         public int? MaxNumRooms { get; set; }
         [Required(ErrorMessage = "Minimum price requires a value")]
-        [Range(0, int.MaxValue, ErrorMessage = "Minimum price cant be lower then 0")]
+        [Range(1, int.MaxValue, ErrorMessage = "Minimum price cant be lower then 1")]
         public int? MinPrice { get; set; }
         [Required(ErrorMessage = "Maximum price requires a value")]
-        [Range(0, int.MaxValue, ErrorMessage = "Maximum price cant be lower then 0")]
+        [Range(1, int.MaxValue, ErrorMessage = "Maximum price cant be lower then 1")]
         public int? MaxPrice { get; set; }
         [Required(ErrorMessage = "Minimum area requires a value")]
         [Range(0, int.MaxValue, ErrorMessage = "Minimum area cant be lower then 0")]

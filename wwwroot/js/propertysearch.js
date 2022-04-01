@@ -36,12 +36,15 @@ setLeftValue(); function setRightValue() {
     var _this = inputRight,
 
         min = parseInt(_this.min),
-        max = parseInt(_this.max); _this.value = Math.max(parseInt(_this.value), parseInt(inputLeft.value) + 1);
+        max = parseInt(_this.max);
+    _this.value = Math.max(parseInt(_this.value), parseInt(inputLeft.value) + 1);
 
     var percent = ((_this.value - min) / (max - min)) * 100;
 
     thumbRight.style.right = (100 - percent) + "%";
     range.style.right = (100 - percent) + "%";
+    /*inputRight.style.right = (100 - percent) + "%";*/
+
     if (tempMax > 0) {
         maximumValue.value = _this.value;
     }

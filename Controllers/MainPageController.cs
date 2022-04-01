@@ -31,7 +31,7 @@ namespace HomeFinder.Controllers
             searchModel.MinPrice = (int)searchModel.Results.Min(p => p.ListPrice);
 
             searchModel.MaxArea = (int)searchModel.Results.Max(p => p.Area);
-            searchModel.MinArea = (int)searchModel.Results.Min(p => p.Area);
+            searchModel.MinArea = 0;
 
             searchModel.MaxNumRooms = (int)searchModel.Results.Max(p => p.NumberOfRooms);
 
@@ -105,8 +105,8 @@ namespace HomeFinder.Controllers
 
                 if (!string.IsNullOrEmpty(searchModel.Searchstring))
                 {
-                    searchModel.Searchstring = searchModel.Searchstring.ToLower();
-                     searchModel.Results = searchModel.Results.Where(p => p.Address.City.ToLower().Contains(searchModel.Searchstring) || p.Address.StreetAddress.ToLower().Contains(searchModel.Searchstring)).ToList();
+                    searchModel.Searchstring = searchModel.Searchstring.ToLower().Trim();
+                     searchModel.Results = searchModel.Results.Where(p => p.Address.City.ToLower().Trim().Contains(searchModel.Searchstring) || p.Address.StreetAddress.ToLower().Contains(searchModel.Searchstring)).ToList();
                 }
                 
                 searchModel.Results = searchModel.Results.Where(p => p.NumberOfRooms >= searchModel.MinNumRooms && p.NumberOfRooms <= searchModel.MaxNumRooms).ToList();

@@ -11,8 +11,8 @@
     var minPrice = (int)props.Min(p => p.ListPrice);
 
     var maxArea = (int)props.Max(p => p.Area);
-    var minArea = (int)props.Min(p => p.Area);
-    
+    var minArea = 0;
+
 }
 
 <h2 class="my-4">Properties</h2>
@@ -141,7 +141,7 @@
                                 <div class="name_search">Lot</div>
 
                             </div>
-                        </label
+                        </label>
                     </div>
                 </div>
                 
@@ -203,3 +203,4 @@
     </div>
 
 </div>
+<script src="~/js/propertysearch.js" asp-append-version="true"></script>
