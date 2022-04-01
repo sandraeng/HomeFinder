@@ -242,7 +242,10 @@ namespace HomeFinder.Controllers
         public async Task<IActionResult> NoticeOfInterest(int id)
         {
             // Update noticeOfInterest with PropertyObject from db.
-            var propertyObject = await _context.PropertyObjects.Where(po => po.Id == id).FirstOrDefaultAsync();
+            var propertyObject = await _context.PropertyObjects
+                .Where(po => po.Id == id)
+                .Include(po => po.Address)
+                .FirstOrDefaultAsync();
 
             if (propertyObject is not null)
             {
@@ -271,7 +274,9 @@ namespace HomeFinder.Controllers
             if ((propertyObject.Id > 0))
             {
                 // Update property object with correct object from db.
-                propertyObject = await _context.PropertyObjects.Where(po => po.Id == propertyObject.Id).FirstOrDefaultAsync();
+                propertyObject = await _context.PropertyObjects
+                    .Where(po => po.Id == propertyObject.Id)
+                    .FirstOrDefaultAsync();
             }
             var user = await _userManager.GetUserAsync(User);
 
@@ -289,7 +294,7 @@ namespace HomeFinder.Controllers
 
                     _context.Add(notice);
                     await _context.SaveChangesAsync();
-                    return View("Details", propertyObject);
+                    return RedirectToAction("Details", propertyObject);
                 }
             }
             return NotFound();
