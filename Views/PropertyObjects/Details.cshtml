@@ -14,8 +14,33 @@
         </div>
         <div class="row g-0">
             <div class="col-12">
-                @*inte fixat så bilderna kopplat till objektet laddas upp*@
-                <img src="https://urbanpark.wellfastigheter.se/img/int_01.jpg" width="100%" style="object-fit: cover;">
+                <div class="card-img">
+                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" intervall="8000">
+                        <div class="carousel-inner" style="height: 600px;">
+                            @{
+                                var first = true;
+                            }
+                            @foreach (var item in @Model.Images)
+                            {
+                                <div class="carousel-item @(first?Html.Raw("active"):Html.Raw(""))" style="height: 600px;">
+                                    <img class="w-100 h-100" style="object-fit: cover;" src="@item.Path" asp-append-version="true" alt="@item.AltText">
+                                    
+                                </div>
+                                first = false;
+                            }
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                           data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                           data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row g-0">
