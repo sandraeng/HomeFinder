@@ -26,7 +26,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MainPage" asp-action="Index">Properties</a>
                         </li>
-                        @if(signInManager.IsSignedIn(User))
+                        @if(signInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="PropertyObjects" asp-action="SavedObjects">My objects</a>
@@ -37,10 +37,10 @@
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownMenuLink" 
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Manage</a>
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Admin</a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a asp-controller="Admin" asp-action="ListRoles" class="dropdown-item">Roles</a>
-                                    <a asp-controller="Admin" asp-action="ListUsers" class="dropdown-item">Users</a>
+                                    <a asp-controller="Admin" asp-action="ListRoles" class="dropdown-item">Manage Roles</a>
+                                    <a asp-controller="Admin" asp-action="ListUsers" class="dropdown-item">Manage Users</a>
 
                                 </div>
                             </li>
