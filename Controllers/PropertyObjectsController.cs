@@ -233,14 +233,16 @@ namespace HomeFinder.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // POST: PropertyObjects/NoticeOfInterest
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        // GET: PropertyObjects/NoticeOfInterest/{id}
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> NoticeOfInterest(int id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             // Update noticeOfInterest with PropertyObject from db.
             var propertyObject = await _context.PropertyObjects
                 .Where(po => po.Id == id)
@@ -271,7 +273,7 @@ namespace HomeFinder.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> VerifyNoticeOfInterest(PropertyObject propertyObject)
+        public async Task<IActionResult> NoticeOfInterest(PropertyObject propertyObject)
         {
             if ((propertyObject.Id > 0))
             {
