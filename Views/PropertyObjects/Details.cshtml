@@ -47,13 +47,8 @@
             <div class="col-12">
                 <div class="card-body">
                     <div class="float-right text-right">
-                        <button type="button" class="btn btn-danger m-1"><i class="fa-solid fa-heart"></i></button>
-                        <form asp-action="NoticeOfInterest">
-                            <input type="hidden" asp-for="Id" />
-                            <div class="form-group">
-                                <input type="submit" value="Leave a notice of interest" class="btn btn-primary m-1" />
-                            </div>
-                        </form>
+                        <button type="button" class="btn btn-danger m-1 col-12"><i class="fa-solid fa-heart"></i></button>
+                        <a asp-action="NoticeOfInterest" asp-route-id="@Model.Id" class="btn btn-primary m-1 col-12">Leave a notice of interest</a>
                     </div>
 
                     <p class="card-text"><b>@Html.DisplayNameFor(model => model.Status):        </b>@Html.DisplayFor(model => model.Status)</p>
