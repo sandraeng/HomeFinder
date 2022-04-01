@@ -1,0 +1,37 @@
+﻿@model List<UserRole>
+
+@{
+    var roleId = ViewBag.roleId;
+}
+
+<div class="text-center mt-5 pt-3 pb-4" style="background-color:#d7d9dbb3;">
+    <form method="post">
+        <div class="col-md-8 offset-md-2">
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>Add or remove users in this role</h2>
+                </div>
+                <div class="card-body">
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <div class="form-control m-1">
+                            <input type="hidden" asp-for="@Model[i].UserId" />
+                            <input type="hidden" asp-for="@Model[i].UserName" />
+                            <input asp-for="@Model[i].IsChecked" class="form-check-input"/>
+                            <label asp-for="@Model[i].IsChecked" class="form-check-label">
+                                @Model[i].UserName
+                            </label>
+                        </div>
+                    }
+                </div>
+                <div class="card-footer">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                    <a asp-controller="Admin" asp-action="EditRole" asp-route-id="@roleId" class="btn btn-primary">
+                        Create role
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
