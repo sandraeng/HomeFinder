@@ -25,7 +25,7 @@
                     <h5>
                         I am interested in this property and would like to be contacted with more information.
                     </h5>
-                    <form asp-action="VerifyNoticeOfInterest">
+                    <form asp-action="NoticeOfInterest">
                         <input type="hidden" asp-for="Id" />
                         <p class="card-text"><b>@Html.DisplayNameFor(model => model.Address):       </b><br />@Html.DisplayFor(model => model.Address.StreetAddress)<br />@Html.DisplayFor(model => model.Address.PostalCode)<br />@Html.DisplayFor(model => model.Address.City)</p>
                         <p class="card-text"><b>@Html.DisplayNameFor(model => model.Realtor):       </b>@Html.DisplayFor(model => model.Realtor.FirstName) @Html.DisplayFor(model => model.Realtor.LastName), @Html.DisplayFor(model => model.Realtor.Company.Name)</p>
