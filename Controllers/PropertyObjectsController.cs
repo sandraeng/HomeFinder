@@ -50,6 +50,7 @@ namespace HomeFinder.Controllers
             var propertyObject = await _context.PropertyObjects
                 .Include(p => p.Address)
                 .Include(p => p.Realtor)
+                .Include(p => p.Images)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (propertyObject == null)
             {
