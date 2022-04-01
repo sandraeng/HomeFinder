@@ -245,6 +245,8 @@ namespace HomeFinder.Controllers
             var propertyObject = await _context.PropertyObjects
                 .Where(po => po.Id == id)
                 .Include(po => po.Address)
+                .Include(po => po.Realtor)
+                .ThenInclude(r => r.Company)
                 .FirstOrDefaultAsync();
 
             if (propertyObject is not null)
