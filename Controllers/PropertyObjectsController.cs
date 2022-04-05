@@ -268,6 +268,40 @@ namespace HomeFinder.Controllers
             return NotFound();
         }
 
+        // POST: PropertyObjects/AddFavoriteObject
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> SaveFavoriteObject(int id)
+        {
+            // Update property object with correct object from db.
+            var propertyObject = await _context.PropertyObjects
+                .Where(po => po.Id == id)
+                .FirstOrDefaultAsync();
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if ((user is not null) && (propertyObject is not null))
+            {
+                // Verify that a PropertyFavoritedByUser for this PropertyObject and user doesn't exist.
+                var oldFavorite = await _context.PropertyFavorited.Where(pf => (pf.PropertyObjectId == propertyObject.Id) && (pf.UserId == user.Id)).FirstOrDefaultAsync();
+                if (oldFavorite is null)
+                {
+                    var favorite = new PropertyFavoritedByUser();
+                    favorite.PropertyObject = propertyObject;
+                    favorite.PropertyObjectId = propertyObject.Id;
+                    favorite.User = user;
+                    favorite.UserId = user.Id;
+
+                    _context.Add(favorite);
+                    await _context.SaveChangesAsync();
+                }
+                return Json(true);
+            }
+            return Json(false);
+        }
+
+
         // POST: PropertyObjects/VerifyNoticeOfInterest
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -299,11 +333,13 @@ namespace HomeFinder.Controllers
 
                     _context.Add(notice);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction("Details", propertyObject);
+                    return RedirectToAction("Details", propertyObject.Id);
                 }
             }
             return NotFound();
         }
+
+
 
         [Authorize]
         public async Task<IActionResult> SavedObjects()
@@ -312,10 +348,11 @@ namespace HomeFinder.Controllers
 
             return View(user);
         }
-
+        [Authorize]
         public async Task<IActionResult> RemoveLikedObject(int id)
         {
-            var objToRemove = await _context.PropertyFavorited.FirstOrDefaultAsync(lP => lP.PropertyObject.Id == id);
+            var user = await _userManager.GetUserAsync(User); // Need to check for liked object for this specific user!
+            var objToRemove = await _context.PropertyFavorited.FirstOrDefaultAsync(lP => lP.PropertyObject.Id == id && lP.User.Id == user.Id);
             if (objToRemove == null)
             {
                 return NotFound();
@@ -325,10 +362,11 @@ namespace HomeFinder.Controllers
 
             return RedirectToAction("SavedObjects");
         }
-
+        [Authorize]
         public async Task<IActionResult> RemoveObjectOfInterest(int id)
         {
-            var objToRemove = await _context.NoticeOfInterests.FirstOrDefaultAsync(nI => nI.PropertyObject.Id == id);
+            var user = await _userManager.GetUserAsync(User); // Need to check for notice if interest-object for this specific user!
+            var objToRemove = await _context.NoticeOfInterests.FirstOrDefaultAsync(nI => nI.PropertyObject.Id == id && nI.User.Id == user.Id);
             if (objToRemove == null)
             {
                 return NotFound();
