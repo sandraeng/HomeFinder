@@ -26,6 +26,7 @@
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\Images\" />
     <Folder Include="wwwroot\lib\fontawesome\" />
+    <Folder Include="wwwroot\relatorProof\" />
   </ItemGroup>
 
 </Project>
