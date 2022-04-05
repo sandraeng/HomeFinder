@@ -6,8 +6,11 @@ namespace HomeFinder.Models
     {
         public int Id { get; set; }
 
+        [Display(Name ="*Company name")]
         [Required]
         public string Name { get; set; }
+
+        [Display(Name ="*Organization number")]
         [Required]
         public string OrgNumber { get; set; }
     }

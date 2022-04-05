@@ -1,10 +1,10 @@
 ﻿@page
-@model RegisterModel
+@model HomeFinder.Areas.Identity.Pages.Account.RegisterRelatorModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Register as relator";
     Layout = "/Areas/Identity/Pages/_AuthLayout.cshtml";
-
 }
+
 
 <h2>@ViewData["Title"]</h2>
 
@@ -39,9 +39,9 @@
         </section>
     </div>
     <div class="col-md-12">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
             <div class="text-center">
-                <a class="btn btn-primary fb-button" href="/Identity/Account/RegisterRelator">Register as relator</a>
+                <a class="btn btn-primary fb-button" href="/Identity/Account/Register">Register as user</a>
             </div>
             <h4>Create a new account.</h4>
             <hr />
@@ -79,37 +79,21 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <div class="input-data">
-                    <label asp-for="Input.Address.StreetAddress" id="streetAddress"></label>
-                    <input asp-for="Input.Address.StreetAddress" class="form-control" onfocus="streetAddressLabelStayUp()"/>
-                    <span asp-validation-for="Input.Address.StreetAddress" class="text-danger"></span>
+                <div class="col-md-6">
+                    <div class="input-data">
+                        <label asp-for="Input.Company.Name"></label>
+                        <input asp-for="Input.Company.Name" class="form-control"/>
+                        <span asp-validation-for="Input.Company.Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-data">
+                        <label asp-for="Input.Company.OrgNumber"></label>
+                        <input asp-for="Input.Company.OrgNumber" class="form-control"/>
+                        <span asp-validation-for="Input.Company.OrgNumber" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="input-data">
-                    <label asp-for="Input.Address.Country" id="country"></label>
-                    <input asp-for="Input.Address.Country" class="form-control" onfocus="countryLabelStayUp()"/>
-                    <span asp-validation-for="Input.Address.Country" class="text-danger"></span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="input-data">
-                    <label asp-for="Input.Address.PostalCode" id="postalCode"></label>
-                    <input asp-for="Input.Address.PostalCode" class="form-control" onfocus="postalCodeLabelStayUp()"/>
-                    <span asp-validation-for="Input.Address.PostalCode" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input-data">
-                    <label asp-for="Input.Address.City" id="city"></label>
-                    <input asp-for="Input.Address.City" class="form-control" onfocus="cityLabelStayUp()"/>
-                    <span asp-validation-for="Input.Address.City" class="text-danger"></span>
-                </div>
-            </div>
-        </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="input-data">
@@ -126,6 +110,16 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group row">
+                @*<label asp-for="Input.RelatorProof" class="col-sm-3 col-form-label"></label>*@
+                <div class="col-md-12">
+                    <div class="custom-file">
+                        <input asp-for="Input.RelatorProof" class="form-control custom-file-input"/>
+                        <label class="custom-file-label">Insert relator proof</label>
+                    </div>
+                        @*<span asp-validation-for="Input.RelatorProof" class="text-danger"></span>*@
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </div>
@@ -133,6 +127,14 @@
 
 @section Scripts {
     <script type="text/javascript">
+        $(document).ready(function () {
+        $('.custom-file-input').on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).next('.custom-file-label').html(fileName);
+        });
+        });
+    
+
         function firstNameLabelStayUp(){
             const firstName = document.getElementById("firstName")
 
