@@ -23,7 +23,7 @@ namespace HomeFinder.Controllers
 
 
         }
-        public IActionResult Index()
+        public IActionResult Index(int? page)
         {
             searchModel.Results = GetAllProps();
 
@@ -34,11 +34,17 @@ namespace HomeFinder.Controllers
             searchModel.MinArea = 0;
 
             searchModel.MaxNumRooms = (int)searchModel.Results.Max(p => p.NumberOfRooms);
+            var pager = new Pager(searchModel.Results.Count, page);
+            var model = new PropertySearchModel
+            {
+                Results = searchModel.Results.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize).ToList(),
+                Pager = pager
+            };
 
-            return View(searchModel);
+            return View(model);
         }
         [HttpPost]
-        public IActionResult Index(PropertySearchModel searchModel)
+        public IActionResult Index(PropertySearchModel searchModel, int? page)
         {
             if (searchModel.MinNumRooms > searchModel.MaxNumRooms)
             {
@@ -58,6 +64,8 @@ namespace HomeFinder.Controllers
             if (ModelState.IsValid)
             {
                 var props = GetAllProps();
+                
+
 
                 int numberBool = 0;
                 
@@ -108,11 +116,15 @@ namespace HomeFinder.Controllers
                     searchModel.Searchstring = searchModel.Searchstring.ToLower().Trim();
                      searchModel.Results = searchModel.Results.Where(p => p.Address.City.ToLower().Trim().Contains(searchModel.Searchstring) || p.Address.StreetAddress.ToLower().Contains(searchModel.Searchstring)).ToList();
                 }
-                
-                searchModel.Results = searchModel.Results.Where(p => p.NumberOfRooms >= searchModel.MinNumRooms && p.NumberOfRooms <= searchModel.MaxNumRooms).ToList();
-                
-               
+
+
+
+
             }
+            var pager = new Pager(searchModel.Results.Count, page);
+                searchModel.Results.Where(p => p.NumberOfRooms >= searchModel.MinNumRooms && p.NumberOfRooms <= searchModel.MaxNumRooms).Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize).ToList();
+                searchModel.Pager = pager;
+            
 
             return View(searchModel);
         }

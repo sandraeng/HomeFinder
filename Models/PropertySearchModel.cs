@@ -43,6 +43,7 @@ namespace HomeFinder.Models
         public bool IsLot { get; set; }
 
         public List<PropertyObject> Results { get; set; }
+        public Pager Pager { get; set; }
     }
 
     
