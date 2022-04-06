@@ -1,27 +1,36 @@
-﻿@*@using HomeFinder.Data
+﻿@using HomeFinder.Data
+@using HomeFinder.Models
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@inject IHttpContextAccessor httpContextAccessor
 @inject HomeFinderContext context
 
 <h3>AddProperty</h3>
-<label hidden>@OnInitializedAsync()</label>
-<label hidden>@GetRealtor</label>
+@{
+    var task = GetRealtor();
+task.Wait();
+if(task.IsCompleted)
+{
+var modelRe = task.Result;
+<h1>@modelRe.Id @modelRe.FirstName</h1>
+}
+}
 
 
-<h1>@realtor.FirstName</h1>
 
 @code {
-    [CascadingParameter]
-    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await AuthenticationStateTask;
-        User = authState.User.Identity.Id;
-    }
+    [Parameter] public HomeFinderUser Realtor { get; set; }
 
-    private async Task GetRealtor()
+    public string UserName;
+
+    public async Task<HomeFinderUser> GetRealtor()
     {
-        var realtor = context.FirstOrDefaultAsync(i => i.id == User);
+        UserName = httpContextAccessor.HttpContext.User.Identity.Name;
+        Realtor = await context.Users.FirstOrDefaultAsync(i => i.Email == UserName);
+        return Realtor;
 
     }
-}*@
+}
