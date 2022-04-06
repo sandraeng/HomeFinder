@@ -111,7 +111,6 @@
                 </div>
             </div>
             <div class="form-group row">
-                @*<label asp-for="Input.RelatorProof" class="col-sm-3 col-form-label"></label>*@
                 <div class="col-md-12">
                     <div class="custom-file">
                         <input asp-for="Input.RelatorProof" class="form-control custom-file-input"/>
@@ -127,13 +126,18 @@
 
 @section Scripts {
     <script type="text/javascript">
+        
+        //Jquery to display filename that fileinput holds
+        
         $(document).ready(function () {
         $('.custom-file-input').on("change", function () {
             var fileName = $(this).val().split("\\").pop();
             $(this).next('.custom-file-label').html(fileName);
         });
         });
-    
+        
+        //Js functions to keep label from not covering input if it holds a value
+
         function companyNameLabelStayUp(){
             const companyName = document.getElementById("companyName")
 
