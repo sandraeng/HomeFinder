@@ -1,0 +1,47 @@
+﻿@using HomeFinder.Controllers
+@using HomeFinder.Data
+@using Microsoft.AspNetCore.Components
+@using Microsoft.EntityFrameworkCore;
+@using HomeFinder.Models
+@inject HomeFinderContext context
+@inject SignInManager signIn
+<h3>Properties</h3>
+
+<label hidden>@GetProperties()</label>
+
+
+
+@foreach (var property in propertyObjects)
+{
+    <table>
+        <tr>
+            <td>
+                @property.Address.StreetAddress
+            </td>
+            <td>
+                @property.Description
+            </td>
+            <td>
+                @property.ListPrice
+            </td>
+            <td>
+                @property.Realtor.FirstName
+            </td>
+            <td>
+                <a href="PropertyObjects/Edit/@property.Id">Edit</a> |
+                <a href="PropertyObjects/Details/@property.Id">Details</a> |
+                <a href="PropertyObjects/Delete/@property.Id">Delete</a>
+            </td>
+        </tr>
+    </table>
+}
+
+@code {
+    [Parameter] public IEnumerable<PropertyObject> propertyObjects { get; set; }
+
+    public IEnumerable<PropertyObject> GetProperties()
+    {
+
+        return propertyObjects = context.PropertyObjects.Include(p => p.Address).Include(p => p.Realtor).ToList();
+    }
+}

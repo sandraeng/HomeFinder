@@ -47,5 +47,12 @@ namespace HomeFinder.Data
         public DbSet<PropertyType> PropertyTypes { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<LeaseType> LeaseTypes { get; set; }
+
+
+        //public async Task<List<PropertyObject>> GetProperties()
+        //{
+        //    List<PropertyObject> propertyObjects;
+        //    return propertyObjects = await PropertyObjects.Include(p => p.Address).Include(p => p.Realtor).ToListAsync();
+        //}
     }
 }
