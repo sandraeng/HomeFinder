@@ -1,10 +1,12 @@
 ﻿@using HomeFinder.Controllers
 @using HomeFinder.Data
 @using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Identity
 @using Microsoft.EntityFrameworkCore;
 @using HomeFinder.Models
 @inject HomeFinderContext context
-@inject SignInManager signIn
+@inject SignInManager<HomeFinderUser> signIn
+
 <h3>Properties</h3>
 
 <label hidden>@GetProperties()</label>
