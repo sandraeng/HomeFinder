@@ -205,28 +205,28 @@
 					<ul class="pagination">
 						@if (Model.Pager.CurrentPage > 1)
 						{
-							<li>
-								<a href="~/MainPage/Index">First</a>
+							<li class="page-item">
+								<a class="page-link" href="~/MainPage/Index">First</a>
 							</li>
 							<li>
-								<a href="~/MainPage/Index?page=@(Model.Pager.CurrentPage - 1)">Previous</a>
+								<a class="page-link" href="~/MainPage/Index?page=@(Model.Pager.CurrentPage - 1)">Previous</a>
 							</li>
 						}
 
-						@for (int page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+						@for (int pge = Model.Pager.StartPage; pge <= Model.Pager.EndPage; pge++)
 						{
-							<li class="@(page == Model.Pager.CurrentPage ? "active" : "")">
-								<a href="~/MainPage/Index?page=page">page[i]</a>
+							<li class="page-item @(pge == Model.Pager.CurrentPage ? "active" : "")">
+								<a class="page-link" href="~/MainPage/Index?page=@pge">@pge</a>
 							</li>
 						}
 
 						@if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
 						{
-							<li>
-								<a href="~/MainPage/Index?page=@(Model.Pager.CurrentPage + 1)">Next</a>
+							<li class="page-item">
+								<a class="page-link" href="~/MainPage/Index?page=@(Model.Pager.CurrentPage + 1)">Next</a>
 							</li>
 							<li>
-								<a href="~/MainPage/Index?page=@(Model.Pager.TotalPages)">Last</a>
+								<a class="page-link" href="~/MainPage/Index?page=@(Model.Pager.TotalPages)">Last</a>
 							</li>
 						}
 					</ul>

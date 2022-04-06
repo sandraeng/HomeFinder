@@ -34,14 +34,14 @@ namespace HomeFinder.Controllers
             searchModel.MinArea = 0;
 
             searchModel.MaxNumRooms = (int)searchModel.Results.Max(p => p.NumberOfRooms);
+            
+            
+            
             var pager = new Pager(searchModel.Results.Count, page);
-            var model = new PropertySearchModel
-            {
-                Results = searchModel.Results.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize).ToList(),
-                Pager = pager
-            };
+            searchModel.Results = searchModel.Results.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize).ToList();
+            searchModel.Pager = pager;
 
-            return View(model);
+            return View(searchModel);
         }
         [HttpPost]
         public IActionResult Index(PropertySearchModel searchModel, int? page)
