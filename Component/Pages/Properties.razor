@@ -1,11 +1,13 @@
 ﻿@using HomeFinder.Controllers
 @using HomeFinder.Data
+@using HomeFinder.Models
 @using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.EntityFrameworkCore;
-@using HomeFinder.Models
 @inject HomeFinderContext context
-@inject SignInManager<HomeFinderUser> signIn
+@inject HomeFinderUser user
+@inject SignInManager<HomeFinderUser> signInManager
 
 <h3>Properties</h3>
 
@@ -40,10 +42,18 @@
 
 @code {
     [Parameter] public IEnumerable<PropertyObject> propertyObjects { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
     public IEnumerable<PropertyObject> GetProperties()
     {
 
         return propertyObjects = context.PropertyObjects.Include(p => p.Address).Include(p => p.Realtor).ToList();
     }
+
+     protected override async Task OnInitializedAsync()
+  {
+      var authState = await AuthenticationStateTask;
+      var Users = authState.User.Identity.Name;
+  }
 }

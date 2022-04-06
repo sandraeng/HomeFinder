@@ -1,0 +1,27 @@
+﻿@*@using HomeFinder.Data
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Authorization
+@inject HomeFinderContext context
+
+<h3>AddProperty</h3>
+<label hidden>@OnInitializedAsync()</label>
+<label hidden>@GetRealtor</label>
+
+
+<h1>@realtor.FirstName</h1>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateTask;
+        User = authState.User.Identity.Id;
+    }
+
+    private async Task GetRealtor()
+    {
+        var realtor = context.FirstOrDefaultAsync(i => i.id == User);
+
+    }
+}*@

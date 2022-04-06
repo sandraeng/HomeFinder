@@ -27,10 +27,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MainPage" asp-action="Index">Properties</a>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Realtor" asp-action="Index">Realtor</a>
-                        </li>
+                        @if(signInManager.IsSignedIn(User) && User.IsInRole("Realtor"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Realtor" asp-action="Index">Realtor</a>
+                            </li>
+                            
+                        }
 
                         @if(signInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
                         {

@@ -9,8 +9,9 @@ namespace HomeFinder.Controllers
 {
     public class RealtorController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string id)
         {
+
             return View();
         }
         
