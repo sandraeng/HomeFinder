@@ -16,9 +16,9 @@ namespace HomeFinder.Data
         {
         }
 
-        public HomeFinderContext()
-        {
-        }
+        //public HomeFinderContext()
+        //{
+        //}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -48,7 +48,7 @@ namespace HomeFinder.Data
         public DbSet<Company> Companies { get; set; }
         public DbSet<LeaseType> LeaseTypes { get; set; }
 
+        
 
-       
     }
 }
