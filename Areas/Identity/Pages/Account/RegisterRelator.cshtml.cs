@@ -105,6 +105,7 @@ namespace HomeFinder.Areas.Identity.Pages.Account
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     PhoneNumber = Input.PhoneNumber,
+                    Company = new Company { Name = Input.Company.Name, OrgNumber = Input.Company.OrgNumber }
                     
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -114,9 +115,9 @@ namespace HomeFinder.Areas.Identity.Pages.Account
                     if (Input.RelatorProof != null)
                     {
                         string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "relatorProof");
-                        uniqueFilename = Guid.NewGuid().ToString() + $"_{Input.FirstName}_{Input.LastName}_" + Input.RelatorProof.FileName;
+                        uniqueFilename = user.Id.ToString() + $"_{Input.FirstName}_{Input.LastName}";
                         string filePath = Path.Combine(uploadsFolder, uniqueFilename);
-
+                                                                                                            //Relator proof file gets uploaded to wwwroot/relatorProof
                         Input.RelatorProof.CopyTo(new FileStream(filePath, FileMode.Create));
                     }
 
