@@ -10,15 +10,11 @@
 
 <h3>AddProperty</h3>
 @{
-    var task = GetRealtor();
-task.Wait();
-if(task.IsCompleted)
-{
-var modelRe = task.Result;
-<h1>@modelRe.Id @modelRe.FirstName</h1>
-}
+    GetRealtor();
+
 }
 
+<h1>@Realtor.Id @Realtor.FirstName</h1>
 
 
 @code {
@@ -26,11 +22,10 @@ var modelRe = task.Result;
 
     public string UserName;
 
-    public async Task<HomeFinderUser> GetRealtor()
+    public void GetRealtor()
     {
         UserName = httpContextAccessor.HttpContext.User.Identity.Name;
-        Realtor = await context.Users.FirstOrDefaultAsync(i => i.Email == UserName);
-        return Realtor;
+        Realtor = context.Users.FirstOrDefault(i => i.Email == UserName);
 
     }
 }
