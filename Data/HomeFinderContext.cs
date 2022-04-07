@@ -49,6 +49,7 @@ namespace HomeFinder.Data
         public DbSet<LeaseType> LeaseTypes { get; set; }
 
 
-       
+
+
     }
 }
