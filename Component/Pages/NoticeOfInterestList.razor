@@ -1,0 +1,39 @@
+﻿@page "/Pages/NoticeOfInterestList"
+
+@using Microsoft.AspNetCore.Components.Web
+@using HomeFinder.Models
+@using HomeFinder.Data
+@inject HomeFinderContext context
+
+<h1>Notice of Interest</h1>
+
+<div class="card-columns">
+    @foreach (var interest in context.NoticeOfInterests)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@interest.PropertyObject</h5>
+            </div>
+        </div>
+@*        <div class="card-footer">
+            <small class="text-muted">
+                <button @onclick="(e => SelectedProperty(interest.PropertyObjectId))"
+                    data-toggle="modal" data-target="#objectModal" class="btn btn-primary"
+                    >More Info</button>
+            </small>
+        </div>*@
+    }
+</div>
+
+@code {
+    //NoticeOfInterest selectProperty;
+    //string selectPropertyId;
+
+    //void SelectedProperty(string propertyId)
+    //{
+    //    selectPropertyId = propertyId;
+    //    selectProperty = context.NoticeOfInterests.First(n => n.PropertyObjectId == propertyId);
+    //}
+}
+
+         services.AddServerSideBlazor();
