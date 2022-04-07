@@ -6,7 +6,7 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.EntityFrameworkCore;
 @inject HomeFinderContext context
-@inject HomeFinderUser user
+@*@inject HomeFinderUser user*@
 @inject SignInManager<HomeFinderUser> signInManager
 
 <h3>Properties</h3>
@@ -51,9 +51,9 @@
         return propertyObjects = context.PropertyObjects.Include(p => p.Address).Include(p => p.Realtor).ToList();
     }
 
-     protected override async Task OnInitializedAsync()
-  {
-      var authState = await AuthenticationStateTask;
-      var Users = authState.User.Identity.Name;
-  }
+  //   protected override async Task OnInitializedAsync()
+  //{
+  //    var authState = await AuthenticationStateTask;
+  //    var Users = authState.User.Identity.Name;
+  //}
 }

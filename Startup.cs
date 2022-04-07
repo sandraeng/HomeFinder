@@ -33,6 +33,7 @@ namespace HomeFinder
             services.AddSingleton<PropertySearchModel>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddHttpContextAccessor();
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["FBAppId"];
