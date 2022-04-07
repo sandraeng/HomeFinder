@@ -1,50 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
+using HomeFinder.Models;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using HomeFinder.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HomeFinder.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
-    public class RegisterModel : PageModel
+    public class RegisterRelatorModel : PageModel
     {
         private readonly SignInManager<HomeFinderUser> _signInManager;
         private readonly UserManager<HomeFinderUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+
         //private readonly IEmailSender _emailSender;
 
-        public RegisterModel(
+        public RegisterRelatorModel(
             UserManager<HomeFinderUser> userManager,
             SignInManager<HomeFinderUser> signInManager,
-            ILogger<RegisterModel> logger
-            /*IEmailSender emailSender*/)
+            ILogger<RegisterModel> logger,
+            /*IEmailSender emailSender*/
+            IWebHostEnvironment hostingEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
             //_emailSender = emailSender;
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModelRelator Input { get; set; }
 
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        public class InputModel
+        public class InputModelRelator
         {
             [Required]
             [EmailAddress]
@@ -63,7 +64,7 @@ namespace HomeFinder.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
-            [StringLength (60)]
+            [StringLength(60)]
             [Display(Name = "*First name")]
             public string FirstName { get; set; }
 
@@ -71,11 +72,16 @@ namespace HomeFinder.Areas.Identity.Pages.Account
             [StringLength(60)]
             [Display(Name = "*Last name")]
             public string LastName { get; set; }
-
-            [Display(Name = "Phone number")]
+            
+            [Required]
+            [Display(Name = "*Phone number")]
             public string PhoneNumber { get; set; }
 
-            public Address Address { get; set; }
+            public Company Company { get; set; }
+
+            [Display(Name = "*Relator proof")]
+            [Required]
+            public IFormFile RelatorProof { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -90,17 +96,31 @@ namespace HomeFinder.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new HomeFinderUser { 
-                    UserName = Input.Email, 
-                    Email = Input.Email, 
-                    FirstName = Input.FirstName, 
+                
+
+                var user = new HomeFinderUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     PhoneNumber = Input.PhoneNumber,
-                    Address = Input.Address
+                    Company = new Company { Name = Input.Company.Name, OrgNumber = Input.Company.OrgNumber }
+                    
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    string uniqueFilename = null;
+                    if (Input.RelatorProof != null)
+                    {
+                        string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "relatorProof");
+                        uniqueFilename = user.Id.ToString() + $"_{Input.FirstName}_{Input.LastName}";
+                        string filePath = Path.Combine(uploadsFolder, uniqueFilename);
+                                                                                                            //Relator proof file gets uploaded to wwwroot/relatorProof
+                        Input.RelatorProof.CopyTo(new FileStream(filePath, FileMode.Create));
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -116,7 +136,7 @@ namespace HomeFinder.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmationRelator", new { Email = Input.Email, returnUrl = returnUrl });
                     }
                     else
                     {
@@ -133,5 +153,6 @@ namespace HomeFinder.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
     }
 }

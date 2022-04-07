@@ -339,11 +339,10 @@ namespace HomeFinder.Controllers
             return NotFound();
         }
 
-
-
-        [Authorize]
+        [Authorize] //For being able to save current user logged in you need to be logged in
         public async Task<IActionResult> SavedObjects()
         {
+            //Gets current user logged in and sends it to savedobjects page to display liked objects and notice of interest
             var user = await _userManager.GetUserAsync(User);
 
             return View(user);
@@ -351,6 +350,8 @@ namespace HomeFinder.Controllers
         [Authorize]
         public async Task<IActionResult> RemoveLikedObject(int id)
         {
+            //Removes specific liked object from db on demand from savedobjects page
+
             var user = await _userManager.GetUserAsync(User); // Need to check for liked object for this specific user!
             var objToRemove = await _context.PropertyFavorited.FirstOrDefaultAsync(lP => lP.PropertyObject.Id == id && lP.User.Id == user.Id);
             if (objToRemove == null)
@@ -365,6 +366,8 @@ namespace HomeFinder.Controllers
         [Authorize]
         public async Task<IActionResult> RemoveObjectOfInterest(int id)
         {
+            //Removes specific notice of interest from db on demand from savedobjects page
+
             var user = await _userManager.GetUserAsync(User); // Need to check for notice if interest-object for this specific user!
             var objToRemove = await _context.NoticeOfInterests.FirstOrDefaultAsync(nI => nI.PropertyObject.Id == id && nI.User.Id == user.Id);
             if (objToRemove == null)
