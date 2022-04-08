@@ -33,6 +33,8 @@ namespace HomeFinder
             services.AddSingleton<PropertySearchModel>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddServerSideBlazor();
+            services.AddHttpContextAccessor();
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["FBAppId"];
@@ -74,6 +76,7 @@ namespace HomeFinder
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapBlazorHub();
             });
         }
     }

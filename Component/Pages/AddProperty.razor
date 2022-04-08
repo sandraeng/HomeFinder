@@ -1,0 +1,31 @@
+﻿@using HomeFinder.Data
+@using HomeFinder.Models
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@inject IHttpContextAccessor httpContextAccessor
+@inject HomeFinderContext context
+
+<h3>AddProperty</h3>
+@{
+    GetRealtor();
+
+}
+
+<h1>@Realtor.Id @Realtor.FirstName</h1>
+
+
+@code {
+    [Parameter] public HomeFinderUser Realtor { get; set; }
+
+    public string UserName;
+
+    public void GetRealtor()
+    {
+        UserName = httpContextAccessor.HttpContext.User.Identity.Name;
+        Realtor = context.Users.FirstOrDefault(i => i.Email == UserName);
+
+    }
+}

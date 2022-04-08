@@ -1,0 +1,12 @@
+﻿@using HomeFinder.Component.Pages
+
+@model IEnumerable<PropertyObject>
+
+@{
+    ViewData["Title"] = "All users";
+}
+
+
+<component type="typeof(Properties)" render-mode="ServerPrerendered" />
+<component type="typeof(NoticeOfInterestList)" render-mode="ServerPrerendered" />
+

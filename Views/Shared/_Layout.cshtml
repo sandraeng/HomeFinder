@@ -27,7 +27,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MainPage" asp-action="Index">Properties</a>
                         </li>
-                        @if(signInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
+                        @if(signInManager.IsSignedIn(User) && User.IsInRole("Realtor"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Realtor" asp-action="Index">Realtor</a>
+                            </li>
+                            
+                        }
+
+                        @if(signInManager.IsSignedIn(User) && !User.IsInRole("Admin") && !User.IsInRole("Realtor"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="PropertyObjects" asp-action="SavedObjects">My objects</a>
@@ -67,6 +75,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/savelikedobject.js"></script>
     
+    <script src="_framework/blazor.server.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
