@@ -32,13 +32,26 @@
                     @property.Address.City
                     @property.Address.Country
                 </div>
-                <p class="card-text">@property.Description</p>
-                <p class="card-text">@property.NumberOfRooms</p>
-                <p class="card-text">@property.Area</p>
-                <p class="card-text">@property.PropertyType.PropertyTypeName</p>
-                <p class="card-text">@property.Realtor.FirstName @property.Realtor.LastName</p>
-                <p class="card-text">@property.Realtor.Email</p>
-                <p class="card-text">@property.Realtor.PhoneNumber</p>
+
+                @foreach (var interest in context.NoticeOfInterests)
+               {
+                    @foreach (var user in context.Users)
+                    {
+                        @if(interest.PropertyObjectId == property.Id && interest.UserId == user.Id)
+                        {
+                            <p class="card-text">Notice of interest: @user.FirstName @user.LastName</p>
+                            
+                        }
+                     
+                    }
+                   
+               }
+
+                <p class="card-text">Description: @property.Description</p>
+                <p class="card-text">NumberOfRooms: @property.NumberOfRooms</p>
+                <p class="card-text">Area: @property.Area</p>
+                <p class="card-text">PropertyType: @property.PropertyType.PropertyTypeName</p>
+                
 
             </div>
             <div class="card-footer">

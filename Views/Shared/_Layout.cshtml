@@ -35,7 +35,7 @@
                             
                         }
 
-                        @if(signInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
+                        @if(signInManager.IsSignedIn(User) && !User.IsInRole("Admin") && !User.IsInRole("Realtor"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="PropertyObjects" asp-action="SavedObjects">My objects</a>
