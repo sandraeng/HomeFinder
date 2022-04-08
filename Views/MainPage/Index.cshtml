@@ -179,7 +179,7 @@
                                 @using (Html.BeginForm("SaveFavoriteObject","PropertyObjects")) {
                                     @Html.Hidden("Id", propertyobject.Id, new { @id = "Id" })
                                     // Uses javascript savedlikedobjects.js
-                                    <button id="btnSaveLike" type="submit" class="btn btn-danger m-1 float-right"><i class="fa-solid fa-heart"></i></button>
+                                    <button name="btnSaveLike" type="submit" class="btn btn-danger m-1 float-right"><i class="fa-solid fa-heart"></i></button>
                                 }
                                 <h5 class="card-text mb-4" style="text-align: center;">@propertyobject.Address.StreetAddress</h5>
                                 <p class="card-text"><b>City:</b> @propertyobject.Address.City</p>
