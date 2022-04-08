@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\relatorProof\**" />
+    <Content Remove="wwwroot\relatorProof\**" />
+    <EmbeddedResource Remove="wwwroot\relatorProof\**" />
+    <None Remove="wwwroot\relatorProof\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="5.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.12" />
@@ -26,7 +33,7 @@
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\Images\" />
     <Folder Include="wwwroot\lib\fontawesome\" />
-    <Folder Include="wwwroot\relatorProof\" />
+    <Folder Include="wwwroot\realtorProof\" />
   </ItemGroup>
 
 </Project>

@@ -114,7 +114,7 @@ namespace HomeFinder.Areas.Identity.Pages.Account
                     string uniqueFilename = null;
                     if (Input.RealtorProof != null)
                     {
-                        string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "relatorProof");
+                        string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "realtorProof");
                         uniqueFilename = user.Id.ToString() + $"_{Input.FirstName}_{Input.LastName}";
                         string filePath = Path.Combine(uploadsFolder, uniqueFilename);
                                                                                                             //Relator proof file gets uploaded to wwwroot/relatorProof
