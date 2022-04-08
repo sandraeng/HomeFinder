@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace HomeFinder.Areas.Identity.Pages.Account
 {
-    public class RegisterRelatorModel : PageModel
+    public class RegisterRealtorModel : PageModel
     {
         private readonly SignInManager<HomeFinderUser> _signInManager;
         private readonly UserManager<HomeFinderUser> _userManager;
@@ -24,7 +24,7 @@ namespace HomeFinder.Areas.Identity.Pages.Account
 
         //private readonly IEmailSender _emailSender;
 
-        public RegisterRelatorModel(
+        public RegisterRealtorModel(
             UserManager<HomeFinderUser> userManager,
             SignInManager<HomeFinderUser> signInManager,
             ILogger<RegisterModel> logger,
@@ -79,9 +79,9 @@ namespace HomeFinder.Areas.Identity.Pages.Account
 
             public Company Company { get; set; }
 
-            [Display(Name = "*Relator proof")]
+            [Display(Name = "*Realtor proof")]
             [Required]
-            public IFormFile RelatorProof { get; set; }
+            public IFormFile RealtorProof { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -112,13 +112,13 @@ namespace HomeFinder.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     string uniqueFilename = null;
-                    if (Input.RelatorProof != null)
+                    if (Input.RealtorProof != null)
                     {
                         string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "relatorProof");
                         uniqueFilename = user.Id.ToString() + $"_{Input.FirstName}_{Input.LastName}";
                         string filePath = Path.Combine(uploadsFolder, uniqueFilename);
                                                                                                             //Relator proof file gets uploaded to wwwroot/relatorProof
-                        Input.RelatorProof.CopyTo(new FileStream(filePath, FileMode.Create));
+                        Input.RealtorProof.CopyTo(new FileStream(filePath, FileMode.Create));
                     }
 
                     _logger.LogInformation("User created a new account with password.");
@@ -136,7 +136,7 @@ namespace HomeFinder.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmationRelator", new { Email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmationRealtor", new { Email = Input.Email, returnUrl = returnUrl });
                     }
                     else
                     {

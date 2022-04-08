@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace HomeFinder.Areas.Identity.Pages.Account
 {
-    public class RegisterConfirmationRelatorModel : PageModel
+    public class RegisterConfirmationRealtorModel : PageModel
     {
         public string ReturnUrl { get; set; }
         public string Email { get; set; }
