@@ -6,17 +6,20 @@ $(document).ready(function () {
     bindSaveLike();
 });
 function bindSaveLike() {
-    $("[id*=btnSaveLike]").on("click", function (e) {
+    $('[name="btnSaveLike"]').parents('form').on("submit", function (e) {
         e.preventDefault();
         saveLike(e);
+        return false;
     });
 }
 
 function saveLike(clickEvent) {
-    form = $(clickEvent.target).parents('form').eq(0);
-
+    //form = $(clickEvent.target).parents('form').eq(0);
+    form = $(clickEvent.target);
+    console.log(form);
     relevantData = {
-        Id: $(clickEvent.target).siblings("#Id").eq(0).val(),
+        //Id: $(clickEvent.target).siblings("#Id").eq(0).val(),
+        Id: form.children('[name="Id"]').first().val(),
         __RequestVerificationToken: $('input[name="__RequestVerificationToken"]', form).val(),
     };
 
@@ -26,7 +29,12 @@ function saveLike(clickEvent) {
         data: relevantData,
         dataType: "json",
         success: function (response) {
-            alert("Saved to your liked objects!");
+            if (response.success == true) {
+                alert("Saved to your liked objects!");
+            }
+            if (response.success == false) {
+                alert("You have already saved this to favorite objects!");
+            }
         }
     });
 }

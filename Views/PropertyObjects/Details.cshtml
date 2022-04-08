@@ -48,9 +48,9 @@
                 <div class="card-body">
                     <div class="float-right text-right">
                         @using (Html.BeginForm("SaveFavoriteObject","PropertyObjects")) {
-                            @Html.HiddenFor(model => model.Id)
+                            @Html.Hidden("Id", @Model.Id, new { @id = "Id" })
                             // Uses javascript savedlikedobjects.js
-                            <button id="btnSaveLike" type="submit" class="btn btn-danger m-1 col-12"><i class="fa-solid fa-heart"></i> Save to favorites</button>
+                            <button name="btnSaveLike" type="submit" class="btn btn-danger m-1 col-12"><i class="fa-solid fa-heart"></i> Save to favorites</button>
                         }
                         <a asp-action="NoticeOfInterest" asp-route-id="@Model.Id" class="btn btn-primary m-1 col-12">Leave a notice of interest</a>
                     </div>
