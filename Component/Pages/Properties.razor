@@ -13,26 +13,91 @@
 @inject IHttpContextAccessor httpContextAccessor
 @inject HomeFinderContext context
 <style>
+
+    #properties-container {
+         display: flex;
+    }
+
     #properties-container > div {
-        display: flex;
+       
         height: 25rem;
         width : 33%;
-        height : 100%;
         border : 2px solid;
-        display : block;
     }
-    
+
+    #left-side > div {
+        height: 50%;
+        width : 100%;
+        border : 2px solid;
+        overflow-y : auto;
+        
+    }
+
+    #left-over > a {
+        background-color: #eee;
+        color: black;
+        display: block;
+        padding: 12px;
+        text-decoration: none;
+        border-bottom: 0.5px solid;
+    }
 
 </style>
 
 <h2 class="text-center">Your Properties</h2>
 <div id="properties-container">
     <div id="left-side">
-        <div id="left-over"></div>
-        <div id="left-under"></div>
+        <div id="left-over">
+            
+            @foreach (var property in propertyObjects)
+           {
+               <a href="#" >@property.Address.FullAddress</a>
+           }
+        </div>
+        <div id="left-under">
+
+        </div>
     </div>
     <div id="middle-side"></div>
-    <div id="right-side"></div>
+    <div id="right-side" class=" text-center">
+        @if (propertyObjectToDisplay==null)
+       {
+            <h5>Select Adress to see more info</h5>
+        }
+        else
+        {
+            <div class="card-columns">
+                <div class="card">
+            <div class="card-body">
+                @if (propertyObjectToDisplay.Images != null)
+                {
+
+                    <img class="card-img" src="@propertyObjectToDisplay.Images[0].Path" asp-append-version="true" style="height:200px;"/>
+                }
+                <div class="card-title">
+                    @propertyObjectToDisplay.Address.StreetAddress
+                    @propertyObjectToDisplay.Address.PostalCode
+                    @propertyObjectToDisplay.Address.City
+                    @propertyObjectToDisplay.Address.Country
+                </div>
+                <p class="card-text">@propertyObjectToDisplay.Description</p>
+                <p class="card-text">@propertyObjectToDisplay.NumberOfRooms</p>
+                <p class="card-text">@propertyObjectToDisplay.Area</p>
+                <p class="card-text">@propertyObjectToDisplay.PropertyType.PropertyTypeName</p>
+                <p class="card-text">@propertyObjectToDisplay.Realtor.FirstName @propertyObjectToDisplay.Realtor.LastName</p>
+                <p class="card-text">@propertyObjectToDisplay.Realtor.Email</p>
+                <p class="card-text">@propertyObjectToDisplay.Realtor.PhoneNumber</p>
+
+            </div>
+            <div class="card-footer">
+                <a href="PropertyObjects/Edit/@propertyObjectToDisplay.Id">Edit</a> |
+                <a href="PropertyObjects/Details/@propertyObjectToDisplay.Id">Details</a> |
+                <a href="PropertyObjects/Delete/@propertyObjectToDisplay.Id">Delete</a>
+            </div>
+        </div>
+            </div>
+        }
+    </div>
 </div>
 @*<div class="card-columns">
     @foreach (var property in propertyObjects)
@@ -71,6 +136,7 @@
 
     public IEnumerable<PropertyObject> propertyObjects { get; set; }
 
+    public PropertyObject propertyObjectToDisplay { get; set; }
 
     public HomeFinderUser Realtor { get; set; }
 
@@ -88,6 +154,11 @@
         GetRealtor();
         propertyObjects = GetProperties();
         ChangeImagePath();
+    }
+
+    public void SetProperty(PropertyObject property)
+    {
+        propertyObjectToDisplay = property;
     }
 
     public IEnumerable<PropertyObject> GetProperties()
