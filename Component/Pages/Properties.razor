@@ -12,11 +12,29 @@
 @using System.Linq;
 @inject IHttpContextAccessor httpContextAccessor
 @inject HomeFinderContext context
+<style>
+    #properties-container > div {
+        display: flex;
+        height: 25rem;
+        width : 33%;
+        height : 100%;
+        border : 2px solid;
+        display : block;
+    }
+    
 
+</style>
 
 <h2 class="text-center">Your Properties</h2>
-
-<div class="card-columns">
+<div id="properties-container">
+    <div id="left-side">
+        <div id="left-over"></div>
+        <div id="left-under"></div>
+    </div>
+    <div id="middle-side"></div>
+    <div id="right-side"></div>
+</div>
+@*<div class="card-columns">
     @foreach (var property in propertyObjects)
     {
         <div class="card">
@@ -48,7 +66,7 @@
             </div>
         </div>
     }
-</div>
+</div>*@
 @code {
 
     public IEnumerable<PropertyObject> propertyObjects { get; set; }
