@@ -6,12 +6,12 @@
     ViewData["Title"] = "Saved objects";
 
     var objectsOfInterest = GetObjectsOfInterest();
-                                                        //Gets all notice of interests and liked objects connected to the signed in user
+    //Gets all notice of interests and liked objects connected to the signed in user
     var likedObjects = GetLiked();
 
     List<PropertyObject> GetObjectsOfInterest()
     {
-        var noticeOfInterests = db.NoticeOfInterests.Where(nI => nI.UserId == Model.Id).Include(nI => nI.PropertyObject).ThenInclude(pO=> pO.Address).Include(nI => nI.PropertyObject.Images).ToList();
+        var noticeOfInterests = db.NoticeOfInterests.Where(nI => nI.UserId == Model.Id).Include(nI => nI.PropertyObject).ThenInclude(pO => pO.Address).Include(nI => nI.PropertyObject.Images).ToList();
 
         var tempList = new List<PropertyObject>();
         foreach (var nI in noticeOfInterests)
@@ -22,7 +22,7 @@
     };
     List<PropertyObject> GetLiked()
     {
-        var liked = db.PropertyFavorited.Where(pF => pF.UserId == Model.Id).Include(nI => nI.PropertyObject).ThenInclude(pO=> pO.Address).Include(nI => nI.PropertyObject.Images).ToList();
+        var liked = db.PropertyFavorited.Where(pF => pF.UserId == Model.Id).Include(nI => nI.PropertyObject).ThenInclude(pO => pO.Address).Include(nI => nI.PropertyObject.Images).ToList();
 
         var tempList = new List<PropertyObject>();
         foreach (var nI in liked)
@@ -34,69 +34,69 @@
 }
 
 <div class="text-center text-white">
-<h1 class="my-5">Liked objects</h1>
+    <h1 class="my-5">Liked objects</h1>
 </div>
 
 @*Displays all liked objects*@
 @if (likedObjects.Count() < 1)
 {
- <div class="container4 border">
-  <p class="custom-p">You have not liked any objects!   @*Result if there is no liked object*@
-</div>
+    <div class="container4 border">
+        <p class="custom-p">You have not liked any objects!   @*Result if there is no liked object*@
+    </div>
 }
 else
 {
-  <div class="row my-5 px-2 border rounded">
-    @foreach (var propObject in likedObjects)
-   {
-       <div class="card m-1 custom-container">
-            <a asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propObject.Id" class="w-50 h-100">
-           <img src="@propObject.Images[0].Path" asp-append-version="true" class="card-img h-100 custom-img-fit" alt="...">         @*Displays each object as a card*@
-           </a> 
-           <div class="pt-3">
-               <h6 class="text-center pb-4">@propObject.Address.StreetAddress</h6>
-                  <p class="card-text px-2">Ort: @propObject.Address.City</p>
-                  <p class="card-text px-2">Bostadstyp: @propObject.PropertyType</p>
-                  <p class="card-text px-2">Pris: @propObject.ListPrice.ToString("c")</p>
-                  <a asp-action="RemoveLikedObject" asp-route-id="@propObject.Id" class="btn btn-danger custom-right-bottom">Ta bort <i class="fa-solid fa-heart"></i></a>
-                 </div>
-               </div>
-   }
-</div>  
+    <div class="row my-5 px-2 border rounded">
+        @foreach (var propObject in likedObjects)
+        {
+            <div class="card m-1 custom-container">
+                <a asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propObject.Id" class="w-50 h-100">
+                    <img src="@propObject.Images[0].Path" asp-append-version="true" class="card-img h-100 custom-img-fit" alt="...">         @*Displays each object as a card*@
+                </a>
+                <div class="pt-3">
+                    <h6 class="text-center pb-4">@propObject.Address.StreetAddress</h6>
+                    <p class="card-text px-2">Ort: @propObject.Address.City</p>
+                    <p class="card-text px-2">Bostadstyp: @propObject.PropertyType</p>
+                    <p class="card-text px-2">Pris: @propObject.ListPrice.ToString("c")</p>
+                    <a asp-action="RemoveLikedObject" asp-route-id="@propObject.Id" class="btn btn-danger custom-right-bottom">Ta bort <i class="fa-solid fa-heart"></i></a>
+                </div>
+            </div>
+        }
+    </div>
 }
 <div class="text-center text-white">
-<h1 class="my-5">Notice of interest</h1>
+    <h1 class="my-5">Notice of interest</h1>
 </div>
 
 @*Displays all notice of interests*@
 @if (objectsOfInterest.Count() < 1)
 {
-    
- <div class="container4 border">
-  <p class="custom-p">You have no notice of interest! @*Result if there is no notice of interest*@
-</div>
+
+    <div class="container4 border">
+        <p class="custom-p">You have no notice of interest! @*Result if there is no notice of interest*@
+    </div>
 
 }
 else
 {
-  <div class="row my-5 px-2 border rounded">
-    @foreach (var propObject in objectsOfInterest)
-   {
-       
-       <div class="card m-1 custom-container ">
-            <a asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propObject.Id" class="w-50 h-100">
-           <img src="@propObject.Images[0].Path" asp-append-version="true" class="card-img h-100 custom-img-fit" alt="...">
-           </a> 
-           <div class="pt-3">
-               <h6 class="text-center pb-4">@propObject.Address.StreetAddress</h6>
-                  <p class="card-text px-2">Ort: @propObject.Address.City</p>
-                  <p class="card-text px-2">Bostadstyp: @propObject.PropertyType</p>                                                    @*Displays each object as a card*@
-                  <p class="card-text px-2">Pris: @propObject.ListPrice.ToString("c")</p>
-                  <div class="custom-right-bottom">
-                  <a asp-action="RemoveObjectOfInterest" asp-route-id="@propObject.Id" class="btn btn-danger">Ta bort</a>
-                 </div>
+    <div class="row my-5 px-2 border rounded">
+        @foreach (var propObject in objectsOfInterest)
+        {
+
+            <div class="card m-1 custom-container ">
+                <a asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propObject.Id" class="w-50 h-100">
+                    <img src="@propObject.Images[0].Path" asp-append-version="true" class="card-img h-100 custom-img-fit" alt="...">
+                </a>
+                <div class="pt-3">
+                    <h6 class="text-center pb-4">@propObject.Address.StreetAddress</h6>
+                    <p class="card-text px-2">Ort: @propObject.Address.City</p>
+                    <p class="card-text px-2">Bostadstyp: @propObject.PropertyType</p>                                                    @*Displays each object as a card*@
+                    <p class="card-text px-2">Pris: @propObject.ListPrice.ToString("c")</p>
+                    <div class="custom-right-bottom">
+                        <a asp-action="RemoveObjectOfInterest" asp-route-id="@propObject.Id" class="btn btn-danger">Ta bort</a>
+                    </div>
                 </div>
-               </div>
-   }
-</div>  
+            </div>
+        }
+    </div>
 }

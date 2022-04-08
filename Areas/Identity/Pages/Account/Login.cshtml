@@ -48,12 +48,12 @@
                 <div class="input-data">
                     <label asp-for="Input.Email" id="email"></label>
                     <input asp-for="Input.Email" class="form-control" onfocus="emailLabelStayUp()"/>
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    @*<span asp-validation-for="Input.Email" class="text-danger"></span>*@
                 </div>
                 <div class="input-data">
                     <label asp-for="Input.Password" id="password"></label>
                     <input asp-for="Input.Password" class="form-control" onfocus="passwordLabelStayUp()"/>
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    @*<span asp-validation-for="Input.Password" class="text-danger"></span>*@
                 </div>
                 </div>
                 <div class="form-group">
@@ -84,13 +84,13 @@
         function passwordLabelStayUp(){
             const password = document.getElementById("password")
 
-            password.classList.toggle("label-label-active")
+            password.classList.add("label-label-active")
 
         }
         function emailLabelStayUp(){
             const email = document.getElementById("email")
 
-            email.classList.toggle("label-label-active")
+            email.classList.add("label-label-active")
 
         }
     </script>

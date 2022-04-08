@@ -1,0 +1,108 @@
+﻿@using HomeFinder.Models;
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity;
+@using System;
+@using System.IO;
+@using System.Collections.Generic;
+@using System.Net.NetworkInformation;
+@using System.Threading.Tasks;
+@using Microsoft.EntityFrameworkCore;
+@using HomeFinder.Data;
+@using System.Linq;
+@inject IHttpContextAccessor httpContextAccessor
+@inject HomeFinderContext context
+
+
+<h2 class="text-center">Your Properties</h2>
+
+<div class="card-columns">
+    @foreach (var property in propertyObjects)
+    {
+        <div class="card">
+            <div class="card-body">
+                @if (property.Images != null)
+                {
+
+                    <img class="card-img" src="@property.Images[0].Path" asp-append-version="true" style="height:200px;"/>
+                }
+                <div class="card-title">
+                    @property.Address.StreetAddress
+                    @property.Address.PostalCode
+                    @property.Address.City
+                    @property.Address.Country
+                </div>
+
+                @foreach (var interest in context.NoticeOfInterests)
+               {
+                    @foreach (var user in context.Users)
+                    {
+                        @if(interest.PropertyObjectId == property.Id && interest.UserId == user.Id)
+                        {
+                            <p class="card-text">Notice of interest: @user.FirstName @user.LastName</p>
+                            
+                        }
+                     
+                    }
+                   
+               }
+
+                <p class="card-text">Description: @property.Description</p>
+                <p class="card-text">NumberOfRooms: @property.NumberOfRooms</p>
+                <p class="card-text">Area: @property.Area</p>
+                <p class="card-text">PropertyType: @property.PropertyType.PropertyTypeName</p>
+                
+
+            </div>
+            <div class="card-footer">
+                <a href="PropertyObjects/Edit/@property.Id">Edit</a> |
+                <a href="PropertyObjects/Details/@property.Id">Details</a> |
+                <a href="PropertyObjects/Delete/@property.Id">Delete</a>
+            </div>
+        </div>
+    }
+</div>
+@code {
+
+    public IEnumerable<PropertyObject> propertyObjects { get; set; }
+
+
+    public HomeFinderUser Realtor { get; set; }
+
+    public string UserName;
+
+    public void GetRealtor()
+    {
+        UserName = httpContextAccessor.HttpContext.User.Identity.Name;
+        Realtor = context.Users.FirstOrDefault(i => i.Email == UserName);
+
+    }
+
+    protected override void OnInitialized()
+    {
+        GetRealtor();
+        propertyObjects = GetProperties();
+        ChangeImagePath();
+    }
+
+    public IEnumerable<PropertyObject> GetProperties()
+    {
+        return context.PropertyObjects.Where(p => p.RealtorId == Realtor.Id).Include(p => p.Address).Include(p => p.Realtor).Include(p => p.PropertyType).Include(p => p.Images).ToList();
+    }
+
+    public IEnumerable<PropertyObject> ChangeImagePath()
+    {
+        propertyObjects = GetProperties();
+        foreach(var property in propertyObjects)
+        {
+            foreach(var image in property.Images)
+            {
+               var splited = image.Path.Split("/");
+               image.Path = splited[1] + "/" + splited[2];
+                
+            }
+        }
+        return propertyObjects;
+    }
+}
+
