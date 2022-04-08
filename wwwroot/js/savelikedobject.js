@@ -15,9 +15,8 @@ function bindSaveLike() {
 
 function saveLike(clickEvent) {
     //form = $(clickEvent.target).parents('form').eq(0);
-    form = $(clickEvent.target);
-    console.log(form);
-    relevantData = {
+    var form = $(clickEvent.target);
+    var relevantData = {
         //Id: $(clickEvent.target).siblings("#Id").eq(0).val(),
         Id: form.children('[name="Id"]').first().val(),
         __RequestVerificationToken: $('input[name="__RequestVerificationToken"]', form).val(),
@@ -28,13 +27,21 @@ function saveLike(clickEvent) {
         url: form.attr('action'),
         data: relevantData,
         dataType: "json",
-        success: function (response) {
-            if (response.success == true) {
+        success: function (res, status, xhr) {
+            if (res.success == true) {
                 alert("Saved to your liked objects!");
             }
-            if (response.success == false) {
+            if (res.success == false) {
                 alert("You have already saved this to favorite objects!");
             }
-        }
+        },
+        error: function (res, status) {
+            var redirectOn = [401, 404];
+            if (redirectOn.includes(res.status)) {
+                var redirectURL = res.getResponseHeader('location');
+                window.location.replace(redirectURL);
+            }
+        },
     });
+
 }
