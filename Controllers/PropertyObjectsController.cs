@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Web;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace HomeFinder.Controllers
 {
@@ -63,6 +64,7 @@ namespace HomeFinder.Controllers
         }
 
         // GET: PropertyObjects/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             // Get a list of values in enum and add to viewbag, so it can be used to populate a dropdown in View.
@@ -79,6 +81,7 @@ namespace HomeFinder.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,RealtorId,PropertyTypeId,Status,ListPrice,NumberOfRooms,Area,NextShowingDateTime,Address,LeaseTypeId,NonLivingArea,LotArea,YearBuilt,Description,Images")] PropertyObject propertyObject, List<IFormFile> files)
         {
             // Update PropertyType with value from DB.
@@ -120,7 +123,7 @@ namespace HomeFinder.Controllers
                     await _context.SaveChangesAsync();
                     propertyObject.Images.Add(image);
                 }
-                return RedirectToAction("Edit", "HomeFinderImages", new {id = propertyObject.Id });
+                return RedirectToAction("Edit", "HomeFinderImages", new { id = propertyObject.Id });
             }
 
 
@@ -149,6 +152,7 @@ namespace HomeFinder.Controllers
         }
 
         // GET: PropertyObjects/Edit/5
+        [Authorize(Roles = "Realtor,Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -171,6 +175,7 @@ namespace HomeFinder.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Realtor,Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,RealtorId,PropertyTypeId,Status,ListPrice,NumberOfRooms,Area,NonLivingArea,LotArea,UploadedDate,NextShowingDateTime,AddressId,Description,LeaseTypeId,YearBuilt")] PropertyObject propertyObject)
         {
             if (id != propertyObject.Id)
@@ -204,6 +209,7 @@ namespace HomeFinder.Controllers
         }
 
         // GET: PropertyObjects/Delete/5
+        [Authorize(Roles = "Realtor,Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -226,6 +232,7 @@ namespace HomeFinder.Controllers
         // POST: PropertyObjects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Realtor,Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var propertyObject = await _context.PropertyObjects.FindAsync(id);
@@ -266,6 +273,15 @@ namespace HomeFinder.Controllers
 
             // Invalid data.
             return NotFound();
+        }
+
+        // GET: PropertyObjects/SaveFavoriteObject
+        // Login redirects to an action but doesn't retain post data,
+        // so we have an empty action and redirect the user.
+        [HttpGet]
+        public IActionResult SaveFavoriteObject()
+        {
+            return RedirectToAction("Index", "MainPage");
         }
 
         // POST: PropertyObjects/saveFavoriteObject
@@ -339,7 +355,6 @@ namespace HomeFinder.Controllers
             }
             return NotFound();
         }
-
 
         [Authorize]
         public async Task<IActionResult> SavedObjects()
