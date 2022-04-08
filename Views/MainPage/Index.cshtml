@@ -103,45 +103,45 @@
                     </div>
 
                     <div class="checkbox_container">
-                        <label class="option_item">
+                        <div class="option_item">
                             <input type="checkbox" asp-for="IsHouse" class="checkbox_search" id="house_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-house"></i></div>
                                 <div class="name_search">House</div>
                             </div>
-                        </label>
-                        <label class="option_item">
+                        </div>
+                        <div class="option_item">
                             <input type="checkbox" asp-for="IsApartment" class="checkbox_search" id="apartment_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-building"></i></div>
                                 <div class="name_search">Apartment</div>
 
                             </div>
-                        </label>
-                        <label class="option_item">
+                        </div>
+                        <div class="option_item">
                             <input type="checkbox" asp-for="IsTownhouse" class="checkbox_search" id="townhouse_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-city"></i></div>
                                 <div class="name_search">Townhouse</div>
 
                             </div>
-                        </label>
-                        <label class="option_item">
+                        </div>
+                        <div class="option_item">
                             <input type="checkbox" asp-for="IsFarm" class="checkbox_search" id="farm_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-industry"></i></div>
                                 <div class="name_search">Farm</div>
 
                             </div>
-                        </label>
-                        <label class="option_item">
+                        </div>
+                        <div class="option_item">
                             <input type="checkbox" asp-for="IsLot" class="checkbox_search" id="lot_option" />
                             <div class="option_inner">
                                 <div class="icon_search"><i class="fa-solid fa-vector-square"></i></div>
                                 <div class="name_search">Lot</div>
 
                             </div>
-                        </label>
+                        </div>
                     </div>
                 </div>
                 
@@ -166,20 +166,18 @@
         {
 
             <div class="card mb-2">
-                <a style="text-decoration: none;" asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propertyobject.Id">
+                <a class="text-dark" style="text-decoration: none;" asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propertyobject.Id">
                     <div class="row g-0">
                         <div class="col-7">
                             @*inte fixat så bilderna kopplat till objektet laddas upp*@
-                            <a asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propertyobject.Id">
-                                <img class="w-100" style="object-fit:cover; " src="@propertyobject.Images[0].Path" asp-append-version="true" alt="@propertyobject.Images[0].AltText">
-                            </a>
+                                <img class="w-100" style="height:100%;" src="@propertyobject.Images[0].Path" asp-append-version="true" alt="@propertyobject.Images[0].AltText">
                         </div>
                         <div class="col-5">
                             <div class="card-body">
                                 @using (Html.BeginForm("SaveFavoriteObject","PropertyObjects")) {
                                     @Html.Hidden("Id", propertyobject.Id, new { @id = "Id" })
                                     // Uses javascript savedlikedobjects.js
-                                    <button id="btnSaveLike" type="submit" class="btn btn-danger m-1 float-right"><i class="fa-solid fa-heart"></i></button>
+                                    <div id="btnSaveLike" type="submit" class="btn btn-danger m-1 float-right"><i class="fa-solid fa-heart"></i></div>
                                 }
                                 <h5 class="card-text mb-4" style="text-align: center;">@propertyobject.Address.StreetAddress</h5>
                                 <p class="card-text"><b>City:</b> @propertyobject.Address.City</p>
