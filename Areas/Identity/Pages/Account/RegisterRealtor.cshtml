@@ -1,5 +1,5 @@
 ﻿@page
-@model HomeFinder.Areas.Identity.Pages.Account.RegisterRelatorModel
+@model HomeFinder.Areas.Identity.Pages.Account.RegisterRealtorModel
 @{
     ViewData["Title"] = "Register as relator";
     Layout = "/Areas/Identity/Pages/_AuthLayout.cshtml";
@@ -113,10 +113,10 @@
             <div class="form-group row">
                 <div class="col-md-12">
                     <div class="custom-file">
-                        <input asp-for="Input.RelatorProof" class="form-control custom-file-input"/>
+                        <input asp-for="Input.RealtorProof" class="form-control custom-file-input"/>
                         <label class="custom-file-label">Insert relator proof</label>
                     </div>
-                        <span asp-validation-for="Input.RelatorProof" class="text-danger"></span>
+                        <span asp-validation-for="Input.RealtorProof" class="text-danger"></span>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
