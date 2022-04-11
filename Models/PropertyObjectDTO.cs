@@ -11,7 +11,7 @@ namespace HomeFinder.Models
 
         public int PropertyTypeId { get; set; }
 
-    
+
         public PropertyType PropertyType { get; set; }
 
         public string RealtorId { get; set; }
@@ -45,7 +45,7 @@ namespace HomeFinder.Models
         public string Description { get; set; }
 
         public int LeaseTypeId { get; set; }
-  
+
         public LeaseType LeaseType { get; set; }
 
         public int YearBuilt { get; set; }

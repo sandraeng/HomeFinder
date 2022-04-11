@@ -74,6 +74,7 @@ namespace HomeFinder.Controllers
                 }
                 return RedirectToAction("Index", "MainPage");
             }
+          
             //ViewData["PropertyObjectId"] = new SelectList(_context.PropertyObjects, "Id", "Id", homeFinderImages.PropertyObjectId);
             return View(homeFinderImages);
         }

@@ -34,6 +34,7 @@ namespace HomeFinder
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddHttpContextAccessor();
+            services.AddServerSideBlazor();
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["FBAppId"];

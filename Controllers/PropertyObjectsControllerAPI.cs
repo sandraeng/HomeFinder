@@ -108,10 +108,19 @@ namespace HomeFinder.Controllers
         [HttpPost]
         public async Task<ActionResult<PropertyObject>> PostPropertyObject(PropertyObject propertyObject)
         {
+            // Update PropertyType with value from DB.
+            propertyObject.PropertyType = _context.PropertyTypes.Where(x => x.Id == propertyObject.PropertyTypeId).FirstOrDefault();
+            // Update LeaseType with value from DB.
+            propertyObject.LeaseType = _context.LeaseTypes.Where(x => x.Id == propertyObject.LeaseTypeId).FirstOrDefault();
+            // Set uploaded date to today.
+            propertyObject.UploadedDate = DateTime.Now;
+            // Set AddressId to 0
+            propertyObject.AddressId = 0;
             _context.PropertyObjects.Add(propertyObject);
             await _context.SaveChangesAsync();
+            return NoContent();
 
-            return CreatedAtAction("GetPropertyObject", new { id = propertyObject.Id }, propertyObject);
+            //return CreatedAtAction("GetPropertyObject", new { id = propertyObject.Id }, propertyObject);
         }
 
         // DELETE: api/PropertyObjectsControllerAPI/5
