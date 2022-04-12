@@ -67,10 +67,19 @@
                <div class="card bg-light" style="min-height: 100%">
                     @*<div class="card-header">Properties</div>*@
                         <div class="card-body">
+                            <div class="btn-group btn-group-toggle" style="display:block;" data-toggle="buttons">
                               @foreach (var property in propertyObjects)
                               {
-                              <a class="card-text" href="#" @onclick="() => SetProperty(property)">@property.Address.FullAddress</a>
+                              @*<a class="card-text" href="#" @onclick="() => SetProperty(property)">@property.Address.FullAddress</a>*@
+
+                              <label class="btn btn-secondary" @onclick="() => SetProperty(property)">
+                                <input type="radio" name="options" id="option+@property.Id" autocomplete="off"> @property.Address.FullAddress
+                                </label>
+
+                              @*<input type="radio" @onclick="() => SetProperty(property)" class="btn-check" name="options-outlined" id="@property.Id" autocomplete="off">
+                              <label class="btn btn-outline-success" for="@property.Id">@property.Address.FullAddress</label>*@
                               }
+                              </div>
                         </div>
                </div>
         </div>
@@ -81,6 +90,7 @@
                <div class="card bg-light" style="min-height: 100%">
                     @*<div class="card-header">Notice of interests</div>*@
                         <div class="card-body" style="min-height: 100%">
+                            <div class="btn-group btn-group-toggle" style="display:block;" data-toggle="buttons">
                              
                                   @if (noticeOfInterests==null)
             {
@@ -94,9 +104,14 @@
             {
                 @foreach (var person in noticeOfInterests)
                               {
-                              <a class="card-text" href="#" @onclick="() => GetPersonalInfo(person)">@person.FirstName @person.LastName</a>
+                              @*<a class="card-text" href="#" @onclick="() => GetPersonalInfo(person)">@person.FirstName @person.LastName</a>*@
+                              
+                              <label class="btn btn-secondary" style="width: 100%" @onclick="() => GetPersonalInfo(person)">
+                                <input type="radio" name="options" id="option+@person.Id" autocomplete="off"> @person.FirstName @person.LastName
+                                </label>
             }                  
             }
+            </div>
                         </div>
                </div>
            
