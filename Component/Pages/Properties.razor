@@ -27,14 +27,8 @@
     }
 
     #left-side .card-body {
-        /*height: 50%;*/
         padding: 0;
         width : 100%;
-        /*border : 2px solid;*/
-        /*overflow:initial;
-        overflow-y : scroll;*/
-        
-        
     }
     
     #left-side > div {
@@ -53,7 +47,6 @@
         display: block;
         padding: 20px;
         text-decoration: none;
-        /*border: 0.5px solid;*/
     }
 
 </style>
@@ -64,87 +57,72 @@
         <h4>Properties</h4> 
         <div id="left-over">
                   
-               <div class="card bg-light" style="min-height: 100%">
-                    @*<div class="card-header">Properties</div>*@
-                        <div class="card-body">
-                            <div class="btn-group btn-group-toggle" style="display:block;" data-toggle="buttons">
-                              @foreach (var property in propertyObjects)
-                              {
-                              @*<a class="card-text" href="#" @onclick="() => SetProperty(property)">@property.Address.FullAddress</a>*@
-
-                              <label class="btn btn-secondary" @onclick="() => SetProperty(property)">
-                                <input type="radio" name="options" id="option+@property.Id" autocomplete="off"> @property.Address.FullAddress
-                                </label>
-
-                              @*<input type="radio" @onclick="() => SetProperty(property)" class="btn-check" name="options-outlined" id="@property.Id" autocomplete="off">
-                              <label class="btn btn-outline-success" for="@property.Id">@property.Address.FullAddress</label>*@
-                              }
-                              </div>
-                        </div>
-               </div>
+            <div class="card bg-light" style="min-height: 100%">
+                <div class="card-body">
+                    <div class="btn-group btn-group-toggle" style="display:block;" data-toggle="buttons">
+                        @foreach (var property in propertyObjects)
+                        {
+                            <label class="btn btn-outline-primary" @onclick="() => SetProperty(property)"  for="@property.Id">
+                            <input type="radio" class="btn-check" name="options-outlined" id="@property.Id" autocomplete="off">
+                            @property.Address.FullAddress</label>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
         <h4>Notice of interests</h4> 
         <div id="left-under" class="text-center">
-            
-            
-               <div class="card bg-light" style="min-height: 100%">
-                    @*<div class="card-header">Notice of interests</div>*@
-                        <div class="card-body" style="min-height: 100%">
-                            <div class="btn-group btn-group-toggle" style="display:block;" data-toggle="buttons">
-                             
-                                  @if (noticeOfInterests==null)
-            {
-                <h5 class="mt-3">Select Adress to see notice of interests</h5>
-            }
-            else if(noticeOfInterests.Count()==0)
-            {
-                <h5 class="mt-3">There is no notice of interests to this property</h5>
-            }
-            else
-            {
-                @foreach (var person in noticeOfInterests)
-                              {
-                              @*<a class="card-text" href="#" @onclick="() => GetPersonalInfo(person)">@person.FirstName @person.LastName</a>*@
-                              
-                              <label class="btn btn-secondary" style="width: 100%" @onclick="() => GetPersonalInfo(person)">
-                                <input type="radio" name="options" id="option+@person.Id" autocomplete="off"> @person.FirstName @person.LastName
+            <div class="card bg-light" style="min-height: 100%">
+                <div class="card-body" style="min-height: 100%">
+                    <div class="btn-group btn-group-toggle" style="display:block;" data-toggle="buttons" id="notice-of-interests">
+                        @if (noticeOfInterests==null)
+                        {
+                            <h5 class="mt-3">Select Adress to see notice of interests</h5>
+                        }
+                        else if(noticeOfInterests.Count()==0)
+                        {
+                            <h5 class="mt-3">There is no notice of interests to this property</h5>
+                        }
+                        else
+                        {
+                            @foreach (var person in noticeOfInterests)
+                            {
+                                <label class="btn btn-outline-primary" style="width: 100%" @onclick="() => GetPersonalInfo(person)">
+                                <input type="radio" class="btn-check" name="options" id="option+@person.Id" autocomplete="off"> @person.FirstName @person.LastName
                                 </label>
-            }                  
-            }
+                            }                  
+                        }
+                    </div>
+                </div>
             </div>
-                        </div>
-               </div>
-           
-        
-        
         </div>
     </div>
     <div id="middle-side" class="text-center">
-        @if (UserToDisplay==null)
-       {
-            <h5 class="mt-3">Select User to see more info</h5>
-        }
-        else
-        {
-            <div class="card bg-light" style="min-height: 100%">
-                    <div class="card-header">Contact</div>
-                        <div class="card-body">
-                             <h5 class="card-title">Info</h5>
-                             <p class="card-text">Firstname: @UserToDisplay.FirstName</p>
-                             <p class="card-text">Lastname: @UserToDisplay.LastName</p>
-                             <p class="card-text">Email: @UserToDisplay.Email</p>
-                             <p class="card-text">Address: @UserToDisplay.Address.FullAddress</p>
-                        </div>
-               </div>
-        }
+        <div class="card bg-light" style="min-height: 100%">
+             <div class="card-header">Contact</div>
+                  <div class="card-body">
+                    @if (UserToDisplay==null)
+                    {
+                    <h5 class="card-text mt-3">Select User to see more info</h5>
+                    }
+                    else
+                    {
+                    <h5 class="card-title">Info</h5>
+                    <p class="card-text">Firstname: @UserToDisplay.FirstName</p>
+                    <p class="card-text">Lastname: @UserToDisplay.LastName</p>
+                    <p class="card-text">Email: @UserToDisplay.Email</p>
+                    <p class="card-text">Address: @UserToDisplay.Address.FullAddress</p>
+                    }
+                  </div>
+        </div>
     </div>
     <div id="right-side" class="text-center">
-        @if (propertyObjectToDisplay==null)
-       {
-            <h5 class="mt-3">Select Adress to see more info</h5>
-        }
-        else
-        {
+      @if (propertyObjectToDisplay==null)
+      {
+         <h5 class="mt-3">Select Adress to see more info</h5>
+      }
+      else
+      {
             
         <div class="card">
             <div class="card-body">
@@ -177,6 +155,7 @@
         }
     </div>
 </div>
+
 @code {
 
     public IEnumerable<PropertyObject> propertyObjects { get; set; }
@@ -205,13 +184,14 @@
         ChangeImagePath();
     }
 
+
+
     public void SetProperty(PropertyObject property)
     {
-        propertyObjectToDisplay = property;
-
-        noticeOfInterests = SetNoticeOfInterests();
-
+        noticeOfInterests = new List<HomeFinderUser>();
         UserToDisplay = null;
+        propertyObjectToDisplay = property;
+        noticeOfInterests = SetNoticeOfInterests();
     }
 
     public void GetPersonalInfo(HomeFinderUser user)
