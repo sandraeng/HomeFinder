@@ -233,12 +233,16 @@ namespace HomeFinder.Controllers
 
         }
 
-        // GET: Admin/RealtorRegistrations
+        // GET: Admin/UnverifiedRealtors
         [HttpGet]
-        public async Task<IActionResult> RealtorRegistrations()
+        public async Task<IActionResult> UnverifiedRealtors()
         {
             var users = await userManager.GetUsersInRoleAsync("UnverifiedRealtor");
             return View(users);
+
+            //string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "realtorProof");
+            //uniqueFilename = user.Id.ToString() + $"_{Input.FirstName}_{Input.LastName}";
+            //string filePath = Path.Combine(uploadsFolder, uniqueFilename);
         }
     }
 }
