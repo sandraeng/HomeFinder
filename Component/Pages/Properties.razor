@@ -20,7 +20,7 @@
     }
 
     #properties-container > div {
-        min-height: 553px;
+        min-height: 734px;
         width : 33%;
         /*border : 1px solid;*/
     }
@@ -39,8 +39,24 @@
         height: 5%;
     }
 
+    #left-under.text-center {
+        background-color: #F8F9FA;
+    }
+
+    #right-side.text-center {
+        background-color: #F8F9FA;
+    }
+
+      #left-side.text-center {
+        background-color: #F8F9FA;
+    }
+
+    #left-over {
+        background-color: #F8F9FA;
+    }
+
     .card-body > a {
-        background-color: #eee;
+        background-color: #F8F9FA;
         color: black;
         display: block;
         padding: 20px;
@@ -53,6 +69,11 @@
 
     #main {
   margin: 50px 0;
+}
+
+.btn-primary {
+    background-color: #fff;
+    /*border: none;*/
 }
 
 #main #faq .card {
@@ -121,6 +142,10 @@ h4 {
     height: 200px;
 }
 
+.propertiesText {
+    color: black;
+}
+
 </style>
 
 <div id="properties-container">
@@ -130,10 +155,10 @@ h4 {
                   
             <div class="card bg-light" style="min-height: 80%">
                 <div class="card-body">
-                    <div class="btn-group btn-group-toggle" style="display:block;" data-toggle="buttons">
+                    <div class="btn-group-vertical btn-group-toggle" style="display:block;" data-toggle="buttons">
                         @foreach (var property in propertyObjects)
                         {
-                            <label class="btn btn-primary" @onclick="() => SetProperty(property)"  for="@property.Id">
+                            <label class="btn btn-primary propertiesText" @onclick="() => SetProperty(property)"  for="@property.Id">
                             <input type="radio" class="btn-check" name="options-outlined" id="@property.Id" autocomplete="off">
                             @property.Address.FullAddress</label>
                         }
@@ -158,7 +183,7 @@ h4 {
                         {
                             @foreach (var person in noticeOfInterests)
                             {
-                                <label class="btn btn-primary" style="width: 100%" @onclick="() => GetPersonalInfo(person)">
+                                <label class="btn btn-primary propertiesText" style="width: 100%" @onclick="() => GetPersonalInfo(person)">
                                 <input type="radio" class="btn-check" name="options" id="option+@person.Id" autocomplete="off"> @person.FirstName @person.LastName
                                 </label>
                             }                  
@@ -209,7 +234,10 @@ h4 {
                     @propertyObjectToDisplay.Address.City
                     @propertyObjectToDisplay.Address.Country
                 </div>
-                <p class="card-text"><strong>Description:</strong> @propertyObjectToDisplay.Description</p>
+                <p class="card-text"><strong>Description:</strong></p>
+                <textarea name="message" id="formBox__messageInput" cols="30" rows="2" placeholder="Meddelande här (frivilligt)">
+                    <strong>Description:</strong> @propertyObjectToDisplay.Description</textarea>
+                
                 <p class="card-text"><strong>Number of rooms:</strong> @propertyObjectToDisplay.NumberOfRooms rooms</p>
                 <p class="card-text"><strong>Area:</strong> @propertyObjectToDisplay.Area m²</p>
                 <p class="card-text"><strong>Type:</strong> @propertyObjectToDisplay.PropertyType.PropertyTypeName</p>
