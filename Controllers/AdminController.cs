@@ -1,8 +1,10 @@
-﻿using HomeFinder.Models;
+﻿using HomeFinder.Data;
+using HomeFinder.Models;
 using HomeFinder.RoleModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,13 +16,14 @@ namespace HomeFinder.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<HomeFinderUser> userManager;
+        private readonly HomeFinderContext context;
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<HomeFinderUser> userManager)
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<HomeFinderUser> userManager, HomeFinderContext context)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this.context = context;
         }
-
 
         [HttpGet]
         public IActionResult ListUsers()
@@ -33,7 +36,8 @@ namespace HomeFinder.Controllers
         public async Task<IActionResult> EditUser(string id)
         {
             var user = await userManager.FindByIdAsync(id);
-
+            user = context.Users.Include(u => u.Address).FirstOrDefault(a => a.AddressId == user.AddressId);
+            
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with id: {id} cannot be found";

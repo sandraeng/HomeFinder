@@ -4,18 +4,19 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="text-center mt-5 pt-3 pb-4" style="background-color:#d7d9dbb3;">
 
 <h1>Create</h1>
 
 <h4>PropertyType</h4>
-<hr />
+<br />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-md-4 offset-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IconUrl" class="control-label"></label>
-                <input asp-for="IconUrl" class="form-control" />
+                <label hidden asp-for="IconUrl" class="control-label"></label>
+                <input type="file" name="file" class="form-control" />
                 <span asp-validation-for="IconUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -24,13 +25,6 @@
                 <select asp-for="@Model.PropertyTypeName" asp-items="ViewBag.PropertyTypeNames" class="form-control"></select>
                 <span asp-validation-for="PropertyTypeName" class="text-danger"></span>
             </div>
-@*
-            <div class="form-group">
-                <label asp-for="PropertyTypeName" class="control-label"></label>
-                <select asp-for="PropertyTypeName" class="form-control"></select>
-                <span asp-validation-for="PropertyTypeName" class="text-danger"></span>
-            </div>
-*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -41,7 +35,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
+</div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

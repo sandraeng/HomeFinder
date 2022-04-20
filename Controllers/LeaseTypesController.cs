@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HomeFinder.Data;
 using HomeFinder.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace HomeFinder.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class LeaseTypesController : Controller
     {
         private readonly HomeFinderContext _context;

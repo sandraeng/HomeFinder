@@ -7,16 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HomeFinder.Data;
 using HomeFinder.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace HomeFinder.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PropertyTypesController : Controller
     {
         private readonly HomeFinderContext _context;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public PropertyTypesController(HomeFinderContext context)
+        public PropertyTypesController(HomeFinderContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         // GET: PropertyTypes
@@ -57,17 +64,34 @@ namespace HomeFinder.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IconUrl,PropertyTypeName")] PropertyType propertyType)
+        public async Task<IActionResult> Create([Bind("Id,IconUrl,PropertyTypeName")] PropertyType propertyType, IFormFile file)
         {
             if (ModelState.IsValid)
             {
+               
+                string path = UploadFile(file);
+                propertyType.IconUrl = "~/Images/" + path;
                 _context.Add(propertyType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(propertyType);
         }
-
+        private string UploadFile(IFormFile file)
+        {
+            string fileName = null;
+            if (file != null)
+            {
+                string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "Images");
+                fileName = Guid.NewGuid().ToString() + "-" + file.FileName;
+                string filePath = Path.Combine(uploadDir, fileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+            }
+            return fileName;
+        }
         // GET: PropertyTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

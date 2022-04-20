@@ -24,7 +24,7 @@ namespace HomeFinder.Data
                 }
 
                 var leaseType = new LeaseType { Description = "Du äger bostaden", Name = "Bostadsrätt" };
-                var apartment = new PropertyType { IconUrl = "https://cdn.pixabay.com/photo/2021/10/11/23/49/building-6702046_960_720.png", PropertyTypeName = PropertyTypeName.Apartment };
+                var apartment = new PropertyType { IconUrl = "~/Images/apartment-logo.png", PropertyTypeName = PropertyTypeName.Apartment };
                 var useTwiceAdress = new Address { City = "Malmö", Country = "Sverige", PostalCode = "211 55", StreetAddress = "Hantverkaregatan 13" };
 
                 //Lösenord för alla: 1!(FirstName) tex. 1!Gabriel
@@ -206,7 +206,7 @@ namespace HomeFinder.Data
                         NextShowingDateTime = DateTime.Now.Date,
                         NonLivingArea = 0,
                         NumberOfRooms = 5,
-                        PropertyType = new PropertyType { IconUrl = "https://cdn.pixabay.com/photo/2021/07/02/04/48/home-6380863_960_720.png", PropertyTypeName = PropertyTypeName.House },
+                        PropertyType = new PropertyType { IconUrl = "~/Images/house-logo.png", PropertyTypeName = PropertyTypeName.House },
                         RealtorId = "c1a35e52-29f0-4ba3-968f-d1d6b89483fe",
                         Status = 0,
                         UploadedDate = DateTime.Now.Date,
@@ -260,7 +260,7 @@ namespace HomeFinder.Data
                         NextShowingDateTime = DateTime.Now.Date,
                         NonLivingArea = 0,
                         NumberOfRooms = 5,
-                        PropertyType = new PropertyType { IconUrl = "https://cdn.pixabay.com/photo/2020/03/10/09/11/architecture-4918393_960_720.png", PropertyTypeName = PropertyTypeName.Townhouse },
+                        PropertyType = new PropertyType { IconUrl = "~/Images/townhouse-logo.png", PropertyTypeName = PropertyTypeName.Townhouse },
                         RealtorId = "a73917c6-5cd3-47a2-88bb-e76c41840137",
                         Status = 0,
                         UploadedDate = DateTime.Now.Date,
