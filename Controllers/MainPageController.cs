@@ -121,10 +121,12 @@ namespace HomeFinder.Controllers
 
 
             }
-            var pager = new Pager(searchModel.Results.Count, page);
-                searchModel.Results.Where(p => p.NumberOfRooms >= searchModel.MinNumRooms && p.NumberOfRooms <= searchModel.MaxNumRooms).Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize).ToList();
+                searchModel.Results.Where(p => p.NumberOfRooms >= searchModel.MinNumRooms && p.NumberOfRooms <= searchModel.MaxNumRooms).ToList();
+                var pager = new Pager(searchModel.Results.Count, page);
+                searchModel.Results.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize).ToList();
                 searchModel.Pager = pager;
-            
+
+
 
             return View(searchModel);
         }

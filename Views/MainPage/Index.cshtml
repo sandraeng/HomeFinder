@@ -170,7 +170,6 @@
                 <a style="text-decoration: none;" asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propertyobject.Id">
                     <div class="row g-0">
                         <div class="col-7">
-                            @*inte fixat så bilderna kopplat till objektet laddas upp*@
                             <a asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propertyobject.Id">
                                 <img class="w-100" style="object-fit:cover; " src="@propertyobject.Images[0].Path" asp-append-version="true" alt="@propertyobject.Images[0].AltText">
                             </a>
@@ -206,27 +205,27 @@
 						@if (Model.Pager.CurrentPage > 1)
 						{
 							<li class="page-item">
-								<a class="page-link" href="~/MainPage/Index">First</a>
+								<a class="page-link button-link" href="~/MainPage/Index">First</a>
 							</li>
 							<li>
-								<a class="page-link" href="~/MainPage/Index?page=@(Model.Pager.CurrentPage - 1)">Previous</a>
+								<a class="page-link button-link" href="~/MainPage/Index?page=@(Model.Pager.CurrentPage - 1)">Previous</a>
 							</li>
 						}
 
 						@for (int pge = Model.Pager.StartPage; pge <= Model.Pager.EndPage; pge++)
 						{
 							<li class="page-item @(pge == Model.Pager.CurrentPage ? "active" : "")">
-								<a class="page-link" href="~/MainPage/Index?page=@pge">@pge</a>
+								<a class="page-link button-link" href="~/MainPage/Index?page=@pge">@pge</a>
 							</li>
 						}
 
 						@if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
 						{
 							<li class="page-item">
-								<a class="page-link" href="~/MainPage/Index?page=@(Model.Pager.CurrentPage + 1)">Next</a>
+								<a class="page-link button-link" href="~/MainPage/Index?page=@(Model.Pager.CurrentPage + 1)">Next</a>
 							</li>
 							<li>
-								<a class="page-link" href="~/MainPage/Index?page=@(Model.Pager.TotalPages)">Last</a>
+								<a class="page-link button-link" href="~/MainPage/Index?page=@(Model.Pager.TotalPages)">Last</a>
 							</li>
 						}
 					</ul>

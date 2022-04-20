@@ -156,3 +156,29 @@ input[type=range] {
         background-color: red;
         -webkit-appearance: none;
     }
+
+/*.page-link {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #d9d9d9 !important;
+    background-color: #4f4f4f !important;
+    border: 1px solid #262626 !important;
+}
+
+    .page-link:hover {
+        z-index: 2;
+        color: #fff !important;
+        text-decoration: none;
+        background-color: #a4a4a4 !important;
+        border-color: #dee2e6;
+    }
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #808080 !important;
+    border-color: #353535;
+}*/
