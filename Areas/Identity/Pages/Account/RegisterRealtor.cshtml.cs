@@ -19,6 +19,7 @@ namespace HomeFinder.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<HomeFinderUser> _signInManager;
         private readonly UserManager<HomeFinderUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IWebHostEnvironment _hostingEnvironment;
 
@@ -27,12 +28,14 @@ namespace HomeFinder.Areas.Identity.Pages.Account
         public RegisterRealtorModel(
             UserManager<HomeFinderUser> userManager,
             SignInManager<HomeFinderUser> signInManager,
+            RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
             /*IEmailSender emailSender*/
             IWebHostEnvironment hostingEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
             //_emailSender = emailSender;
@@ -96,7 +99,14 @@ namespace HomeFinder.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                
+                // Check if there is a realtor-role, otherwise we can't create realtors.
+                var unverifedRealtorRole = _roleManager.Roles.Where(r => r.Name == "UnverifiedRealtor").FirstOrDefault();
+                if(unverifedRealtorRole == null)
+                {
+                    string errorMessage = "Unable to register new realtor. The user role 'UnverifiedRealtor' does not exist. Please notify site Administrators.";
+                    ModelState.AddModelError(string.Empty, errorMessage);
+                    return Page();
+                }
 
                 var user = new HomeFinderUser
                 {
@@ -111,6 +121,9 @@ namespace HomeFinder.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    var addedUser = _userManager.Users.Where(u => u.UserName == user.UserName).FirstOrDefault();
+                    await _userManager.AddToRoleAsync(addedUser, unverifedRealtorRole.Name);
+
                     string uniqueFilename = null;
                     if (Input.RealtorProof != null)
                     {

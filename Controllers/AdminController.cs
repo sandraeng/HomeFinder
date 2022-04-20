@@ -233,6 +233,12 @@ namespace HomeFinder.Controllers
 
         }
 
-        
+        // GET: Admin/RealtorRegistrations
+        [HttpGet]
+        public async Task<IActionResult> RealtorRegistrations()
+        {
+            var users = await userManager.GetUsersInRoleAsync("UnverifiedRealtor");
+            return View(users);
+        }
     }
 }
