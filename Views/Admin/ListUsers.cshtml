@@ -40,10 +40,10 @@
                             <span id="confirmDeleteSpan_@user.Id" style="display:none">
                                 <span>Are you sure you want to delete this user?</span>
                                 <button type="submit" class="btn btn-danger">Yes</button>
-                                <a class="btn btn-primary" onclick="confirmDelete('@user.Id', false)">No</a>
+                                <a class="btn btn-primary text-light" onclick="confirmDelete('@user.Id', false)">No</a>
                             </span>
                             <span id="deleteSpan_@user.Id">
-                                <a class="btn btn-danger" onclick="confirmDelete('@user.Id', true)">Delete</a>
+                                <a class="btn btn-danger text-light" onclick="confirmDelete('@user.Id', true)">Delete</a>
                             </span>
                         </form>
                     </div>
@@ -66,18 +66,6 @@
     }
 </div>
 
-<script>
-    function confirmDelete(uniqueId, isDeleteClicked){
-        var deleteSpan = 'deleteSpan_' + uniqueId;
-        var confirmDeleteSpan = 'confirmDeleteSpan_' + uniqueId;
-
-        if (isDeleteClicked){
-            $('#' + deleteSpan).hide();
-            $('#' + confirmDeleteSpan).show();
-        }
-        else{
-            $('#' + deleteSpan).show();
-            $('#' + confirmDeleteSpan).hide();
-        }
-    }
-</script>
+@section Scripts{
+    <script src="~/js/deleteconfirmation.js"></script>
+}

@@ -24,136 +24,136 @@
             <div class="form_container">
                 <h5 style="text-align: center;">Filter Search</h5>
                 <div asp-validation-summary="All" class="text-danger"></div>
-            <article class="card-group-item">
-                <div class="my-1">
-                    <input type="text" asp-for="Searchstring" placeholder="City or Street" class="form-control col-12" />
-                </div>
-            </article>
-            <article class="card-group-item mt-3 mb-3">
-                <h6 style="text-align:center;">Price</h6>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                    <label>Min</label>
-                    <input type="number" asp-for="MinPrice" class="form-control" id="minimum-value">
+                <article class="card-group-item">
+                    <div class="my-1">
+                        <input type="text" asp-for="Searchstring" placeholder="City or Street" class="form-control col-12" />
                     </div>
-                    <div class="form-group col-md-6 text-right">
-                    <label>Max</label>
-                    <input type="number" asp-for="MaxPrice" class="form-control" id="maximum-value">
+                </article>
+                <article class="card-group-item mt-3 mb-3">
+                    <h6 style="text-align:center;">Price</h6>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Min</label>
+                            <input type="number" asp-for="MinPrice" class="form-control" id="minimum-value">
+                        </div>
+                        <div class="form-group col-md-6 text-right">
+                            <label>Max</label>
+                            <input type="number" asp-for="MaxPrice" class="form-control" id="maximum-value">
+                        </div>
                     </div>
-                </div>
-                <div class="middle w-100">
-                    <div class="multi-range-slider">
-                        <input type="range"  id="input-left" min="@minPrice" max="@maxPrice" value="@Model.MinPrice" />
-                        <input type="range"  id="input-right" min="@minPrice" max="@maxPrice" value="@Model.MaxPrice" />
+                    <div class="middle w-100">
+                        <div class="multi-range-slider">
+                            <input type="range" id="input-left" min="@minPrice" max="@maxPrice" value="@Model.MinPrice" />
+                            <input type="range" id="input-right" min="@minPrice" max="@maxPrice" value="@Model.MaxPrice" />
 
-                    <div class="slider">
-                    <div class="track"></div>
-                    <div class="range"></div>
-                    <div class="thumb left"></div>
-                    <div class="thumb right"></div>
-                </div>
-                </div>
-                </div>
-            </article>
-            @Html.ValidationMessageFor(model => model.MaxPrice, "", new { @class = "text-danger"})
-            @Html.ValidationMessageFor(model => model.MinPrice, "", new { @class = "text-danger"})
-             <article class="card-group-item mt-3 mb-3">
-                 <h6 style="text-align:center;">Area</h6>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                    <label>Min</label>
-                    <input type="number" asp-for="MinArea" class="form-control" id="minimum-value2">
-                    </div>
-                    <div class="form-group col-md-6 text-right">
-                    <label>Max</label>
-                    <input type="number" asp-for="MaxArea" class="form-control" id="maximum-value2">
-                    </div>
-                </div>
-                <div class="middle w-100">
-                    <div class="multi-range-slider">
-                        <input type="range"  id="input-left2" min="@minArea" max="@maxArea" value="@Model.MinArea" />
-                        <input type="range"  id="input-right2" min="@minArea" max="@maxArea" value="@Model.MaxArea" />
-
-                    <div class="slider">
-                    <div class="track"></div>
-                    <div class="range2"></div>
-                    <div class="thumb left2"></div>
-                    <div class="thumb right2"></div>
-                </div>
-                </div>
-                </div>
-            </article>
-            @Html.ValidationMessageFor(model => model.MinArea, "", new { @class = "text-danger"})
-            @Html.ValidationMessageFor(model => model.MaxArea, "", new { @class = "text-danger"})
-            <article class="card-group-item mt-3 mb-3">
-                <div class="my-2">
-                    <h6 style="text-align:center;">Number of rooms</h6>
-                    <label for="minNumRooms">Min</label>
-                    <input type="number" asp-for="MinNumRooms" step="1" class="form-control-sm col-4" />
-                    <label for="maxNumRooms">Max</label>
-                    <input type="number" asp-for="MaxNumRooms" step="1" class="form-control-sm col-4 float-right" />
-                </div>
-            </article>
-            @Html.ValidationMessageFor(model => model.MinNumRooms, "", new { @class = "text-danger"})
-            @Html.ValidationMessageFor(model => model.MaxNumRooms, "", new { @class = "text-danger"})
-            <article class="card-group-item  mt-3 mb-3">
-                <div class="checkbox_wrapper">
-                    <div class="checkbox_title">
-                        <h6>Choose Property Type</h6>
-                    </div>
-
-                    <div class="checkbox_container">
-                        <label class="option_item">
-                            <input type="checkbox" asp-for="IsHouse" class="checkbox_search" id="house_option" />
-                            <div class="option_inner">
-                                <div class="icon_search"><i class="fa-solid fa-house"></i></div>
-                                <div class="name_search">House</div>
+                            <div class="slider">
+                                <div class="track"></div>
+                                <div class="range"></div>
+                                <div class="thumb left"></div>
+                                <div class="thumb right"></div>
                             </div>
-                        </label>
-                        <label class="option_item">
-                            <input type="checkbox" asp-for="IsApartment" class="checkbox_search" id="apartment_option" />
-                            <div class="option_inner">
-                                <div class="icon_search"><i class="fa-solid fa-building"></i></div>
-                                <div class="name_search">Apartment</div>
-
-                            </div>
-                        </label>
-                        <label class="option_item">
-                            <input type="checkbox" asp-for="IsTownhouse" class="checkbox_search" id="townhouse_option" />
-                            <div class="option_inner">
-                                <div class="icon_search"><i class="fa-solid fa-city"></i></div>
-                                <div class="name_search">Townhouse</div>
-
-                            </div>
-                        </label>
-                        <label class="option_item">
-                            <input type="checkbox" asp-for="IsFarm" class="checkbox_search" id="farm_option" />
-                            <div class="option_inner">
-                                <div class="icon_search"><i class="fa-solid fa-industry"></i></div>
-                                <div class="name_search">Farm</div>
-
-                            </div>
-                        </label>
-                        <label class="option_item">
-                            <input type="checkbox" asp-for="IsLot" class="checkbox_search" id="lot_option" />
-                            <div class="option_inner">
-                                <div class="icon_search"><i class="fa-solid fa-vector-square"></i></div>
-                                <div class="name_search">Lot</div>
-
-                            </div>
-                        </label>
+                        </div>
                     </div>
+                </article>
+                @Html.ValidationMessageFor(model => model.MaxPrice, "", new { @class = "text-danger"})
+                @Html.ValidationMessageFor(model => model.MinPrice, "", new { @class = "text-danger"})
+                <article class="card-group-item mt-3 mb-3">
+                    <h6 style="text-align:center;">Area</h6>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Min</label>
+                            <input type="number" asp-for="MinArea" class="form-control" id="minimum-value2">
+                        </div>
+                        <div class="form-group col-md-6 text-right">
+                            <label>Max</label>
+                            <input type="number" asp-for="MaxArea" class="form-control" id="maximum-value2">
+                        </div>
+                    </div>
+                    <div class="middle w-100">
+                        <div class="multi-range-slider">
+                            <input type="range" id="input-left2" min="@minArea" max="@maxArea" value="@Model.MinArea" />
+                            <input type="range" id="input-right2" min="@minArea" max="@maxArea" value="@Model.MaxArea" />
+
+                            <div class="slider">
+                                <div class="track"></div>
+                                <div class="range2"></div>
+                                <div class="thumb left2"></div>
+                                <div class="thumb right2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                @Html.ValidationMessageFor(model => model.MinArea, "", new { @class = "text-danger"})
+                @Html.ValidationMessageFor(model => model.MaxArea, "", new { @class = "text-danger"})
+                <article class="card-group-item mt-3 mb-3">
+                    <div class="my-2">
+                        <h6 style="text-align:center;">Number of rooms</h6>
+                        <label for="minNumRooms">Min</label>
+                        <input type="number" asp-for="MinNumRooms" step="1" class="form-control-sm col-4" />
+                        <label for="maxNumRooms">Max</label>
+                        <input type="number" asp-for="MaxNumRooms" step="1" class="form-control-sm col-4 float-right" />
+                    </div>
+                </article>
+                @Html.ValidationMessageFor(model => model.MinNumRooms, "", new { @class = "text-danger"})
+                @Html.ValidationMessageFor(model => model.MaxNumRooms, "", new { @class = "text-danger"})
+                <article class="card-group-item  mt-3 mb-3">
+                    <div class="checkbox_wrapper">
+                        <div class="checkbox_title">
+                            <h6>Choose Property Type</h6>
+                        </div>
+
+                        <div class="checkbox_container">
+                            <label class="option_item">
+                                <input type="checkbox" asp-for="IsHouse" class="checkbox_search" id="house_option" />
+                                <div class="option_inner">
+                                    <div class="icon_search"><i class="fa-solid fa-house"></i></div>
+                                    <div class="name_search">House</div>
+                                </div>
+                            </label>
+                            <label class="option_item">
+                                <input type="checkbox" asp-for="IsApartment" class="checkbox_search" id="apartment_option" />
+                                <div class="option_inner">
+                                    <div class="icon_search"><i class="fa-solid fa-building"></i></div>
+                                    <div class="name_search">Apartment</div>
+
+                                </div>
+                            </label>
+                            <label class="option_item">
+                                <input type="checkbox" asp-for="IsTownhouse" class="checkbox_search" id="townhouse_option" />
+                                <div class="option_inner">
+                                    <div class="icon_search"><i class="fa-solid fa-city"></i></div>
+                                    <div class="name_search">Townhouse</div>
+
+                                </div>
+                            </label>
+                            <label class="option_item">
+                                <input type="checkbox" asp-for="IsFarm" class="checkbox_search" id="farm_option" />
+                                <div class="option_inner">
+                                    <div class="icon_search"><i class="fa-solid fa-industry"></i></div>
+                                    <div class="name_search">Farm</div>
+
+                                </div>
+                            </label>
+                            <label class="option_item">
+                                <input type="checkbox" asp-for="IsLot" class="checkbox_search" id="lot_option" />
+                                <div class="option_inner">
+                                    <div class="icon_search"><i class="fa-solid fa-vector-square"></i></div>
+                                    <div class="name_search">Lot</div>
+
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                </article> <!-- card-group-item.// -->
+
+                <div class="my-3" style="text-align:center;">
+                    <input type="submit" value="Filter" class="btn btn-success btn-sm mr-3" />
+                    <a asp-action="Index" class="btn btn-secondary btn-sm">Clear</a>
                 </div>
-                
-            </article> <!-- card-group-item.// -->
-            
-            <div class="my-3" style="text-align:center;">
-            <input type="submit" value="Filter" class="btn btn-success btn-sm mr-3"/>
-            <a asp-action="Index" class="btn btn-secondary btn-sm">Clear</a>
-            </div>
             </div>
         </form>
-        @if(Model.Results.Count() < 1)
+        @if (Model.Results.Count() < 1)
         {
             <div class="col-5">
                 <div class="card-body" style="background-color:white; border-radius: 5px; text-align: center;">
@@ -161,48 +161,48 @@
                 </div>
             </div>
         }
-        
+
         @foreach (var propertyobject in Model.Results)
         {
 
             <div class="card mb-2">
-                <a style="text-decoration: none;" asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propertyobject.Id">
+                <a style="text-decoration: none; color:black;" asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propertyobject.Id">
                     <div class="row g-0">
-                        <div class="col-7">
-                            @*inte fixat så bilderna kopplat till objektet laddas upp*@
-                            <a asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propertyobject.Id">
-                                <img class="w-100" style="object-fit:cover; " src="@propertyobject.Images[0].Path" asp-append-version="true" alt="@propertyobject.Images[0].AltText">
-                            </a>
-                        </div>
-                        <div class="col-5">
-                            <div class="card-body">
-                                @using (Html.BeginForm("SaveFavoriteObject","PropertyObjects")) {
-                                    @Html.Hidden("Id", propertyobject.Id, new { @id = "Id" });
-                                    // Uses javascript savedlikedobjects.js
-                                    <button name="btnSaveLike" type="submit" class="btn btn-danger m-1 float-right"><i class="fa-solid fa-heart"></i></button>
-                                }
-                                <h5 class="card-text mb-4" style="text-align: center;">@propertyobject.Address.StreetAddress</h5>
-                                <p class="card-text"><b>City:</b> @propertyobject.Address.City</p>
-                                <p class="card-text"><b>Property type:</b> @propertyobject.PropertyType.PropertyTypeName.ToString()</p>
-                                <p class="card-text"><b>Rooms:</b> @propertyobject.NumberOfRooms.ToString("0")</p>
-                                <p class="card-text"><b>Area:</b> @propertyobject.Area.ToString("0") sqm</p>
-                                @if (@propertyobject.NonLivingArea > 0)
-                                {
-                                    <p class="card-text"><b>Biarea:</b> @propertyobject.NonLivingArea.ToString("0") sqm</p>
-                                }
-                                @if (@propertyobject.LotArea > 0)
-                                {
-                                    <p class="card-text"><b>Lot size:</b> @propertyobject.LotArea.ToString("0") sqm</p>
-                                }
-                                <p class="card-text"><b>Price:</b> @propertyobject.ListPrice.ToString("c")</p>
-
+                            <div class="col-7">
+                                @*<a asp-controller="PropertyObjects" asp-action="Details" asp-route-id="@propertyobject.Id">*@
+                                @*inte fixat så bilderna kopplat till objektet laddas upp*@
+                                <img class="w-100" style="height:100%;" src="@propertyobject.Images[0].Path" asp-append-version="true" alt="@propertyobject.Images[0].AltText">
+                                @*</a>*@
+                            </div>
+                            <div class="col-5">
+                                <div class="card-body">
+                                    @using (Html.BeginForm("SaveFavoriteObject", "PropertyObjects"))
+                                    {
+                                        @Html.Hidden("Id", propertyobject.Id, new { @id = "Id" });
+                                        // Uses javascript savedlikedobjects.js
+                                        <button name="btnSaveLike" type="submit" class="btn btn-danger m-1 float-right"><i class="fa-solid fa-heart"></i></button>
+                                    }
+                                    <h5 class="card-text mb-4" style="text-align: center;">@propertyobject.Address.StreetAddress</h5>
+                                    <p class="card-text"><b>City:</b> @propertyobject.Address.City</p>
+                                    <p class="card-text"><b>Property type:</b> @propertyobject.PropertyType.PropertyTypeName.ToString()</p>
+                                    <p class="card-text"><b>Rooms:</b> @propertyobject.NumberOfRooms.ToString("0")</p>
+                                    <p class="card-text"><b>Area:</b> @propertyobject.Area.ToString("0") sqm</p>
+                                    @if (@propertyobject.NonLivingArea > 0)
+                                    {
+                                        <p class="card-text"><b>Biarea:</b> @propertyobject.NonLivingArea.ToString("0") sqm</p>
+                                    }
+                                    @if (@propertyobject.LotArea > 0)
+                                    {
+                                        <p class="card-text"><b>Lot size:</b> @propertyobject.LotArea.ToString("0") sqm</p>
+                                    }
+                                    <p class="card-text"><b>Price:</b> @propertyobject.ListPrice.ToString("c")</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
             </div>
         }
-        
+
     </div>
 
 </div>
