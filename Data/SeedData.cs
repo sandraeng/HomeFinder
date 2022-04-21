@@ -143,6 +143,7 @@ namespace HomeFinder.Data
                 {
                     await roleStore.CreateAsync(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" });
                     await roleStore.CreateAsync(new IdentityRole { Name = "Realtor", NormalizedName = "REALTOR" });
+                    await roleStore.CreateAsync(new IdentityRole { Name = "UnverifiedRealtor", NormalizedName = "UNVERIFIEDREALTOR" });
 
                     var userStore = new UserStore<HomeFinderUser>(context);
                     foreach (var user in context.Users)

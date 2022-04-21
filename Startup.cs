@@ -63,7 +63,10 @@ namespace HomeFinder
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ServeUnknownFileTypes = true, // serve extensionless files
+            });
 
             app.UseRouting();
 

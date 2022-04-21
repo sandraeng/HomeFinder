@@ -2,15 +2,19 @@
 using HomeFinder.Models;
 using HomeFinder.RoleModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.IO;
 using System.ComponentModel.Design;
 using System.Data;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using MimeDetective;
+using System;
 
 namespace HomeFinder.Controllers
 {
@@ -19,13 +23,19 @@ namespace HomeFinder.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<HomeFinderUser> userManager;
-        private readonly HomeFinderContext context;
+        private readonly HomeFinderContext _context;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<HomeFinderUser> userManager, HomeFinderContext context)
+        public AdminController(
+            RoleManager<IdentityRole> roleManager,
+            UserManager<HomeFinderUser> userManager,
+            HomeFinderContext context,
+            IWebHostEnvironment hostingEnvironment)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
-            this.context = context;
+            this._context = context;
+            this._hostingEnvironment = hostingEnvironment;
         }
 
         [HttpGet]
@@ -38,12 +48,11 @@ namespace HomeFinder.Controllers
         [HttpGet]
         public async Task<IActionResult> EditUser(string id)
         {
-            var user = context.Users.Include(u => u.Address).Include(u => u.Company).FirstOrDefault(a => a.Id == id);
+            var user = _context.Users.Include(u => u.Address).Include(u => u.Company).FirstOrDefault(a => a.Id == id);
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with id: {id} cannot be found";
-                return View("Error");
+                throw new ArgumentException($"User with id: {id} could not be found.");
             }
 
             var userClaims = await userManager.GetClaimsAsync(user);
@@ -70,7 +79,7 @@ namespace HomeFinder.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUser(EditUser model)
         {
-            var user = context.Users.Include(u => u.Address).Include(u => u.Company).FirstOrDefault(a => a.Id == model.Id);
+            var user = _context.Users.Include(u => u.Address).Include(u => u.Company).FirstOrDefault(a => a.Id == model.Id);
 
             if (user == null)
             {
@@ -109,8 +118,8 @@ namespace HomeFinder.Controllers
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await userManager.FindByIdAsync(id);
-            var likedObjects = context.PropertyFavorited.FirstOrDefault(p => p.UserId == id);
-            var markedInterested = context.NoticeOfInterests.FirstOrDefault(p => p.UserId == id);
+            var likedObjects = _context.PropertyFavorited.FirstOrDefault(p => p.UserId == id);
+            var markedInterested = _context.NoticeOfInterests.FirstOrDefault(p => p.UserId == id);
 
             if (user == null)
             {
@@ -121,11 +130,11 @@ namespace HomeFinder.Controllers
             {
                 if(likedObjects != null)
                 {
-                    context.PropertyFavorited.Remove(likedObjects);
+                    _context.PropertyFavorited.Remove(likedObjects);
                 }
                 if(markedInterested != null)
                 {
-                    context.NoticeOfInterests.Remove(markedInterested);
+                    _context.NoticeOfInterests.Remove(markedInterested);
                 }
 
                 var result = await userManager.DeleteAsync(user);
@@ -190,8 +199,7 @@ namespace HomeFinder.Controllers
 
             if(role == null)
             {
-                ViewBag.ErrorMessage = $"Role with id: {id} cannot be found";
-                return View("Error");
+                throw new ArgumentException($"Role with id: {id} could not be found.");
             }
 
             var model = new EditRole
@@ -218,8 +226,7 @@ namespace HomeFinder.Controllers
 
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Role with id: {model.Id} cannot be found";
-                return View("Error");
+                throw new ArgumentException($"Role with id: {model.Id} could not be found.");
             }
             else
             {
@@ -249,8 +256,7 @@ namespace HomeFinder.Controllers
 
             if(role == null)
             {
-                ViewBag.ErrorMessage = $"Role with id: {roleId} cannot be found";
-                return View("Error");
+                throw new ArgumentException($"Role with id: {roleId} could not be found.");
             }
 
             var model = new List<UserRole>();
@@ -283,8 +289,7 @@ namespace HomeFinder.Controllers
 
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Role with id: {roleId} cannot be found";
-                return View("Error");
+                throw new ArgumentException($"Role with id: {roleId} could not be found.");
             }
 
             for (int i = 0; i < model.Count; i++)
@@ -347,6 +352,139 @@ namespace HomeFinder.Controllers
 
                 return View("ListRoles");
             }
+        }
+
+
+        // GET: Admin/UnverifiedRealtors
+        [HttpGet]
+        public async Task<IActionResult> UnverifiedRealtors()
+        {
+            var users = await userManager.GetUsersInRoleAsync("UnverifiedRealtor");
+            return View(users);
+        }
+
+        // GET: Admin/ViewUnverifiedRealtors/id
+        [HttpGet]
+        public async Task<IActionResult> ViewUnverifiedRealtor(string id)
+        {
+            var user = await _context.Users
+                .Where(u => u.Id == id)
+                .Include(u => u.Address)
+                .Include(u => u.Company)
+                .FirstOrDefaultAsync();
+            if (user is null)
+            {
+                throw new ArgumentException($"User with id: {id} could not be found.");
+            }
+            if (!(await userManager.IsInRoleAsync(user, "UnverifiedRealtor")))
+            {
+                throw new ArgumentException($"User with id: {id} is not in role 'UnverifiedRealtor'.");
+            }
+
+            // Get list of files for this user. Filename contains user id.
+            string proofFolder = "realtorProof";
+            string webPath = $"/{proofFolder}";
+            string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, proofFolder);
+            List<string> fileUrls = new List<string>();
+            List<string> imageUrls = new List<string>();
+
+            DirectoryInfo di = new DirectoryInfo(uploadsFolder);
+
+            foreach (FileInfo fi in di.GetFiles())
+            {
+                if (fi.Name.Contains(user.Id))
+                {
+                    if (IsImageFile(fi.FullName))
+                    {
+                        imageUrls.Add($"{webPath}/{fi.Name}");
+                    }
+                    else
+                    {
+                        fileUrls.Add($"{webPath}/{fi.Name}");
+                    }
+
+                }
+
+            }
+            ViewBag.UserFiles = fileUrls;
+            ViewBag.UserImages = imageUrls;
+            return View(user);
+        }
+
+        // Post: Admin/VerifyRealtor
+        [HttpPost]
+        public async Task<IActionResult> VerifyRealtor(string id)
+        {
+            var user = await _context.Users
+                .Where(u => u.Id == id)
+                .Include(u => u.Address)
+                .Include(u => u.Company)
+                .FirstOrDefaultAsync();
+            if (user is null)
+            {
+                throw new ArgumentException($"User with id: {id} could not be found.");
+            }
+            if (!(await userManager.IsInRoleAsync(user, "UnverifiedRealtor")))
+            {
+                throw new ArgumentException($"User with id: {id} is not in role 'UnverifiedRealtor'.");
+            }
+
+            return View(user);
+        }
+        // Post: Admin/RealtorVerified
+        [HttpPost]
+        public async Task<IActionResult> RealtorVerified(string id)
+        {
+            var user = await _context.Users
+                .Where(u => u.Id == id)
+                .Include(u => u.Address)
+                .Include(u => u.Company)
+                .FirstOrDefaultAsync();
+            if (user is null)
+            {
+                throw new ArgumentException($"User with id: {id} could not be found.");
+            }
+            if (!(await userManager.IsInRoleAsync(user, "UnverifiedRealtor")))
+            {
+                throw new ArgumentException($"User with id: {id} is not in role 'UnverifiedRealtor'.");
+            }
+
+            await userManager.AddToRoleAsync(user, "Realtor");
+            await userManager.RemoveFromRoleAsync(user, "UnverifiedRealtor");
+            user.EmailConfirmed = true;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("UnverifiedRealtors", "Admin");
+        }
+        /// <summary>
+        /// Returns true if file exists and has mimetype image.
+        /// Returns false otherwise.
+        /// Throws ArgumentException if filePath is null.
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        private bool IsImageFile(string filePath)
+        {
+            if (filePath is null)
+            {
+                throw new ArgumentException($"filePath must be a non null string");
+            }
+            if (System.IO.File.Exists(filePath))
+            {
+                // This could be optimized if checking IsImageFile many times in a row.
+                var Inspector = new ContentInspectorBuilder()
+                {
+                    Definitions = MimeDetective.Definitions.Default.All()
+                }.Build();
+
+                var content = ContentReader.Default.ReadFromFile(filePath);
+                var results = Inspector.Inspect(content);
+                var isImage = results.ByMimeType().Any(r => r.MimeType.Contains("image/"));
+
+                return isImage;
+            }
+            return false;
         }
     }
 }

@@ -30,6 +30,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils" Version="5.0.2" />
+    <PackageReference Include="Mime-Detective" Version="22.7.19" />
   </ItemGroup>
 
   <ItemGroup>

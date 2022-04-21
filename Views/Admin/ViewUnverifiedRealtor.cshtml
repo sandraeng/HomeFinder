@@ -1,0 +1,100 @@
+﻿@model HomeFinderUser
+
+@{
+    ViewData["Title"] = "Verify Realtor";
+}
+
+<div class="card mt-2 mb-2">
+    <div class="card-header">
+        <h4>@ViewData["Title"]</h4>
+    </div>
+<div class="card-content">
+        <div class="row">
+            <div class="col-md-12">
+                <form id="profile-form" method="post">
+                    @* User *@
+                    <div class="col-md-12">
+                        <h4>User data</h4>
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            <label asp-for="FirstName"></label>
+                            <input asp-for="FirstName" disabled class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LastName"></label>
+                            <input asp-for="LastName" disabled class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber"></label>
+                            <input asp-for="PhoneNumber" disabled class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    @* Address object*@
+                    <div class="col-md-12">
+                        <h4>Address</h4>
+                        <input type="hidden" asp-for="Address.Id" />
+                        <div class="form-group">
+                            <label asp-for="Address.StreetAddress"></label>
+                            <input asp-for="Address.StreetAddress" disabled class="form-control" />
+                            <span asp-validation-for="Address.StreetAddress" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address.PostalCode"></label>
+                            <input asp-for="Address.PostalCode" disabled class="form-control" />
+                            <span asp-validation-for="Address.PostalCode" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address.City"></label>
+                            <input asp-for="Address.City" disabled class="form-control" />
+                            <span asp-validation-for="Address.City" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address.Country"></label>
+                            <input asp-for="Address.Country" disabled class="form-control" />
+                            <span asp-validation-for="Address.Country" class="text-danger"></span>
+                        </div>
+                    </div>
+                    @* Company object *@
+                    <div class="col-md-12">
+                        <h4>Company</h4>
+                        <input type="hidden" asp-for="CompanyId" />
+                        <div class="form-group">
+                            <label asp-for="Company.Name"></label>
+                            <input asp-for="Company.Name" disabled class="form-control" disabled />
+                            <span asp-validation-for="Company.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Company.OrgNumber"></label>
+                            <input asp-for="Company.OrgNumber" disabled class="form-control" disabled />
+                            <span asp-validation-for="Company.OrgNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                </form>
+                <div class="col-md-12">
+                    <h4>Verification Files</h4>
+@foreach (string fileUrl in ViewBag.UserFiles) {
+                    <a href="@fileUrl" download>@fileUrl</a>
+}
+                </div>
+                <div class="col-md-12">
+                    <h4>Verification images</h4>
+@foreach (string imageUrl in ViewBag.UserImages) {
+                    <img src="@imageUrl" /><br />
+}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <form asp-controller="Admin" asp-action="VerifyRealtor">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input type="submit" value="Verify Realtor" class="btn btn-primary" />
+                <a asp-action="EditUser" asp-controller="Admin" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
+            </div>
+        </form>
+    </div>
+</div>
