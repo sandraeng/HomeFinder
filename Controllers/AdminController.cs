@@ -8,10 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.IO;
-using System.ComponentModel.Design;
 using System.Data;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using MimeDetective;
 using System;
@@ -48,11 +46,11 @@ namespace HomeFinder.Controllers
         [HttpGet]
         public async Task<IActionResult> EditUser(string id)
         {
-            var user = _context.Users.Include(u => u.Address).Include(u => u.Company).FirstOrDefault(a => a.Id == id);
+            var user = await _context.Users.Include(u => u.Address).Include(u => u.Company).FirstOrDefaultAsync(a => a.Id == id);
 
             if (user == null)
             {
-                throw new ArgumentException($"User with id: {id} could not be found.");
+                return View("Error");
             }
 
             var userClaims = await userManager.GetClaimsAsync(user);
@@ -79,11 +77,10 @@ namespace HomeFinder.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUser(EditUser model)
         {
-            var user = _context.Users.Include(u => u.Address).Include(u => u.Company).FirstOrDefault(a => a.Id == model.Id);
+            var user = await _context.Users.Include(u => u.Address).Include(u => u.Company).FirstOrDefaultAsync(a => a.Id == model.Id);
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with id: {model.Id} cannot be found";
                 return View("Error");
             }
             else
@@ -118,12 +115,12 @@ namespace HomeFinder.Controllers
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await userManager.FindByIdAsync(id);
-            var likedObjects = _context.PropertyFavorited.FirstOrDefault(p => p.UserId == id);
-            var markedInterested = _context.NoticeOfInterests.FirstOrDefault(p => p.UserId == id);
+            var likedObjects = await _context.PropertyFavorited.FirstOrDefaultAsync(p => p.UserId == id);
+            var markedInterested = await _context.NoticeOfInterests.FirstOrDefaultAsync(p => p.UserId == id);
+            var externalLogin = await _context.UserLogins.FirstOrDefaultAsync(p => p.UserId == id);
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with id: {id} cannot be found";
                 return View("Error");
             }
             else
@@ -135,6 +132,10 @@ namespace HomeFinder.Controllers
                 if(markedInterested != null)
                 {
                     _context.NoticeOfInterests.Remove(markedInterested);
+                }
+                if(externalLogin != null)
+                {
+                    _context.UserLogins.Remove(externalLogin);
                 }
 
                 var result = await userManager.DeleteAsync(user);
@@ -199,7 +200,7 @@ namespace HomeFinder.Controllers
 
             if(role == null)
             {
-                throw new ArgumentException($"Role with id: {id} could not be found.");
+                return View("Error");
             }
 
             var model = new EditRole
@@ -226,7 +227,7 @@ namespace HomeFinder.Controllers
 
             if (role == null)
             {
-                throw new ArgumentException($"Role with id: {model.Id} could not be found.");
+                return View("Error");
             }
             else
             {
@@ -256,7 +257,7 @@ namespace HomeFinder.Controllers
 
             if(role == null)
             {
-                throw new ArgumentException($"Role with id: {roleId} could not be found.");
+                return View("Error");
             }
 
             var model = new List<UserRole>();
@@ -289,7 +290,7 @@ namespace HomeFinder.Controllers
 
             if (role == null)
             {
-                throw new ArgumentException($"Role with id: {roleId} could not be found.");
+                return View("Error");
             }
 
             for (int i = 0; i < model.Count; i++)
@@ -332,7 +333,6 @@ namespace HomeFinder.Controllers
             
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Role with id: {id} cannot be found";
                 return View("Error");
             }
             else
