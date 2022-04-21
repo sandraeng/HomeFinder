@@ -1,0 +1,40 @@
+﻿@model HomeFinderUser
+
+@{
+    ViewData["Title"] = "Verify Realtor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-12">
+    <div class="card mb-2">
+        <div class="card-header">
+            <h5>
+                @Html.DisplayFor(model => model.Company.Name), @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)
+            </h5>
+        </div>
+        <div class="row g-0">
+            <div class="col-12">
+                <div class="card-body">
+                    <h5>
+                        Verification
+                    </h5>
+                        <p class="card-text">Is the information supplied by this prospective realtor correct?</p>
+                        <p class="card-text">Click 'Verify Realtor' to change role from "UnverifiedRealtor" to "Realtor" and set EmailConfirmed to True.</p>
+                    <form asp-controller="Admin" asp-action="RealtorVerified">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            <input type="submit" value="Verify Realtor" class="btn btn-danger" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="m-2">
+            <a asp-controller="Admin" asp-action="ViewUnverifiedRealtor">Go back to unverified</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
