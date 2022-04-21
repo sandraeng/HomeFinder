@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using HomeFinder.Data;
 using Microsoft.EntityFrameworkCore;
 using HomeFinder.Models;
+using System.Text.Json.Serialization;
 
 namespace HomeFinder
 {
@@ -35,6 +36,8 @@ namespace HomeFinder
             services.AddRazorPages();
             services.AddHttpContextAccessor();
             services.AddServerSideBlazor();
+            services.AddControllers().AddJsonOptions(x =>
+   x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["FBAppId"];
