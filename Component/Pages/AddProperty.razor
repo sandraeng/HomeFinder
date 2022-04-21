@@ -5,7 +5,10 @@
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.EntityFrameworkCore
+@using System.Net.Http
+@using System.Text.Json
 @inject IHttpContextAccessor httpContextAccessor
+@inject IHttpClientFactory ClientFactory
 @inject HomeFinderContext context
 
 <h3>AddProperty</h3>
@@ -15,6 +18,20 @@
 }
 
 <h1>@Realtor.Id @Realtor.FirstName</h1>
+
+@if (getObjectsError)
+{
+    <p>Unable to get objects. Please try again later.</p>
+}
+else
+{
+    <ul>
+        @foreach (var o in objects)
+        {
+            <li>@o.Id</li>
+        }
+    </ul>
+}
 
 
 @code {
@@ -28,4 +45,48 @@
         Realtor = context.Users.FirstOrDefault(i => i.Email == UserName);
 
     }
+     private IEnumerable<PropertyObject> objects = Array.Empty<PropertyObject>();
+    private bool getObjectsError;
+    private bool shouldRender;
+    protected override bool ShouldRender() => shouldRender;
+
+     protected override async Task OnInitializedAsync()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get,
+            "https://localhost:5001/api/homefinder");
+        //request.Headers.Add("Accept", "application/vnd.github.v3+json");
+        //request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
+
+        var client = ClientFactory.CreateClient();
+
+        var response = await client.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+            objects = await JsonSerializer.DeserializeAsync
+                <IEnumerable<PropertyObject>>(responseStream);
+       
+            // https://stackoverflow.com/questions/64599864/asp-dotnet-core-mvc-reading-api-jsonserializer-start-from-another-node
+            // Result: KeyNotFoundException: The given key was not present in the dictionary.
+            //// Parse the result of the query to a JsonDocument
+            //var document = JsonDocument.Parse(responseStream);
+
+            //// Access the "items" collection in the JsonDocument
+            //var objectElement = document.RootElement.GetProperty("items");
+
+            //// Get the raw Json text of the collection and parse it to IEnumerable<Book> 
+            //// The JsonSerializerOptions make sure to ignore case sensitivity
+            //objects = JsonSerializer.Deserialize<IEnumerable<PropertyObject>>(objectElement.GetRawText(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+
+        }
+        else
+        {
+            getObjectsError = true;
+        }
+
+        shouldRender = true;
+    }
+
 }

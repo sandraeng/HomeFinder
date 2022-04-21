@@ -36,6 +36,7 @@ namespace HomeFinder
             services.AddRazorPages();
             services.AddHttpContextAccessor();
             services.AddServerSideBlazor();
+            services.AddHttpClient();
             services.AddControllers().AddJsonOptions(x =>
    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddAuthentication().AddFacebook(facebookOptions =>
