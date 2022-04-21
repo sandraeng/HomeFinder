@@ -119,7 +119,13 @@ p {
     color: #222;
 }
 
-#realtorViewObjectsTitles {
+.infoTitles {
+    display: block;
+    background-color: #DDDDDD;
+}
+
+#propertiesTitle {
+    margin-bottom: 36px;
     display: block;
     background-color: #DDDDDD;
 }
