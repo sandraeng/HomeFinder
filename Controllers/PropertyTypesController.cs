@@ -99,7 +99,6 @@ namespace HomeFinder.Controllers
             {
                 return NotFound();
             }
-
             var propertyType = await _context.PropertyTypes.FindAsync(id);
             if (propertyType == null)
             {
@@ -113,7 +112,7 @@ namespace HomeFinder.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IconUrl,PropertyTypeName")] PropertyType propertyType)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,IconUrl,PropertyTypeName")] PropertyType propertyType, IFormFile file)
         {
             if (id != propertyType.Id)
             {
@@ -124,6 +123,11 @@ namespace HomeFinder.Controllers
             {
                 try
                 {
+                    if(file != null)
+                    {
+                        string path = UploadFile(file);
+                        propertyType.IconUrl = "~/Images/" + path;
+                    }
                     _context.Update(propertyType);
                     await _context.SaveChangesAsync();
                 }

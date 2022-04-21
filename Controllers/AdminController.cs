@@ -6,7 +6,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Data;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace HomeFinder.Controllers
@@ -35,9 +38,8 @@ namespace HomeFinder.Controllers
         [HttpGet]
         public async Task<IActionResult> EditUser(string id)
         {
-            var user = await userManager.FindByIdAsync(id);
-            user = context.Users.Include(u => u.Address).FirstOrDefault(a => a.AddressId == user.AddressId);
-            
+            var user = context.Users.Include(u => u.Address).Include(u => u.Company).FirstOrDefault(a => a.Id == id);
+
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with id: {id} cannot be found";
@@ -54,13 +56,86 @@ namespace HomeFinder.Controllers
                 PhoneNumber = user.PhoneNumber,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Address = user.Address,
                 AddressId = user.AddressId,
+                Company = user.Company,
                 CompanyId = user.CompanyId,
                 Claims = userClaims.Select(c => c.Value).ToList(),
                 Roles = userRoles.ToList()
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUser model)
+        {
+            var user = context.Users.Include(u => u.Address).Include(u => u.Company).FirstOrDefault(a => a.Id == model.Id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with id: {model.Id} cannot be found";
+                return View("Error");
+            }
+            else
+            {
+                user.Id = model.Id;
+                user.Email = model.Email;
+                user.PhoneNumber = model.PhoneNumber;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Address = model.Address;
+                user.AddressId = model.AddressId;
+                user.Company = model.Company;
+                user.CompanyId = model.CompanyId;
+
+                var result = await userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            var likedObjects = context.PropertyFavorited.FirstOrDefault(p => p.UserId == id);
+            var markedInterested = context.NoticeOfInterests.FirstOrDefault(p => p.UserId == id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with id: {id} cannot be found";
+                return View("Error");
+            }
+            else
+            {
+                context.NoticeOfInterests.Remove(markedInterested);
+                context.PropertyFavorited.Remove(likedObjects);
+                var result = await userManager.DeleteAsync(user);
+                
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View("ListUsers");
+            }
         }
 
         [HttpGet]
@@ -78,7 +153,9 @@ namespace HomeFinder.Controllers
                 {
                     Name = model.RoleName
                 };
-                IdentityResult result = await roleManager.CreateAsync(role);
+
+                var result = await roleManager.CreateAsync(role);
+
                 if (result.Succeeded)
                 {
                     return RedirectToAction("ListRoles", "Admin");
@@ -237,6 +314,33 @@ namespace HomeFinder.Controllers
 
         }
 
-        
+        [HttpPost]
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            var role = await roleManager.FindByIdAsync(id);
+            
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with id: {id} cannot be found";
+                return View("Error");
+            }
+            else
+            {
+                var result = await roleManager.DeleteAsync(role);
+
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListRoles");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View("ListRoles");
+            }
+        }
     }
 }

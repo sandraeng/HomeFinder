@@ -68,12 +68,15 @@ html {
   position: relative;
   min-height: 100%;
 }
-
+label{
+    font-weight:600;
+}
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
     background: url("/Images/bg-suggestion2.jpeg") center fixed no-repeat;
     background-size: cover;
+    
 }
 .footer {
     position: absolute;

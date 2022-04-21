@@ -50,7 +50,7 @@
             <div class="col-md-6">
                 <div class="input-data">
                     <label asp-for="Input.FirstName" id="firstName"></label>
-                    <input asp-for="Input.FirstName" class="form-control" onfocus="firstNameLabelStayUp()"/>
+                    <input asp-for="Input.FirstName" class="form-control" oninput="firstNameLabelStayUp()"/>
                     <span asp-validation-for="Input.FirstName" class="text-danger"></span>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using HomeFinder.Models;
 using Microsoft.AspNetCore.Identity;
@@ -31,11 +32,14 @@ namespace HomeFinder.Data
             builder.Entity<PropertyFavoritedByUser>()
                 .HasKey(c => new { c.PropertyObjectId, c.UserId });
 
+            
             // Set ONDELETE cascade restrict
             foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+
             base.OnModelCreating(builder);
         }
 

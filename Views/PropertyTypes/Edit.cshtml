@@ -1,40 +1,54 @@
-﻿@model HomeFinder.Models.PropertyType
+﻿@using HomeFinder.Data
+@model HomeFinder.Models.PropertyType
+@inject HomeFinderContext context
 
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="text-center pt-4 pb-4" style="background-color:#d7d9dbb3;">
 
-<h1>Edit</h1>
+    <h1>Edit</h1>
 
-<h4>PropertyType</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="IconUrl" class="control-label"></label>
-                <input asp-for="IconUrl" class="form-control" />
-                <span asp-validation-for="IconUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PropertyTypeName" class="control-label"></label>
-                <select asp-for="PropertyTypeName" class="form-control"></select>
-                <span asp-validation-for="PropertyTypeName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <h4>PropertyType</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="IconUrl" class="control-label" style="font-weight:600;">Current image</label><br />
+                    <img src="@Model.IconUrl" asp-append-version="true" style="width:50px;"><br />
+                    <input hidden asp-for="IconUrl" class="form-control" />
+                    <label asp-for="IconUrl" class="control-label mt-2">Change image</label>
+                    <input type="file" name="file" class="form-control"/>
+                    <span asp-validation-for="IconUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PropertyTypeName" class="control-label"></label>
+                    <select asp-for="PropertyTypeName" class="form-control">
+                        <option value="@PropertyTypeName.House">@PropertyTypeName.House</option>
+                        <option value="@PropertyTypeName.Apartment">@PropertyTypeName.Apartment</option>
+                        <option value="@PropertyTypeName.Townhouse">@PropertyTypeName.Townhouse</option>
+                        <option value="@PropertyTypeName.Farm">@PropertyTypeName.Farm</option>
+                        <option value="@PropertyTypeName.Lot">@PropertyTypeName.Lot</option>
+                    </select>
+                    <span asp-validation-for="PropertyTypeName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }
