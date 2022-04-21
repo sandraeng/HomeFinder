@@ -28,7 +28,7 @@ namespace HomeFinder.Areas.Identity.Pages.Account
         public ExternalLoginModel(
             SignInManager<HomeFinderUser> signInManager,
             UserManager<HomeFinderUser> userManager,
-            ILogger<ExternalLoginModel> logger,
+            ILogger<ExternalLoginModel> logger
             /*IEmailSender emailSender*/)
         {
             _signInManager = signInManager;
