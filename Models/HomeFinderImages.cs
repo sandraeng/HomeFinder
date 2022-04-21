@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace HomeFinder.Models
 {
@@ -14,6 +15,7 @@ namespace HomeFinder.Models
         public string AltText { get; set; }
 
         public int PropertyObjectId { get; set; }
+        [JsonIgnore]
         [ForeignKey("PropertyObjectId")]
         public PropertyObject PropertyObject { get; set; }
     }

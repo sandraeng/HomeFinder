@@ -10,7 +10,7 @@ using HomeFinder.Models;
 
 namespace HomeFinder.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/HomeFinderImages")]
     [ApiController]
     public class HomeFinderImagesControllerAPI : ControllerBase
     {

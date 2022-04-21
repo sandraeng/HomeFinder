@@ -12,7 +12,7 @@ using System.Web;
 
 namespace HomeFinder.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/HomeFinder")]
     [ApiController]
     public class PropertyObjectsControllerAPI : ControllerBase
     {
@@ -29,7 +29,13 @@ namespace HomeFinder.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PropertyObject>>> GetPropertyObjects()
         {
-            return await _context.PropertyObjects.ToListAsync();
+            return await _context.PropertyObjects
+                .Include(p => p.Address)
+                .Include(p => p.Realtor)
+                .Include(p => p.Images)
+                .Include(p=> p.PropertyType)
+                .Include(p=> p.LeaseType)
+                .ToListAsync();
         }
 
         // GET: api/PropertyObjectsControllerAPI/5
@@ -40,6 +46,8 @@ namespace HomeFinder.Controllers
                 .Include(p => p.Address)
                 .Include(p => p.Realtor)
                 .Include(p => p.Images)
+                   .Include(p => p.PropertyType)
+                .Include(p => p.LeaseType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             string apiKey = configuration.GetValue<string>("GoogleMapsAPIKey");
             var propertyObjectDTO = new PropertyObjectDTO
@@ -47,6 +55,7 @@ namespace HomeFinder.Controllers
                 Id = propertyObject.Id,
                 AddressId = propertyObject.AddressId,
                 PropertyTypeId = propertyObject.PropertyTypeId,
+                PropertyType = propertyObject.PropertyType,
                 RealtorId = propertyObject.RealtorId,
                 Status = propertyObject.Status,
                 ListPrice = propertyObject.ListPrice,
@@ -59,6 +68,7 @@ namespace HomeFinder.Controllers
                 Images = propertyObject.Images,
                 Description = propertyObject.Description,
                 LeaseTypeId = propertyObject.LeaseTypeId,
+                LeaseType = propertyObject.LeaseType,
                 YearBuilt = propertyObject.YearBuilt,
                 GoogleMapsURL = GoogleMapsURL(apiKey, propertyObject.Address.FullAddress)
 
@@ -115,7 +125,7 @@ namespace HomeFinder.Controllers
             // Set uploaded date to today.
             propertyObject.UploadedDate = DateTime.Now;
             // Set AddressId to 0
-            propertyObject.AddressId = 0;
+            //propertyObject.AddressId = 0;
             _context.PropertyObjects.Add(propertyObject);
             await _context.SaveChangesAsync();
             return NoContent();
