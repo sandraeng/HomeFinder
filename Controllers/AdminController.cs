@@ -119,10 +119,16 @@ namespace HomeFinder.Controllers
             }
             else
             {
-                context.NoticeOfInterests.Remove(markedInterested);
-                context.PropertyFavorited.Remove(likedObjects);
+                if(likedObjects != null)
+                {
+                    context.PropertyFavorited.Remove(likedObjects);
+                }
+                if(markedInterested != null)
+                {
+                    context.NoticeOfInterests.Remove(markedInterested);
+                }
+
                 var result = await userManager.DeleteAsync(user);
-                
 
                 if (result.Succeeded)
                 {
