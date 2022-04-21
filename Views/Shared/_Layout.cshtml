@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/customcss.css" />
     <link rel="stylesheet" href="~/css/mainpage.css" />
+    <link rel="stylesheet" href="~/css/realtor.css" />
 </head>
 <body>
     <header>
@@ -31,11 +32,10 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Realtor" asp-action="Index">Realtor</a>
-                            </li>
-                            
+                            </li>                          
                         }
 
-                        @if(signInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
+                        @if(signInManager.IsSignedIn(User) && !User.IsInRole("Admin") && !User.IsInRole("Realtor"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="PropertyObjects" asp-action="SavedObjects">My objects</a>

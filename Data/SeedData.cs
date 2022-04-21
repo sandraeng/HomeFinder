@@ -265,7 +265,7 @@ namespace HomeFinder.Data
                         Status = 0,
                         UploadedDate = DateTime.Now.Date,
                         YearBuilt = 2021
-                    }
+                    }           
                 );
                 context.SaveChanges();
                 var propertyObjects = context.PropertyObjects.ToList();
