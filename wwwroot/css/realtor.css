@@ -2,11 +2,11 @@
     display: flex;
 }
 
-    #properties-container > div {
-        min-height: 734px;
-        width: 33%;
-        /*border : 1px solid;*/
-    }
+#properties-container > div {
+    min-height: 734px;
+    width: 33%;
+    /*border : 1px solid;*/
+}
 
 #left-side .card-body {
     padding: 0;
@@ -50,6 +50,14 @@
     background-color: #F8F9FA;
 }
 
+.card {
+    background-color: #F8F9FA;
+}
+
+.card-footer {
+    background-color: #F8F9FA;
+}
+
 p {
     color: black;
 }
@@ -63,47 +71,47 @@ p {
     border: 0;
 }
 
-    #main #faq .card .card-header {
-        border: 0;
-        -webkit-box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
-        box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
-        border-radius: 2px;
-        padding: 0;
-    }
+#main #faq .card .card-header {
+    border: 0;
+    -webkit-box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+    box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+    border-radius: 2px;
+    padding: 0;
+}
 
-        #main #faq .card .card-header .btn-header-link {
-            color: #fff;
-            display: block;
-            text-align: left;
-            background: #grey;
-            color: #222;
-            padding: 20px;
-        }
+#main #faq .card .card-header .btn-header-link {
+    color: #fff;
+    display: block;
+    text-align: left;
+    background: #grey;
+    color: #222;
+    padding: 20px;
+}
 
-            #main #faq .card .card-header .btn-header-link:after {
-                content: "\f107";
-                font-family: 'Font Awesome 5 Free';
-                font-weight: 900;
-                float: right;
-            }
+#main #faq .card .card-header .btn-header-link:after {
+    content: "\f107";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    float: right;
+}
 
-            #main #faq .card .card-header .btn-header-link.collapsed {
-                background: #e48153;
-                color: #fff;
-            }
+#main #faq .card .card-header .btn-header-link.collapsed {
+     background: #e48153;
+     color: #fff;
+}
 
-                #main #faq .card .card-header .btn-header-link.collapsed:after {
-                    content: "\f106";
-                }
+#main #faq .card .card-header .btn-header-link.collapsed:after {
+     content: "\f106";
+}
 
-    #main #faq .card .collapsing {
-        background: #fff;
-        line-height: 30px;
-    }
+#main #faq .card .collapsing {
+     background: #fff;
+     line-height: 30px;
+}
 
-    #main #faq .card .collapse {
-        border: 0;
-    }
+#main #faq .card .collapse {
+     border: 0;
+}
 
 #main #faq .card .collapse.show {
     background: #fff;
@@ -128,4 +136,8 @@ p {
 .propertiesText {
     color: black;
     background-color: #fff;
+}
+
+.mt-3 {
+    background-color: #F8F9FA;
 }

@@ -16,32 +16,33 @@
 
 <div id="properties-container">
     <div id="left-side" class="text-center">
-        <h4 id="realtorViewObjectsTitles">Properties</h4> 
+        <h5 id="realtorViewObjectsTitles">Properties</h5>
         <div id="left-over">
-                  
+
             <div class="card bg-light" style="min-height: 80%">
                 <div class="card-body">
                     <div class="btn-group-vertical btn-group-toggle" style="display:block;" data-toggle="buttons">
                         @foreach (var property in propertyObjects)
                         {
-                            <label class="btn btn-primary propertiesText" @onclick="() => SetProperty(property)"  for="@property.Id">
-                            <input type="radio" class="btn-check" name="options-outlined" id="@property.Id" autocomplete="off">
-                            @property.Address.FullAddress</label>
+                            <label class="btn btn-primary propertiesText" @onclick="() => SetProperty(property)" for="@property.Id">
+                                <input type="radio" class="btn-check" name="options-outlined" id="@property.Id" autocomplete="off">
+                                @property.Address.FullAddress
+                            </label>
                         }
                     </div>
                 </div>
             </div>
         </div>
-        <h4 id="realtorViewObjectsTitles">Notice of interests</h4> 
+        <h5 id="realtorViewObjectsTitles">Notice of interests</h5>
         <div id="left-under" class="text-center">
             <div class="card bg-light" style="min-height: 50%">
                 <div class="card-body" style="min-height: 100%">
                     <div class="btn-group-vertical btn-group-toggle" style="display:block;" data-toggle="buttons" id="notice-of-interests">
-                        @if (noticeOfInterests==null)
+                        @if (noticeOfInterests == null)
                         {
                             <h6 class="mt-3">Select Address to see notice of interests</h6>
                         }
-                        else if(noticeOfInterests.Count()==0)
+                        else if (noticeOfInterests.Count() == 0)
                         {
                             <h6 class="mt-3">There is no notice of interests to this property</h6>
                         }
@@ -50,9 +51,9 @@
                             @foreach (var person in noticeOfInterests)
                             {
                                 <label class="btn btn-primary propertiesText" style="width: 100%" @onclick="() => GetPersonalInfo(person)">
-                                <input type="radio" class="btn-check" name="options" id="option+@person.Id" autocomplete="off"> @person.FirstName @person.LastName
+                                    <input type="radio" class="btn-check" name="options" id="option+@person.Id" autocomplete="off"> @person.FirstName @person.LastName
                                 </label>
-                            }                  
+                            }
                         }
                     </div>
                 </div>
@@ -61,64 +62,62 @@
     </div>
     <div id="middle-side" class="text-center">
         <div class="card bg-light" style="min-height: 100%">
-             <div class="card-title"><h4 id="realtorViewObjectsTitles">Contact</h4></div>
-                  <div class="card-body">
-                    @if (UserToDisplay==null)
-                    {
-                    <h6 class="card-text mt-3">Select User to see more info</h6>
-                    }
-                    else
-                    {
+            <div class="card-title"><h5 id="realtorViewObjectsTitles">Contact</h5></div>
+            @if (UserToDisplay == null)
+            {
+                <h6 class="mt-3">Select User to see more info</h6>
+            }
+            else
+            {
+                <div class="card-body">
                     <h5 class="card-title">Info</h5>
                     <p class="card-text"><strong>Firstname:</strong> @UserToDisplay.FirstName</p>
                     <p class="card-text"><strong>Lastname:</strong> @UserToDisplay.LastName</p>
                     <p class="card-text"><strong>E-mail:</strong> @UserToDisplay.Email</p>
                     <p class="card-text"><strong>Address:</strong> @UserToDisplay.Address.FullAddress</p>
-                    }
-                  </div>
+                </div>
+            }
         </div>
     </div>
     <div id="right-side" class="text-center">
-        <div class="card-title"><h4 id="realtorViewObjectsTitles">Selected object</h4></div>
-      @if (propertyObjectToDisplay==null)
-      {
-         <h6 class="mt-3">Select Adress to see more info</h6>
-      }
-      else
-      {
-            
         <div class="card">
-            <div class="card-body">
-                @if (propertyObjectToDisplay.Images != null)
+            <div class="card-title"><h5 id="realtorViewObjectsTitles">Selected object</h5></div>
+                @if (propertyObjectToDisplay == null)
                 {
-
-                    <img class="card-img" src="@propertyObjectToDisplay.Images[0].Path" asp-append-version="true"/>
+                    <h6 class="mt-3">Select Adress to see more info</h6>
                 }
-                <div class="card-title">
-                    @propertyObjectToDisplay.Address.StreetAddress,
-                    @propertyObjectToDisplay.Address.PostalCode
-                    @propertyObjectToDisplay.Address.City
-                    @propertyObjectToDisplay.Address.Country
-                </div>
-                <p class="card-text"><strong>Description:</strong></p>
-                <textarea name="message" id="formBox__messageInput" cols="30" rows="2" placeholder="Meddelande här (frivilligt)">
-                    <strong>Description:</strong> @propertyObjectToDisplay.Description</textarea>           
+                else
+                {
+                    <div class="card-body">
+                        @if (propertyObjectToDisplay.Images != null)
+                        {
 
-                <p class="card-text"><strong>Number of rooms:</strong> @propertyObjectToDisplay.NumberOfRooms rooms</p>
-                <p class="card-text"><strong>Area:</strong> @propertyObjectToDisplay.Area m²</p>
-                <p class="card-text"><strong>Type:</strong> @propertyObjectToDisplay.PropertyType.PropertyTypeName</p>
-                <p class="card-text"><strong>Realtor:</strong> @propertyObjectToDisplay.Realtor.FirstName @propertyObjectToDisplay.Realtor.LastName</p>
-                <p class="card-text"><strong>E-mail:</strong> @propertyObjectToDisplay.Realtor.Email</p>
-                <p class="card-text"><strong>Phone number:</strong> @propertyObjectToDisplay.Realtor.PhoneNumber</p>
+                            <img class="card-img" src="@propertyObjectToDisplay.Images[0].Path" asp-append-version="true" />
+                        }
+                        <div class="card-title">
+                            @propertyObjectToDisplay.Address.StreetAddress,
+                            @propertyObjectToDisplay.Address.PostalCode
+                            @propertyObjectToDisplay.Address.City
+                            @propertyObjectToDisplay.Address.Country
+                        </div>
+                        <p class="card-text"><strong>Description:</strong></p>
+                        <textarea name="message" id="formBox__messageInput" cols="30" rows="2">
+                        <strong>Description:</strong> @propertyObjectToDisplay.Description</textarea>
 
-            </div>
-            <div class="card-footer">
-                <a href="PropertyObjects/Edit/@propertyObjectToDisplay.Id">Edit</a> |
-                <a href="PropertyObjects/Details/@propertyObjectToDisplay.Id">Details</a> |
-                <a href="PropertyObjects/Delete/@propertyObjectToDisplay.Id">Delete</a>
-            </div>
+                        <p class="card-text"><strong>Number of rooms:</strong> @propertyObjectToDisplay.NumberOfRooms rooms</p>
+                        <p class="card-text"><strong>Area:</strong> @propertyObjectToDisplay.Area m²</p>
+                        <p class="card-text"><strong>Type:</strong> @propertyObjectToDisplay.PropertyType.PropertyTypeName</p>
+                        <p class="card-text"><strong>Realtor:</strong> @propertyObjectToDisplay.Realtor.FirstName @propertyObjectToDisplay.Realtor.LastName</p>
+                        <p class="card-text"><strong>E-mail:</strong> @propertyObjectToDisplay.Realtor.Email</p>
+                        <p class="card-text"><strong>Phone number:</strong> @propertyObjectToDisplay.Realtor.PhoneNumber</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="PropertyObjects/Edit/@propertyObjectToDisplay.Id">Edit</a> |
+                        <a href="PropertyObjects/Details/@propertyObjectToDisplay.Id">Details</a> |
+                        <a href="PropertyObjects/Delete/@propertyObjectToDisplay.Id">Delete</a>
+                    </div>
+                }
         </div>
-        }
     </div>
 </div>
 
@@ -169,7 +168,7 @@
 
         foreach (var item in context.NoticeOfInterests.Include(n => n.User).ThenInclude(u => u.Address).ToList())
         {
-            if (item.PropertyObject==propertyObjectToDisplay)
+            if (item.PropertyObject == propertyObjectToDisplay)
             {
                 listToSend.Add(item.User);
             }
@@ -186,13 +185,13 @@
     public IEnumerable<PropertyObject> ChangeImagePath()
     {
         propertyObjects = GetProperties();
-        foreach(var property in propertyObjects)
+        foreach (var property in propertyObjects)
         {
-            foreach(var image in property.Images)
+            foreach (var image in property.Images)
             {
-               var splited = image.Path.Split("/");
-               image.Path = splited[1] + "/" + splited[2];
-                
+                var splited = image.Path.Split("/");
+                image.Path = splited[1] + "/" + splited[2];
+
             }
         }
         return propertyObjects;
