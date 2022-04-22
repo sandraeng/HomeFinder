@@ -115,8 +115,8 @@ namespace HomeFinder.Controllers
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await userManager.FindByIdAsync(id);
-            var likedObjects = await _context.PropertyFavorited.FirstOrDefaultAsync(p => p.UserId == id);
-            var markedInterested = await _context.NoticeOfInterests.FirstOrDefaultAsync(p => p.UserId == id);
+            var likedObjects = _context.PropertyFavorited.Where(p => p.UserId == id);
+            var markedInterested = _context.NoticeOfInterests.Where(p => p.UserId == id);
             var externalLogin = await _context.UserLogins.FirstOrDefaultAsync(p => p.UserId == id);
             var userRole = await _context.UserRoles.FirstOrDefaultAsync(p => p.UserId == id);
 
@@ -126,19 +126,25 @@ namespace HomeFinder.Controllers
             }
             else
             {
-                if(likedObjects != null)
+                if (likedObjects.Count() != 0)
                 {
-                    _context.PropertyFavorited.Remove(likedObjects);
+                    foreach (var item in likedObjects)
+                    {
+                        _context.PropertyFavorited.Remove(item);
+                    }
                 }
-                if(markedInterested != null)
+                if (markedInterested.Count() != 0)
                 {
-                    _context.NoticeOfInterests.Remove(markedInterested);
+                    foreach (var item in markedInterested)
+                    {
+                        _context.NoticeOfInterests.Remove(item);
+                    }
                 }
-                if(externalLogin != null)
+                if (externalLogin != null)
                 {
                     _context.UserLogins.Remove(externalLogin);
                 }
-                if(userRole != null)
+                if (userRole != null)
                 {
                     _context.UserRoles.Remove(userRole);
                 }
@@ -182,7 +188,7 @@ namespace HomeFinder.Controllers
                     return RedirectToAction("ListRoles", "Admin");
                 }
 
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
@@ -203,7 +209,7 @@ namespace HomeFinder.Controllers
         {
             var role = await roleManager.FindByIdAsync(id);
 
-            if(role == null)
+            if (role == null)
             {
                 return View("Error");
             }
@@ -214,9 +220,9 @@ namespace HomeFinder.Controllers
                 RoleName = role.Name
             };
 
-            foreach(var user in userManager.Users)
+            foreach (var user in userManager.Users)
             {
-                if(await userManager.IsInRoleAsync(user, role.Name))
+                if (await userManager.IsInRoleAsync(user, role.Name))
                 {
                     model.Users.Add(user.UserName);
                 }
@@ -260,14 +266,14 @@ namespace HomeFinder.Controllers
 
             var role = await roleManager.FindByIdAsync(roleId);
 
-            if(role == null)
+            if (role == null)
             {
                 return View("Error");
             }
 
             var model = new List<UserRole>();
 
-            foreach(var user in userManager.Users)
+            foreach (var user in userManager.Users)
             {
                 var userRole = new UserRole
                 {
@@ -275,7 +281,7 @@ namespace HomeFinder.Controllers
                     UserName = user.UserName
                 };
 
-                if(await userManager.IsInRoleAsync(user, role.Name))
+                if (await userManager.IsInRoleAsync(user, role.Name))
                 {
                     userRole.IsChecked = true;
                 }
@@ -320,10 +326,10 @@ namespace HomeFinder.Controllers
 
                 if (result.Succeeded)
                 {
-                    if (i < (model.Count - 1)) 
+                    if (i < (model.Count - 1))
                         continue;
-                    else 
-                        return RedirectToAction("EditRole", new {Id = roleId});
+                    else
+                        return RedirectToAction("EditRole", new { Id = roleId });
                 }
             }
 
@@ -335,7 +341,7 @@ namespace HomeFinder.Controllers
         public async Task<IActionResult> DeleteRole(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
-            
+
             if (role == null)
             {
                 return View("Error");
