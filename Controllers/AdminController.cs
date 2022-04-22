@@ -118,6 +118,7 @@ namespace HomeFinder.Controllers
             var likedObjects = await _context.PropertyFavorited.FirstOrDefaultAsync(p => p.UserId == id);
             var markedInterested = await _context.NoticeOfInterests.FirstOrDefaultAsync(p => p.UserId == id);
             var externalLogin = await _context.UserLogins.FirstOrDefaultAsync(p => p.UserId == id);
+            var userRole = await _context.UserRoles.FirstOrDefaultAsync(p => p.UserId == id);
 
             if (user == null)
             {
@@ -136,6 +137,10 @@ namespace HomeFinder.Controllers
                 if(externalLogin != null)
                 {
                     _context.UserLogins.Remove(externalLogin);
+                }
+                if(userRole != null)
+                {
+                    _context.UserRoles.Remove(userRole);
                 }
 
                 var result = await userManager.DeleteAsync(user);
