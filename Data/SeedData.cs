@@ -239,7 +239,7 @@ namespace HomeFinder.Data
                         Address = new Address { City = "Karlskoga", Country = "Sverige", PostalCode = "691 91", StreetAddress = "Tavlan 212" },
                         Area = 145,
                         Description = "Fin gård men djurhållningsmöjligheter",
-                        Images = { new HomeFinderImages { AltText = "Gårdshuset", Path = "~/Images/farm-outside.png" }, new HomeFinderImages { AltText = "Stallet", Path = "~/Images/Images/farm-stable.png" } },
+                        Images = { new HomeFinderImages { AltText = "Gårdshuset", Path = "~/Images/farm-outside.png" }, new HomeFinderImages { AltText = "Stallet", Path = "~/Images/farm-stable.png" } },
                         LeaseType = leaseType,
                         ListPrice = 2400000,
                         LotArea = 10684,
