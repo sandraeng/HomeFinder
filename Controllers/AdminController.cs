@@ -470,19 +470,25 @@ namespace HomeFinder.Controllers
             {
                 throw new ArgumentException($"filePath must be a non null string");
             }
-            if (System.IO.File.Exists(filePath))
+            try
             {
-                // This could be optimized if checking IsImageFile many times in a row.
-                var Inspector = new ContentInspectorBuilder()
+                if (System.IO.File.Exists(filePath))
                 {
-                    Definitions = MimeDetective.Definitions.Default.All()
-                }.Build();
+                    // This could be optimized if checking IsImageFile many times in a row.
+                    var Inspector = new ContentInspectorBuilder()
+                    {
+                        Definitions = MimeDetective.Definitions.Default.All()
+                    }.Build();
 
-                var content = ContentReader.Default.ReadFromFile(filePath);
-                var results = Inspector.Inspect(content);
-                var isImage = results.ByMimeType().Any(r => r.MimeType.Contains("image/"));
+                    var content = ContentReader.Default.ReadFromFile(filePath);
+                    var results = Inspector.Inspect(content);
+                    var isImage = results.ByMimeType().Any(r => r.MimeType.Contains("image/"));
 
-                return isImage;
+                    return isImage;
+                }
+            } catch (IOException ex)
+            {
+                return false; // If an IOException has occured we can't inspect what kind of file it is, assume regular file.
             }
             return false;
         }
