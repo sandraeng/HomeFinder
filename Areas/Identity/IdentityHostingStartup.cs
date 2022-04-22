@@ -16,8 +16,9 @@ namespace HomeFinder.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddIdentity<HomeFinderUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
-                    .AddEntityFrameworkStores<HomeFinderContext>();
+                services.AddIdentity<HomeFinderUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddEntityFrameworkStores<HomeFinderContext>()
+                    .AddDefaultTokenProviders();
             });
         }
     }
