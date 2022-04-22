@@ -66,10 +66,11 @@ namespace HomeFinder.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,IconUrl,PropertyTypeName")] PropertyType propertyType, IFormFile file)
         {
-                string path = UploadFile(file);
-                propertyType.IconUrl = "~/Images/" + path;
+            string path = UploadFile(file);
+            propertyType.IconUrl = "~/Images/" + path;
+            ModelState.Remove("IconUrl");
             if (ModelState.IsValid)
-            {              
+            {
                 _context.Add(propertyType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

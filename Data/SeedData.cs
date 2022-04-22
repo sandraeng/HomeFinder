@@ -218,6 +218,60 @@ namespace HomeFinder.Data
                     },
                     new PropertyObject
                     {
+                        Address = new Address { City = "Karlskoga", Country = "Sverige", PostalCode = "691 37", StreetAddress = "Tegnervägen 1C" },
+                        Area = 94,
+                        Description = "Modern totalrenoverad 3:a",
+                        Images = { new HomeFinderImages { AltText = "Kök", Path = "~/Images/Renoverad-trea-1.png" }, new HomeFinderImages { AltText = "Vardagsrum", Path = "~/Images/Images/Renoverad-trea-2.png" } },
+                        LeaseType = leaseType,
+                        ListPrice = 1200000,
+                        LotArea = 0,
+                        NextShowingDateTime = DateTime.Now.Date,
+                        NonLivingArea = 0,
+                        NumberOfRooms = 3,
+                        PropertyType = apartment,
+                        RealtorId = "c1a35e52-29f0-4ba3-968f-d1d6b89483fe",
+                        Status = 0,
+                        UploadedDate = DateTime.Now.Date,
+                        YearBuilt = 1991
+                    },
+                    new PropertyObject
+                    {
+                        Address = new Address { City = "Karlskoga", Country = "Sverige", PostalCode = "691 91", StreetAddress = "Tavlan 212" },
+                        Area = 145,
+                        Description = "Fin gård men djurhållningsmöjligheter",
+                        Images = { new HomeFinderImages { AltText = "Gårdshuset", Path = "~/Images/farm-outside.png" }, new HomeFinderImages { AltText = "Stallet", Path = "~/Images/Images/farm-stable.png" } },
+                        LeaseType = leaseType,
+                        ListPrice = 2400000,
+                        LotArea = 10684,
+                        NextShowingDateTime = DateTime.Now.Date,
+                        NonLivingArea = 0,
+                        NumberOfRooms = 5,
+                        PropertyType = farm,
+                        RealtorId = "a73917c6-5cd3-47a2-88bb-e76c41840137",
+                        Status = 0,
+                        UploadedDate = DateTime.Now.Date,
+                        YearBuilt = 1949
+                    },
+                    new PropertyObject
+                    {
+                        Address = new Address { City = "Ödeshög", Country = "Sverige", PostalCode = "599 91", StreetAddress = "Gräsberg 1" },
+                        Area = 0,
+                        Description = "Åkermark att använda till jordbruk",
+                        Images = { new HomeFinderImages { AltText = "Stor åkermark", Path = "~/Images/lot.png" } },
+                        LeaseType = leaseType,
+                        ListPrice = 2400000,
+                        LotArea = 80652,
+                        NextShowingDateTime = DateTime.Now.Date,
+                        NonLivingArea = 0,
+                        NumberOfRooms = 0,
+                        PropertyType = lot,
+                        RealtorId = "a73917c6-5cd3-47a2-88bb-e76c41840137",
+                        Status = 0,
+                        UploadedDate = DateTime.Now.Date,
+                        YearBuilt = 1949
+                    },
+                    new PropertyObject
+                    {
                         Address = new Address { City = "Stockholm", Country = "Sverige", PostalCode = "118 28", StreetAddress = "Fatburs brunnsgata 26" },
                         Area = 40,
                         Description = "Liten men fräsch tvåa",
