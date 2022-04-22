@@ -19,7 +19,7 @@
         <h5 id="propertiesTitle">Properties</h5>
         <div id="left-over">
 
-            <div class="card bg-light" style="min-height: 80%">
+            <div class="card bg-light" >
                 <div class="card-body">
                     <div class="btn-group-vertical btn-group-toggle" data-toggle="buttons">
                         @foreach (var property in propertyObjects)
@@ -35,9 +35,9 @@
         </div>
         <h5 class="infoTitles">Notice of interests</h5>
         <div id="left-under" class="text-center">
-            <div class="card bg-light" style="min-height: 50%">
-                <div class="card-body" style="min-height: 100%">
-                    <div class="btn-group-vertical btn-group-toggle" style="width: 100%" data-toggle="buttons" id="notice-of-interests">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <div class="btn-group-vertical btn-group-toggle w-100" data-toggle="buttons" id="notice-of-interests">
                         @if (noticeOfInterests == null)
                         {
                             <h6 class="mt-3">Select Address to see notice of interests</h6>
@@ -61,7 +61,7 @@
         </div>
     </div>
     <div id="middle-side" class="text-center">
-        <div class="card bg-light" style="min-height: 100%">
+        <div class="card bg-light">
             <div class="card-title"><h5 class="infoTitles">Contact</h5></div>
             @if (UserToDisplay == null)
             {
