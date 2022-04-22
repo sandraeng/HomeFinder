@@ -17,12 +17,18 @@
             <div class="form-group">
                 <label hidden asp-for="IconUrl" class="control-label"></label>
                 <input type="file" name="file" class="form-control" />
-                <span asp-validation-for="IconUrl" class="text-danger"></span>
+                @*<span asp-validation-for="IconUrl" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="PropertyTypeName" class="control-label"></label>
                 @* The following creates a dropdown for enum values. Gets values from viewbag in controller. *@
-                <select asp-for="@Model.PropertyTypeName" asp-items="ViewBag.PropertyTypeNames" class="form-control"></select>
+                <select asp-for="@Model.PropertyTypeName" class="form-control">
+                    <option value="@PropertyTypeName.House">@PropertyTypeName.House</option>
+                        <option value="@PropertyTypeName.Apartment">@PropertyTypeName.Apartment</option>
+                        <option value="@PropertyTypeName.Townhouse">@PropertyTypeName.Townhouse</option>
+                        <option value="@PropertyTypeName.Farm">@PropertyTypeName.Farm</option>
+                        <option value="@PropertyTypeName.Lot">@PropertyTypeName.Lot</option>
+                </select>
                 <span asp-validation-for="PropertyTypeName" class="text-danger"></span>
             </div>
             <div class="form-group">
