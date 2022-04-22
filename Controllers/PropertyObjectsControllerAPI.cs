@@ -12,7 +12,7 @@ using System.Web;
 
 namespace HomeFinder.Controllers
 {
-    [Route("api/HomeFinder")]
+    [Route("api/PropertyObject")]
     [ApiController]
     public class PropertyObjectsControllerAPI : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace HomeFinder.Controllers
             this.configuration = configuration;
         }
 
-        // GET: api/PropertyObjectsControllerAPI
+        // GET: api/PropertyObject
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PropertyObject>>> GetPropertyObjects()
         {
@@ -33,8 +33,6 @@ namespace HomeFinder.Controllers
                 .Include(p => p.Address)
                 .Include(p => p.Realtor)
                 .Include(p => p.Images)
-                .Include(p=> p.PropertyType)
-                .Include(p=> p.LeaseType)
                 .ToListAsync();
         }
 
