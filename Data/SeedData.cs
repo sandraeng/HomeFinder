@@ -25,8 +25,8 @@ namespace HomeFinder.Data
 
                 var leaseType = new LeaseType { Description = "Du äger bostaden", Name = "Bostadsrätt" };
                 var apartment = new PropertyType { IconUrl = "~/Images/apartment-logo.png", PropertyTypeName = PropertyTypeName.Apartment };
-                var farm = new PropertyType { IconUrl = "~/Images/apartment-logo.png", PropertyTypeName = PropertyTypeName.Farm };
-                var lot = new PropertyType { IconUrl = "~/Images/apartment-logo.png", PropertyTypeName = PropertyTypeName.Lot };
+                var farm = new PropertyType { IconUrl = "~/Images/farm-logo.png", PropertyTypeName = PropertyTypeName.Farm };
+                var lot = new PropertyType { IconUrl = "~/Images/lot-icon.png", PropertyTypeName = PropertyTypeName.Lot };
 
                 var useTwiceAdress = new Address { City = "Malmö", Country = "Sverige", PostalCode = "211 55", StreetAddress = "Hantverkaregatan 13" };
 
