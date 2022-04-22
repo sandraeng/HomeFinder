@@ -82,41 +82,41 @@
     <div id="right-side" class="text-center">
         <div class="card">
             <div class="card-title"><h5 id="realtorViewObjectsTitles">Selected object</h5></div>
-                @if (propertyObjectToDisplay == null)
-                {
-                    <h6 class="mt-3">Select Adress to see more info</h6>
-                }
-                else
-                {
-                    <div class="card-body">
-                        @if (propertyObjectToDisplay.Images != null)
-                        {
+            @if (propertyObjectToDisplay == null)
+            {
+                <h6 class="mt-3">Select Adress to see more info</h6>
+            }
+            else
+            {
+                <div class="card-body">
+                    @if (propertyObjectToDisplay.Images != null)
+                    {
 
-                            <img class="card-img" src="@propertyObjectToDisplay.Images[0].Path" asp-append-version="true" />
-                        }
-                        <div class="card-title">
-                            @propertyObjectToDisplay.Address.StreetAddress,
-                            @propertyObjectToDisplay.Address.PostalCode
-                            @propertyObjectToDisplay.Address.City
-                            @propertyObjectToDisplay.Address.Country
-                        </div>
-                        <p class="card-text"><strong>Description:</strong></p>
-                        <textarea name="message" id="formBox__messageInput" cols="30" rows="2">
-                        <strong>Description:</strong> @propertyObjectToDisplay.Description</textarea>
+                        <img class="card-img" src="@propertyObjectToDisplay.Images[0].Path" asp-append-version="true" />
+                    }
+                    <div class="card-title">
+                        @propertyObjectToDisplay.Address.StreetAddress,
+                        @propertyObjectToDisplay.Address.PostalCode
+                        @propertyObjectToDisplay.Address.City
+                        @propertyObjectToDisplay.Address.Country
+                    </div>
+                    <p class="card-text"><strong>Description:</strong></p>
+                    <textarea name="message" id="formBox__messageInput" cols="30" rows="2">
+                    <strong>Description:</strong> @propertyObjectToDisplay.Description</textarea>
 
-                        <p class="card-text"><strong>Number of rooms:</strong> @propertyObjectToDisplay.NumberOfRooms rooms</p>
-                        <p class="card-text"><strong>Area:</strong> @propertyObjectToDisplay.Area m²</p>
-                        <p class="card-text"><strong>Type:</strong> @propertyObjectToDisplay.PropertyType.PropertyTypeName</p>
-                        <p class="card-text"><strong>Realtor:</strong> @propertyObjectToDisplay.Realtor.FirstName @propertyObjectToDisplay.Realtor.LastName</p>
-                        <p class="card-text"><strong>E-mail:</strong> @propertyObjectToDisplay.Realtor.Email</p>
-                        <p class="card-text"><strong>Phone number:</strong> @propertyObjectToDisplay.Realtor.PhoneNumber</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="PropertyObjects/Edit/@propertyObjectToDisplay.Id">Edit</a> |
-                        <a href="PropertyObjects/Details/@propertyObjectToDisplay.Id">Details</a> |
-                        <a href="PropertyObjects/Delete/@propertyObjectToDisplay.Id">Delete</a>
-                    </div>
-                }
+                    <p class="card-text"><strong>Number of rooms:</strong> @propertyObjectToDisplay.NumberOfRooms rooms</p>
+                    <p class="card-text"><strong>Area:</strong> @propertyObjectToDisplay.Area m²</p>
+                    <p class="card-text"><strong>Type:</strong> @propertyObjectToDisplay.PropertyType.PropertyTypeName</p>
+                    <p class="card-text"><strong>Realtor:</strong> @propertyObjectToDisplay.Realtor.FirstName @propertyObjectToDisplay.Realtor.LastName</p>
+                    <p class="card-text"><strong>E-mail:</strong> @propertyObjectToDisplay.Realtor.Email</p>
+                    <p class="card-text"><strong>Phone number:</strong> @propertyObjectToDisplay.Realtor.PhoneNumber</p>
+                </div>
+                <div class="card-footer">
+                    <a href="PropertyObjects/Edit/@propertyObjectToDisplay.Id">Edit</a> |
+                    <a href="PropertyObjects/Details/@propertyObjectToDisplay.Id">Details</a> |
+                    <a href="PropertyObjects/Delete/@propertyObjectToDisplay.Id">Delete</a>
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -139,7 +139,6 @@
     {
         UserName = httpContextAccessor.HttpContext.User.Identity.Name;
         Realtor = context.Users.FirstOrDefault(i => i.Email == UserName);
-
     }
 
     protected override void OnInitialized()
@@ -173,7 +172,6 @@
                 listToSend.Add(item.User);
             }
         }
-
         return listToSend;
     }
 
@@ -191,7 +189,6 @@
             {
                 var splited = image.Path.Split("/");
                 image.Path = splited[1] + "/" + splited[2];
-
             }
         }
         return propertyObjects;

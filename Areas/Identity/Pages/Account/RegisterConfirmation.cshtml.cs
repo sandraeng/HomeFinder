@@ -14,18 +14,16 @@ namespace HomeFinder.Areas.Identity.Pages.Account
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<HomeFinderUser> _userManager;
-        private readonly IEmailSender _sender;
+        //private readonly IEmailSender _sender;
 
-        public RegisterConfirmationModel(UserManager<HomeFinderUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<HomeFinderUser> userManager /*IEmailSender sender*/)
         {
             _userManager = userManager;
-            _sender = sender;
+            //_sender = sender;
         }
 
         public string Email { get; set; }
-
         public bool DisplayConfirmAccountLink { get; set; }
-
         public string EmailConfirmationUrl { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string email, string returnUrl = null)
@@ -55,7 +53,6 @@ namespace HomeFinder.Areas.Identity.Pages.Account
                     values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                     protocol: Request.Scheme);
             }
-
             return Page();
         }
     }

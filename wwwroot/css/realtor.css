@@ -5,7 +5,6 @@
 #properties-container > div {
     min-height: 734px;
     width: 33%;
-    /*border : 1px solid;*/
 }
 
 #left-side .card-body {
@@ -83,7 +82,6 @@ p {
     color: #fff;
     display: block;
     text-align: left;
-    background: #grey;
     color: #222;
     padding: 20px;
 }
@@ -140,4 +138,12 @@ p {
 
 .mt-3 {
     background-color: #F8F9FA;
+}
+
+.card-title {
+    margin: 0px 0px;
+}
+
+.btn-primary.propertiesText:hover {
+    border-color: #e48153;
 }
