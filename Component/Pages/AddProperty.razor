@@ -45,7 +45,7 @@ else
         Realtor = context.Users.FirstOrDefault(i => i.Email == UserName);
 
     }
-    private IEnumerable<dynamic> objects = Array.Empty<dynamic>();
+    private IEnumerable<PropertyObject> objects = Array.Empty<PropertyObject>();
     private bool getObjectsError;
     private bool shouldRender;
     protected override bool ShouldRender() => shouldRender;
@@ -77,11 +77,11 @@ else
             document = JsonDocument.Parse(responseStream);
 
             // Access the "items" collection in the JsonDocument
-            //var objectElement = document.RootElement.GetProperty("values");
+            var objectElement = document.RootElement.GetProperty("values");
 
             // Get the raw Json text of the collection and parse it to IEnumerable<Book> 
             // The JsonSerializerOptions make sure to ignore case sensitivity
-            objects = JsonSerializer.Deserialize<IEnumerable<dynamic>>(document.RootElement.GetRawText(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            objects = JsonSerializer.Deserialize<IEnumerable<PropertyObject>>(objectElement.GetRawText(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
 
         }
