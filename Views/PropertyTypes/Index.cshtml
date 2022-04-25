@@ -27,14 +27,14 @@
                     <form method="post" asp-action="Delete" asp-route-id="@type.Id">
                         <a asp-action="Edit" asp-route-id="@type.Id" class="btn btn-primary">Edit</a>
 
-                        <span id="confirmDeleteSpan_@type.Id" style="display:none">
+                        @*<span id="confirmDeleteSpan_@type.Id" style="display:none">
                             <span>Are you sure you want to delete this property type?</span>
                             <button type="submit" class="btn btn-danger">Yes</button>
                             <a class="btn btn-primary text-light" onclick="confirmDelete('@type.Id', false)">No</a>
                         </span>
                         <span id="deleteSpan_@type.Id">
                             <a class="btn btn-danger text-light" onclick="confirmDelete('@type.Id', true)">Delete</a>
-                        </span>
+                        </span>*@
                     </form>
                 </div>
             </div>

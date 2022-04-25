@@ -104,6 +104,8 @@ namespace HomeFinder.Controllers
             {
                 return NotFound();
             }
+            ViewBag.PropertyTypeNames = new SelectList(Enum.GetNames(typeof(PropertyTypeName)));
+
             return View(propertyType);
         }
 
