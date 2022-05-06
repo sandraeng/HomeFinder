@@ -119,6 +119,12 @@ namespace HomeFinder.Controllers
         // GET: PropertyObjects/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            // API: GetPropertyObjectById()
+            // ViewModel: PropertyObject
+            // ViewModel: Address
+            // ViewModel: PropertyType
+            // ViewModel: HomeFinderImages
+
             if (id == null)
             {
                 return NotFound();
@@ -138,6 +144,12 @@ namespace HomeFinder.Controllers
         }
 
         private List<PropertyObject>GetAllProps(){
+
+            // API: ListPropertyObjects()
+            // ViewModel: PropertyObject
+            // ViewModel: Address
+            // ViewModel: PropertyType
+            // ViewModel: HomeFinderImages
 
             return _context.PropertyObjects
                 .Include(p => p.Address)

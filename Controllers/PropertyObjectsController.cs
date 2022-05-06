@@ -36,6 +36,9 @@ namespace HomeFinder.Controllers
         // GET: PropertyObjects
         public async Task<IActionResult> Index()
         {
+            // API: ListPropertyObjects()
+            // ViewModel: PropertyObject
+            // ViewModel: HomeFinderUser
             var homeFinderContext = _context.PropertyObjects.Include(p => p.Address).Include(p => p.Realtor);
             return View(await homeFinderContext.ToListAsync());
         }
@@ -48,6 +51,11 @@ namespace HomeFinder.Controllers
                 return NotFound();
             }
 
+            // API: GetPropertyObjectById(int id)
+            // ViewModel: PropertyObject
+            // ViewModel: HomeFinderUser
+            // ViewModel: Address
+            // ViewModel: Images
             var propertyObject = await _context.PropertyObjects
                 .Include(p => p.Address)
                 .Include(p => p.Realtor)
@@ -72,6 +80,13 @@ namespace HomeFinder.Controllers
             ViewBag.PropertyTypes = _context.PropertyTypes.ToList();
             ViewBag.LeaseTypes = _context.LeaseTypes.ToList();
 
+            // API: ListPropertyObjectStatuses()
+            // ViewModel: PropertyObjectStatus
+            // API: ListPropertyTypes()
+            // ViewModel: PropertyType
+            // API: ListLeaseTypes()
+            // ViewModel: LeaseType
+
             ViewData["RealtorId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
@@ -84,6 +99,15 @@ namespace HomeFinder.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,RealtorId,PropertyTypeId,Status,ListPrice,NumberOfRooms,Area,NextShowingDateTime,Address,LeaseTypeId,NonLivingArea,LotArea,YearBuilt,Description,Images")] PropertyObject propertyObject, List<IFormFile> files)
         {
+            // POST ViewModel: PostPropertyObjectViewModel
+            // POST ViewModel: File?
+            // API: CreateImage()
+            // API: CreatePropertyObject()
+            // API: ListPropertyObjectStatuses()
+            // API: ListPropertyTypes()
+            // API: ListLeaseTypes()
+
+
             // Update PropertyType with value from DB.
             propertyObject.PropertyType = _context.PropertyTypes.Where(x => x.Id == propertyObject.PropertyTypeId).FirstOrDefault();
             // Update LeaseType with value from DB.
@@ -155,6 +179,13 @@ namespace HomeFinder.Controllers
         [Authorize(Roles = "Realtor,Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
+            // API: GetPropertyObjectById()
+            // ViewModel: PropertyObject
+            // API: GetAddresses()
+            // ViewModel: Address
+            // API: GetRealtors() alt. GetUsersByRole("Realtor")?
+            // ViewModel: HomefinderUser
+
             if (id == null)
             {
                 return NotFound();
@@ -178,6 +209,13 @@ namespace HomeFinder.Controllers
         [Authorize(Roles = "Realtor,Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,RealtorId,PropertyTypeId,Status,ListPrice,NumberOfRooms,Area,NonLivingArea,LotArea,UploadedDate,NextShowingDateTime,AddressId,Description,LeaseTypeId,YearBuilt")] PropertyObject propertyObject)
         {
+            // API: UpdatePropertyObject()
+            // POST ViewModel: PropertyObject
+            // API: GetAddresses()
+            // ViewModel: Address
+            // API: GetRealtors() alt. GetUsersByRole("Realtor")?
+            // ViewModel: HomefinderUser
+
             if (id != propertyObject.Id)
             {
                 return NotFound();
@@ -212,6 +250,11 @@ namespace HomeFinder.Controllers
         [Authorize(Roles = "Realtor,Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
+            // API: ListPropertyObjects()
+            // ViewModel: PropertyObject
+            // ViewModel: Address
+            // ViewModel: HomeFinderUser
+
             if (id == null)
             {
                 return NotFound();
@@ -235,6 +278,8 @@ namespace HomeFinder.Controllers
         [Authorize(Roles = "Realtor,Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // API: RemovePropertyObjectById()
+
             var propertyObject = await _context.PropertyObjects.FindAsync(id);
             _context.PropertyObjects.Remove(propertyObject);
             await _context.SaveChangesAsync();
@@ -250,6 +295,17 @@ namespace HomeFinder.Controllers
             {
                 return NotFound();
             }
+
+            // API: GetPropertyObjectById()
+            // ViewModel: PropertyObject
+            // ViewModel: Address
+            // ViewModel: HomeFinderUser
+            // ViewModel: Company
+            //
+            // API: GetUser() ?
+            // API: GetNoticeOfInterestByPropertyId() ?
+            // ViewModel: NoticeOfInterest
+
 
             // Update noticeOfInterest with PropertyObject from db.
             var propertyObject = await _context.PropertyObjects
@@ -290,6 +346,11 @@ namespace HomeFinder.Controllers
         [Authorize]
         public async Task<IActionResult> SaveFavoriteObject(int id)
         {
+            // API: GetPropertyFavoritedByUser()
+            // Vi måste fan döpa om "PropertyFavoritedByUser" till "SavedProperty" eller något...
+            // ViewModel: PropertyFavoritedByUser
+            // API: AddPropertyFavoritedByUser()
+
             // Update property object with correct object from db.
             var propertyObject = await _context.PropertyObjects
                 .Where(po => po.Id == id)
@@ -326,6 +387,11 @@ namespace HomeFinder.Controllers
         [Authorize]
         public async Task<IActionResult> NoticeOfInterest(PropertyObject propertyObject)
         {
+            // API: GetNoticeOfInterestByUserIdPropertyId() ?
+            // ViewModel: NoticeOfInterest
+            // POST ViewModel: NoticeOfInterest
+            // API: AddNoticeOfInterest
+
             if ((propertyObject.Id > 0))
             {
                 // Update property object with correct object from db.
@@ -366,6 +432,8 @@ namespace HomeFinder.Controllers
         [Authorize]
         public async Task<IActionResult> RemoveLikedObject(int id)
         {
+            // API: RemovePropertyFavoritedByUser()
+
             var user = await _userManager.GetUserAsync(User); // Need to check for liked object for this specific user!
             var objToRemove = await _context.PropertyFavorited.FirstOrDefaultAsync(lP => lP.PropertyObject.Id == id && lP.User.Id == user.Id);
             if (objToRemove == null)
@@ -382,6 +450,10 @@ namespace HomeFinder.Controllers
         [Authorize]
         public async Task<IActionResult> RemoveObjectOfInterest(int id)
         {
+            // API: RemoveNoticeOfInterest()
+            // API: GetNoticeOfInterestByPropertyAndUser() ?
+            // ViewModel: NoticeOfInterest
+
             var user = await _userManager.GetUserAsync(User); // Need to check for notice if interest-object for this specific user!
             var objToRemove = await _context.NoticeOfInterests.FirstOrDefaultAsync(nI => nI.PropertyObject.Id == id && nI.User.Id == user.Id);
             if (objToRemove == null)

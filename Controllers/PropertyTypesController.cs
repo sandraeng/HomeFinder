@@ -29,6 +29,9 @@ namespace HomeFinder.Controllers
         // GET: PropertyTypes
         public async Task<IActionResult> Index()
         {
+            // API: ListPropertyTypes()
+            // ViewModel: PropertyTypes
+
             return View(await _context.PropertyTypes.ToListAsync());
         }
 
@@ -39,6 +42,9 @@ namespace HomeFinder.Controllers
             {
                 return NotFound();
             }
+
+            // API: GetPropertyTypeById()
+            // ViewModel: PropertyType
 
             var propertyType = await _context.PropertyTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -53,6 +59,9 @@ namespace HomeFinder.Controllers
         // GET: PropertyTypes/Create
         public IActionResult Create()
         {
+            // API: ListPropertyTypes()
+            // ViewModel: PropertyType
+
             // Get a list of values in enum and add to viewbag, so it can be used to populate a dropdown in View.
             ViewBag.PropertyTypeNames = new SelectList(Enum.GetNames(typeof(PropertyTypeName)));
 
@@ -66,6 +75,10 @@ namespace HomeFinder.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,IconUrl,PropertyTypeName")] PropertyType propertyType, IFormFile file)
         {
+            // API: AddPropertyType()
+            // POST ViewModel: PropertyType
+            // API: UploadFile() ?
+
             string path = UploadFile(file);
             propertyType.IconUrl = "~/Images/" + path;
             ModelState.Remove("IconUrl");
@@ -79,6 +92,9 @@ namespace HomeFinder.Controllers
         }
         private string UploadFile(IFormFile file)
         {
+            // API: UploadFile()
+            // POST ViewModel: File/Image?
+
             string fileName = null;
             if (file != null)
             {
@@ -95,6 +111,10 @@ namespace HomeFinder.Controllers
         // GET: PropertyTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            // API: ListPropertyTypes()
+            // API: GetPropertyTypeById()
+            // ViewModel: PropertyType
+
             if (id == null)
             {
                 return NotFound();
@@ -116,6 +136,12 @@ namespace HomeFinder.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,IconUrl,PropertyTypeName")] PropertyType propertyType, IFormFile file)
         {
+            // API: ListPropertyTypes()
+            // API: GetPropertyTypeById()
+            // API: UpdatePropertyType()
+            // ViewModel: PropertyType
+            // POST ViewModel: PropertyType
+
             if (id != propertyType.Id)
             {
                 return NotFound();
@@ -152,6 +178,8 @@ namespace HomeFinder.Controllers
         // GET: PropertyTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            // API: GetPropertyTypeById()
+
             if (id == null)
             {
                 return NotFound();
@@ -172,6 +200,8 @@ namespace HomeFinder.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // API: RemovePropertyType()
+
             var propertyType = await _context.PropertyTypes.FindAsync(id);
             _context.PropertyTypes.Remove(propertyType);
             await _context.SaveChangesAsync();
